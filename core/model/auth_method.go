@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spacemanio/helmet/core/migration"
-	"github.com/spacemanio/helmet/core/util"
+	"github.com/spacewalkio/helmet/core/migration"
+	"github.com/spacewalkio/helmet/core/util"
 
 	"github.com/spf13/viper"
 )

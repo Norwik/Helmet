@@ -7,9 +7,9 @@ package controller
 import (
 	"io/ioutil"
 
-	"github.com/spacemanio/helmet/core/component"
-	"github.com/spacemanio/helmet/core/model"
-	"github.com/spacemanio/helmet/core/module"
+	"github.com/spacewalkio/helmet/core/component"
+	"github.com/spacewalkio/helmet/core/model"
+	"github.com/spacewalkio/helmet/core/module"
 
 	"github.com/spf13/viper"
 )

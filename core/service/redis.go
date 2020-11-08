@@ -36,9 +36,11 @@ func NewRedisDriver(addr string, password string, db int) *Redis {
 // Connect establish a redis connection
 func (r *Redis) Connect() error {
 	r.Client = redis.NewClient(&redis.Options{
-		Addr:     r.Addr,
-		Password: r.Password,
-		DB:       r.DB,
+		Addr:        r.Addr,
+		Password:    r.Password,
+		DB:          r.DB,
+		PoolSize:    10,
+		PoolTimeout: 30 * time.Second,
 	})
 
 	err := r.Ping()

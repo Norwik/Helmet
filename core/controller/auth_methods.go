@@ -10,8 +10,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/spacemanio/helmet/core/model"
-	"github.com/spacemanio/helmet/core/module"
+	"github.com/spacewalkio/helmet/core/model"
+	"github.com/spacewalkio/helmet/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"

@@ -7,7 +7,7 @@ package model
 import (
 	"time"
 
-	"github.com/spacemanio/helmet/core/util"
+	"github.com/spacewalkio/helmet/core/util"
 )
 
 // Option struct

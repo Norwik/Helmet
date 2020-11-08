@@ -5,8 +5,8 @@
 package module
 
 import (
-	"github.com/spacemanio/helmet/core/migration"
-	"github.com/spacemanio/helmet/core/model"
+	"github.com/spacewalkio/helmet/core/migration"
+	"github.com/spacewalkio/helmet/core/model"
 )
 
 // CreateKeyBasedAuthData creates a new entity

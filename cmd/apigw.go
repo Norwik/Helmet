@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spacemanio/helmet/core/service"
-	"github.com/spacemanio/helmet/sdk"
+	"github.com/spacewalkio/helmet/core/service"
+	"github.com/spacewalkio/helmet/sdk"
 
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"

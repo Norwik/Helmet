@@ -7,7 +7,7 @@ package model
 import (
 	"fmt"
 
-	"github.com/spacemanio/helmet/core/util"
+	"github.com/spacewalkio/helmet/core/util"
 )
 
 // DSN struct

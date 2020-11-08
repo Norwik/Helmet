@@ -15,9 +15,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spacemanio/helmet/core/component"
-	"github.com/spacemanio/helmet/core/controller"
-	"github.com/spacemanio/helmet/core/module"
+	"github.com/spacewalkio/helmet/core/component"
+	"github.com/spacewalkio/helmet/core/controller"
+	"github.com/spacewalkio/helmet/core/module"
 
 	"github.com/drone/envsubst"
 	"github.com/labstack/echo-contrib/prometheus"

@@ -5,7 +5,7 @@
 package main
 
 import (
-	"github.com/spacemanio/helmet/cmd"
+	"github.com/spacewalkio/helmet/cmd"
 )
 
 var (

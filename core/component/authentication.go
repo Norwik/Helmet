@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/spacemanio/helmet/core/model"
-	"github.com/spacemanio/helmet/core/module"
-	"github.com/spacemanio/helmet/core/util"
+	"github.com/spacewalkio/helmet/core/model"
+	"github.com/spacewalkio/helmet/core/module"
+	"github.com/spacewalkio/helmet/core/util"
 )
 
 // KeyBasedAuthMethod type

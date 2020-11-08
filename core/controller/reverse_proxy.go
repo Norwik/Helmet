@@ -7,8 +7,8 @@ package controller
 import (
 	"net/http"
 
-	"github.com/spacemanio/helmet/core/component"
-	"github.com/spacemanio/helmet/core/module"
+	"github.com/spacewalkio/helmet/core/component"
+	"github.com/spacewalkio/helmet/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"

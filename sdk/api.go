@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/spacemanio/helmet/core/model"
-	"github.com/spacemanio/helmet/core/service"
-	"github.com/spacemanio/helmet/core/util"
+	"github.com/spacewalkio/helmet/core/model"
+	"github.com/spacewalkio/helmet/core/service"
+	"github.com/spacewalkio/helmet/core/util"
 )
 
 // API type

@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/spacemanio/helmet/core/model"
+	"github.com/spacewalkio/helmet/core/model"
 )
 
 // Router type

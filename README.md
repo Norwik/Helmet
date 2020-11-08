@@ -3,22 +3,22 @@
     <h3 align="center">Helmet</h3>
     <p align="center">A Lightweight Cloud Native API Gateway.</p>
     <p align="center">
-        <a href="https://github.com/Spacemanio/Helmet/actions/workflows/build.yml">
-            <img src="https://github.com/Spacemanio/Helmet/actions/workflows/build.yml/badge.svg">
+        <a href="https://github.com/spacewalkio/Helmet/actions/workflows/build.yml">
+            <img src="https://github.com/spacewalkio/Helmet/actions/workflows/build.yml/badge.svg">
         </a>
-        <a href="https://github.com/Spacemanio/Helmet/actions">
-            <img src="https://github.com/Spacemanio/Helmet/workflows/Release/badge.svg">
+        <a href="https://github.com/spacewalkio/Helmet/actions">
+            <img src="https://github.com/spacewalkio/Helmet/workflows/Release/badge.svg">
         </a>
-        <a href="https://github.com/Spacemanio/Helmet/releases">
+        <a href="https://github.com/spacewalkio/Helmet/releases">
             <img src="https://img.shields.io/badge/Version-0.1.1-red.svg">
         </a>
-        <a href="https://goreportcard.com/report/github.com/Spacemanio/Helmet">
-            <img src="https://goreportcard.com/badge/github.com/Spacemanio/Helmet?v=0.1.1">
+        <a href="https://goreportcard.com/report/github.com/spacewalkio/Helmet">
+            <img src="https://goreportcard.com/badge/github.com/spacewalkio/Helmet?v=0.1.1">
         </a>
-        <a href="https://godoc.org/github.com/spacemanio/helmet">
-            <img src="https://godoc.org/github.com/spacemanio/helmet?status.svg">
+        <a href="https://godoc.org/github.com/spacewalkio/helmet">
+            <img src="https://godoc.org/github.com/spacewalkio/helmet?status.svg">
         </a>
-        <a href="https://github.com/Spacemanio/Helmet/blob/master/LICENSE">
+        <a href="https://github.com/spacewalkio/Helmet/blob/master/LICENSE">
             <img src="https://img.shields.io/badge/LICENSE-MIT-orange.svg">
         </a>
     </p>
@@ -50,12 +50,12 @@ Here is some of the key features:
 
 #### Linux Deployment
 
-Download [the latest helmet binary](https://github.com/Spacemanio/Helmet/releases). Make it executable from everywhere.
+Download [the latest helmet binary](https://github.com/spacewalkio/Helmet/releases). Make it executable from everywhere.
 
 ```zsh
-$ export HELMET_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Spacemanio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
+$ export HELMET_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/spacewalkio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
 
-$ curl -sL https://github.com/Spacemanio/Helmet/releases/download/v{$HELMET_LATEST_VERSION}/helmet_{$HELMET_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
+$ curl -sL https://github.com/spacewalkio/Helmet/releases/download/v{$HELMET_LATEST_VERSION}/helmet_{$HELMET_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
 ```
 
 Then install `etcd` cluster or a single node! please [refer to etcd docs](https://etcd.io/docs/v3.5/) or bin directory inside this repository.
@@ -192,12 +192,12 @@ $ helmet server -c /path/to/config.yml
 
 For transparency into our release cycle and in striving to maintain backward compatibility, Helmet is maintained under the [Semantic Versioning guidelines](https://semver.org/) and release process is predictable and business-friendly.
 
-See the [Releases section of our GitHub project](https://github.com/spacemanio/helmet/releases) for changelogs for each release version of Helmet. It contains summaries of the most noteworthy changes made in each release.
+See the [Releases section of our GitHub project](https://github.com/spacewalkio/helmet/releases) for changelogs for each release version of Helmet. It contains summaries of the most noteworthy changes made in each release.
 
 
 ## Bug tracker
 
-If you have any suggestions, bug reports, or annoyances please report them to our issue tracker at https://github.com/spacemanio/helmet/issues
+If you have any suggestions, bug reports, or annoyances please report them to our issue tracker at https://github.com/spacewalkio/helmet/issues
 
 
 ## Security Issues
