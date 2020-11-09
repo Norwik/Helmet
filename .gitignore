@@ -19,3 +19,4 @@ sync
 *.db
 
 config.test.yml
+coverage.html
