@@ -32,6 +32,7 @@ func (db *Database) GetBasicAuthDataByUsername(username, password string) model.
 // GetBasicAuthDataByID gets an entity by id
 func (db *Database) GetBasicAuthDataByID(id int) model.BasicAuthData {
 	basicAuthData := model.BasicAuthData{}
+
 	db.Connection.Where("id = ?", id).First(&basicAuthData)
 
 	return basicAuthData

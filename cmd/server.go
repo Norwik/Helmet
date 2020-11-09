@@ -180,20 +180,24 @@ var serverCmd = &cobra.Command{
 				},
 			}))
 
+			// List Endpoints
 			e1.GET("/endpoint", controller.GetEndpoints)
 
+			// Auth Methods CRUD
 			e1.GET("/auth/method", controller.GetAuthMethods)
 			e1.GET("/auth/method/:id", controller.GetAuthMethod)
 			e1.DELETE("/auth/method/:id", controller.DeleteAuthMethod)
 			e1.POST("/auth/method", controller.CreateAuthMethod)
 			e1.PUT("/auth/method/:id", controller.UpdateAuthMethod)
 
+			// API Keys CRUD
 			e1.GET("/auth/key", controller.GetKeysBasedAuthData)
 			e1.GET("/auth/key/:id", controller.GetKeyBasedAuthData)
 			e1.DELETE("/auth/key/:id", controller.DeleteKeyBasedAuthData)
 			e1.POST("/auth/key", controller.CreateKeyBasedAuthData)
 			e1.PUT("/auth/key/:id", controller.UpdateKeyBasedAuthData)
 
+			// Basic Auth CRUD
 			e1.GET("/auth/basic", controller.GetBasicAuthItems)
 			e1.GET("/auth/basic/:id", controller.GetBasicAuthData)
 			e1.DELETE("/auth/basic/:id", controller.DeleteBasicAuthData)
@@ -202,6 +206,8 @@ var serverCmd = &cobra.Command{
 		}
 
 		e.GET("/_me", controller.Me)
+
+		// API GW Health
 		e.GET("/_health", controller.Health)
 
 		e.Any("/*", func(c echo.Context) error {

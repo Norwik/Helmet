@@ -5,6 +5,8 @@
 package migration
 
 import (
+	"time"
+
 	"github.com/spacewalkio/helmet/core/util"
 
 	"github.com/jinzhu/gorm"
@@ -124,5 +126,28 @@ func (b *OAuthData) LoadFromJSON(data []byte) error {
 
 // ConvertToJSON convert object to json
 func (b *OAuthData) ConvertToJSON() (string, error) {
+	return util.ConvertToJSON(b)
+}
+
+// OAuthAccessData struct
+type OAuthAccessData struct {
+	gorm.Model
+
+	AccessToken  string    `json:"accessToken"`
+	RefreshToken string    `json:"refreshToken"`
+	Meta         string    `json:"meta"`
+	ExpireAt     time.Time `json:"expireAt"`
+
+	OAuthDataID int       `json:"oauthDataID"`
+	OAuthData   OAuthData `json:"oauthData" gorm:"foreignKey:OAuthDataID" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+}
+
+// LoadFromJSON update object from json
+func (b *OAuthAccessData) LoadFromJSON(data []byte) error {
+	return util.LoadFromJSON(b, data)
+}
+
+// ConvertToJSON convert object to json
+func (b *OAuthAccessData) ConvertToJSON() (string, error) {
 	return util.ConvertToJSON(b)
 }

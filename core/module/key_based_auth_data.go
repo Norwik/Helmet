@@ -26,6 +26,7 @@ func (db *Database) UpdateKeyBasedAuthDataByID(keyBasedAuthData *model.KeyBasedA
 // GetKeyBasedAuthDataByID gets an entity by uuid
 func (db *Database) GetKeyBasedAuthDataByID(id int) model.KeyBasedAuthData {
 	keyBasedAuthData := model.KeyBasedAuthData{}
+
 	db.Connection.Where("id = ?", id).First(&keyBasedAuthData)
 
 	return keyBasedAuthData
@@ -34,6 +35,7 @@ func (db *Database) GetKeyBasedAuthDataByID(id int) model.KeyBasedAuthData {
 // GetKeyBasedAuthDataByAPIKey gets an entity by api key
 func (db *Database) GetKeyBasedAuthDataByAPIKey(apiKey string) model.KeyBasedAuthData {
 	keyBasedAuthData := model.KeyBasedAuthData{}
+
 	db.Connection.Where("api_key = ?", apiKey).First(&keyBasedAuthData)
 
 	return keyBasedAuthData
