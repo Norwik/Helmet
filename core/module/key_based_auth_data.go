@@ -23,7 +23,7 @@ func (db *Database) UpdateKeyBasedAuthDataByID(keyBasedAuthData *model.KeyBasedA
 	return keyBasedAuthData
 }
 
-// GetKeyBasedAuthDataByID gets an entity by uuid
+// GetKeyBasedAuthDataByID gets an entity by ID
 func (db *Database) GetKeyBasedAuthDataByID(id int) model.KeyBasedAuthData {
 	keyBasedAuthData := model.KeyBasedAuthData{}
 

@@ -104,12 +104,14 @@ func (db *Database) Migrate() bool {
 	db.Connection.AutoMigrate(&migration.AuthMethod{})
 	db.Connection.AutoMigrate(&migration.KeyBasedAuthData{})
 	db.Connection.AutoMigrate(&migration.BasicAuthData{})
+	db.Connection.AutoMigrate(&migration.OAuthData{})
 	db.Connection.AutoMigrate(&migration.OAuthAccessData{})
 
 	status = status && db.Connection.HasTable(&migration.Option{})
 	status = status && db.Connection.HasTable(&migration.AuthMethod{})
 	status = status && db.Connection.HasTable(&migration.KeyBasedAuthData{})
 	status = status && db.Connection.HasTable(&migration.BasicAuthData{})
+	status = status && db.Connection.HasTable(&migration.OAuthData{})
 	status = status && db.Connection.HasTable(&migration.OAuthAccessData{})
 
 	return status
@@ -123,12 +125,14 @@ func (db *Database) Rollback() bool {
 	db.Connection.DropTableIfExists(&migration.AuthMethod{})
 	db.Connection.DropTableIfExists(&migration.KeyBasedAuthData{})
 	db.Connection.DropTableIfExists(&migration.BasicAuthData{})
+	db.Connection.DropTableIfExists(&migration.OAuthData{})
 	db.Connection.DropTableIfExists(&migration.OAuthAccessData{})
 
 	status = status && !db.Connection.HasTable(&migration.Option{})
 	status = status && !db.Connection.HasTable(&migration.AuthMethod{})
 	status = status && !db.Connection.HasTable(&migration.KeyBasedAuthData{})
 	status = status && !db.Connection.HasTable(&migration.BasicAuthData{})
+	status = status && !db.Connection.HasTable(&migration.OAuthData{})
 	status = status && !db.Connection.HasTable(&migration.OAuthAccessData{})
 
 	return status
