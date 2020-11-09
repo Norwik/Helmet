@@ -30,7 +30,6 @@ jobs:
           go get -t .
           make ci
           make integration
-          make integration
           git status
           git diff > diff.log
           cat diff.log
