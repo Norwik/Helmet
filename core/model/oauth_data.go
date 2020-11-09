@@ -5,7 +5,7 @@
 package model
 
 import (
-	"fmt"
+	"errors"
 	"strings"
 	"time"
 
@@ -39,19 +39,19 @@ func (o *OAuthData) LoadFromJSON(data []byte) error {
 // Validate validates a request payload
 func (o *OAuthData) Validate() error {
 	if strings.TrimSpace(o.Name) == "" {
-		return fmt.Errorf("Oauth key name is required")
+		return errors.New("Oauth key name is required")
 	}
 
 	if strings.TrimSpace(o.ClientID) == "" {
-		return fmt.Errorf("Client id is required")
+		return errors.New("Client id is required")
 	}
 
 	if strings.TrimSpace(o.ClientSecret) == "" {
-		return fmt.Errorf("Client secret is required")
+		return errors.New("Client secret is required")
 	}
 
 	if o.AuthMethodID == 0 {
-		return fmt.Errorf("Auth method id is required")
+		return errors.New("Auth method id is required")
 	}
 
 	return nil

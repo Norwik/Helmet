@@ -5,7 +5,7 @@
 package model
 
 import (
-	"fmt"
+	"errors"
 	"strings"
 	"time"
 
@@ -44,19 +44,19 @@ func (b *BasicAuthData) ConvertToJSON() (string, error) {
 // Validate validates a request payload
 func (b *BasicAuthData) Validate() error {
 	if strings.TrimSpace(b.Name) == "" {
-		return fmt.Errorf("Basic auth name is required")
+		return errors.New("Basic auth name is required")
 	}
 
 	if strings.TrimSpace(b.Username) == "" {
-		return fmt.Errorf("Basic auth username is required")
+		return errors.New("Basic auth username is required")
 	}
 
 	if strings.TrimSpace(b.Password) == "" {
-		return fmt.Errorf("Basic auth password is required")
+		return errors.New("Basic auth password is required")
 	}
 
 	if b.AuthMethodID == 0 {
-		return fmt.Errorf("Auth method id is required")
+		return errors.New("Auth method id is required")
 	}
 
 	return nil

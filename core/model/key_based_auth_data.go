@@ -5,7 +5,7 @@
 package model
 
 import (
-	"fmt"
+	"errors"
 	"strings"
 	"time"
 
@@ -38,15 +38,15 @@ func (k *KeyBasedAuthData) LoadFromJSON(data []byte) error {
 // Validate validates a request payload
 func (k *KeyBasedAuthData) Validate() error {
 	if strings.TrimSpace(k.Name) == "" {
-		return fmt.Errorf("API key name is required")
+		return errors.New("API key name is required")
 	}
 
 	if strings.TrimSpace(k.APIKey) == "" {
-		return fmt.Errorf("API key is required")
+		return errors.New("API key is required")
 	}
 
 	if k.AuthMethodID == 0 {
-		return fmt.Errorf("Auth method id is required")
+		return errors.New("Auth method id is required")
 	}
 
 	return nil

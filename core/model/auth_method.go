@@ -5,6 +5,7 @@
 package model
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"strings"
@@ -59,7 +60,7 @@ func (a *AuthMethod) Validate() error {
 	}
 
 	if strings.TrimSpace(a.Name) == "" {
-		return fmt.Errorf("Auth method name is required")
+		return errors.New("Auth method name is required")
 	}
 
 	if strings.TrimSpace(a.Endpoints) != "" {
