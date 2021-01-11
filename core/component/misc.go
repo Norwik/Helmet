@@ -3,16 +3,3 @@
 // license that can be found in the LICENSE file.
 
 package component
-
-// Level log level type
-type Level int
-
-const (
-	// Debug const
-	Debug Level = iota
-	// Info const
-	Info
-
-	// CorralationID const
-	CorralationID
-)

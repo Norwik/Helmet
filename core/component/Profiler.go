@@ -6,10 +6,36 @@ package component
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	log "github.com/sirupsen/logrus"
 )
+
+// Level log level type
+type Level int
+
+const (
+	// Debug const
+	Debug Level = iota
+	// Info const
+	Info
+
+	// CorralationID const
+	CorralationID
+)
+
+// String implements stringer interface.
+func (l Level) String() string {
+	switch l {
+	case Debug:
+		return "debug"
+	case Info:
+		return "info"
+	default:
+		return fmt.Sprintf("unknown state: %d", l)
+	}
+}
 
 // Profiler type
 type Profiler struct {
