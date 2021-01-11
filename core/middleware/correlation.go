@@ -7,7 +7,7 @@ package middleware
 import (
 	"strings"
 
-	"github.com/clivern/walnut/core/util"
+	"github.com/clivern/walnut/core/component"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +18,7 @@ func Correlation() gin.HandlerFunc {
 		corralationID := c.GetHeader("x-correlation-id")
 
 		if strings.TrimSpace(corralationID) == "" {
-			c.Request.Header.Add("X-Correlation-ID", util.GenerateUUID4())
+			c.Request.Header.Add("X-Correlation-ID", component.NewCorrelation().UUIDv4())
 		}
 		c.Next()
 	}

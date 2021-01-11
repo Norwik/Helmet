@@ -51,7 +51,5 @@ func LoadConfigs(path string) error {
 
 	viper.ReadConfig(bytes.NewBuffer([]byte(data1)))
 
-	viper.SetDefault("app.name", "x-x-x-x")
-
 	return nil
 }

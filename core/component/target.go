@@ -3,3 +3,19 @@
 // license that can be found in the LICENSE file.
 
 package component
+
+import (
+	"context"
+)
+
+// Target type
+type Target struct {
+	ctx context.Context
+}
+
+// NewTarget creates a new instance
+func NewTarget(ctx context.Context) *Target {
+	return &Target{
+		ctx: ctx,
+	}
+}

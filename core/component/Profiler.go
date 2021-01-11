@@ -11,19 +11,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// Level log level type
-type Level int
-
-const (
-	// Debug const
-	Debug Level = iota
-	// Info const
-	Info
-
-	// CorralationID const
-	CorralationID
-)
-
 // Profiler type
 type Profiler struct {
 	ctx context.Context

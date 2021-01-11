@@ -6,6 +6,7 @@ package cmd
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -15,9 +16,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/clivern/walnut/core/component"
 	"github.com/clivern/walnut/core/controller"
 	"github.com/clivern/walnut/core/middleware"
-	"github.com/clivern/walnut/core/util"
 
 	"github.com/drone/envsubst"
 	"github.com/gin-gonic/gin"
@@ -62,13 +63,15 @@ var serverCmd = &cobra.Command{
 			))
 		}
 
-		viper.SetDefault("app.name", util.GenerateUUID4())
+		fs := component.NewFileSystem(
+			context.Background(),
+		)
 
 		if viper.GetString("app.log.output") != "stdout" {
 			dir, _ := filepath.Split(viper.GetString("app.log.output"))
 
-			if !util.DirExists(dir) {
-				if _, err := util.EnsureDir(dir, 775); err != nil {
+			if !fs.DirExists(dir) {
+				if err := fs.EnsureDir(dir, 775); err != nil {
 					panic(fmt.Sprintf(
 						"Directory [%s] creation failed with error: %s",
 						dir,
@@ -77,7 +80,7 @@ var serverCmd = &cobra.Command{
 				}
 			}
 
-			if !util.FileExists(viper.GetString("app.log.output")) {
+			if !fs.FileExists(viper.GetString("app.log.output")) {
 				f, err := os.Create(viper.GetString("app.log.output"))
 				if err != nil {
 					panic(fmt.Sprintf(

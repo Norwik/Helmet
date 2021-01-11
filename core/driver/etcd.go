@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/clivern/walnut/core/component"
 	"github.com/clivern/walnut/core/util"
 
 	"github.com/spf13/viper"
@@ -190,10 +191,14 @@ func (e *Etcd) GetKeys(key string) ([]string, error) {
 		return result, err
 	}
 
+	fs := component.NewFileSystem(
+		context.Background(),
+	)
+
 	for _, ev := range resp.Kvs {
-		sub := strings.Replace(string(ev.Key), util.EnsureTrailingSlash(key), "", -1)
+		sub := strings.Replace(string(ev.Key), fs.EnsureTrailingSlash(key), "", -1)
 		subKeys := strings.Split(sub, "/")
-		newKey := fmt.Sprintf("%s%s", util.EnsureTrailingSlash(key), subKeys[0])
+		newKey := fmt.Sprintf("%s%s", fs.EnsureTrailingSlash(key), subKeys[0])
 
 		if !util.InArray(newKey, result) {
 			result = append(result, newKey)
