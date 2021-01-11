@@ -1,0 +1,57 @@
+# App configs
+app:
+    # Env mode (dev or prod)
+    mode: ${WALNUT_APP_MODE:-prod}
+    # HTTP port
+    port: ${WALNUT_API_PORT:-80}
+    # Hostname
+    hostname: ${WALNUT_API_HOSTNAME:-127.0.0.1}
+    # TLS configs
+    tls:
+        status: ${WALNUT_API_TLS_STATUS:-off}
+        pemPath: ${WALNUT_API_TLS_PEMPATH:-cert/server.pem}
+        keyPath: ${WALNUT_API_TLS_KEYPATH:-cert/server.key}
+
+    # API Configs
+    api:
+        key: ${WALNUT_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
+
+    # Async Workers
+    workers:
+        # Queue max capacity
+        buffer: ${WALNUT_WORKERS_CHAN_CAPACITY:-5000}
+        # Number of concurrent workers
+        count: ${WALNUT_WORKERS_COUNT:-4}
+
+    # Runtime, Requests/Response and Walnut Metrics
+    metrics:
+        prometheus:
+            # Route for the metrics endpoint
+            endpoint: ${WALNUT_METRICS_PROM_ENDPOINT:-/metrics}
+
+    # Application Database
+    database:
+        # Database driver
+        driver: ${WALNUT_DB_DRIVER:-etcd}
+
+        # Etcd Configs
+        etcd:
+            # Etcd database name or prefix
+            databaseName: ${WALNUT_DB_ETCD_DB:-walnut}
+            # Etcd username
+            username: ${WALNUT_DB_ETCD_USERNAME:- }
+            # Etcd password
+            password: ${WALNUT_DB_ETCD_PASSWORD:- }
+            # Etcd endpoints
+            endpoints: ${WALNUT_DB_ETCD_ENDPOINTS:-http://127.0.0.1:2379}
+            # Timeout in seconds
+            timeout: 30
+
+    # Log configs
+    log:
+        # Log level, it can be debug, info, warn, error, panic, fatal
+        level: ${WALNUT_LOG_LEVEL:-info}
+        # Output can be stdout or abs path to log file /var/logs/walnut.log
+        output: ${WALNUT_LOG_OUTPUT:-stdout}
+        # Format can be json
+        format: ${WALNUT_LOG_FORMAT:-json}
