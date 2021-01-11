@@ -38,7 +38,7 @@ func TestIntegrationEtcd(t *testing.T) {
 
 	g.Describe("#Connect", func() {
 		g.It("It should connect to etcd server", func() {
-			g.Assert(db.Connect()).Equal(nil)
+			g.Assert(db.Connect(0)).Equal(nil)
 		})
 	})
 

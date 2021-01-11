@@ -29,7 +29,7 @@ func TestIntegrationOptionMethods(t *testing.T) {
 	g := goblin.Goblin(t)
 
 	db := driver.NewEtcdDriver()
-	db.Connect()
+	db.Connect(0)
 
 	defer db.Close()
 

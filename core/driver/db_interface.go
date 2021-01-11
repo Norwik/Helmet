@@ -10,7 +10,7 @@ import (
 
 // Database interface
 type Database interface {
-	Connect() error
+	Connect(timeout int) error
 	IsConnected() bool
 	Put(key, value string) error
 	PutWithLease(key, value string, leaseID clientv3.LeaseID) error

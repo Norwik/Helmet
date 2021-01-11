@@ -15,8 +15,8 @@ type EtcdMock struct {
 }
 
 // Connect mock
-func (e *EtcdMock) Connect() error {
-	args := e.Called()
+func (e *EtcdMock) Connect(timeout int) error {
+	args := e.Called(timeout)
 	return args.Error(0)
 }
 
