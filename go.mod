@@ -8,9 +8,10 @@ require (
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/franela/goblin v0.0.0-20210113153425-413781f5e6c8
 	github.com/gin-gonic/gin v1.7.2
-	github.com/go-redis/redis v6.15.9+incompatible // indirect
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/google/uuid v1.2.0 // indirect
 	github.com/markbates/pkger v0.17.1
+	github.com/onsi/gomega v1.14.0 // indirect
 	github.com/prometheus/client_golang v1.11.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.8.1
