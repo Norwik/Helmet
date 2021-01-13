@@ -19,6 +19,9 @@ const (
 	StateClosed State = iota
 	StateHalfOpen
 	StateOpen
+
+	defaultInterval = time.Duration(0) * time.Second
+	defaultTimeout = time.Duration(60) * time.Second
 )
 
 var (
@@ -188,9 +191,6 @@ func NewTwoStepCircuitBreaker(st Settings) *TwoStepCircuitBreaker {
 	}
 }
 
-const defaultInterval = time.Duration(0) * time.Second
-const defaultTimeout = time.Duration(60) * time.Second
-
 func defaultReadyToTrip(counts Counts) bool {
 	return counts.ConsecutiveFailures > 5
 }
@@ -207,16 +207,20 @@ func (cb *CircuitBreaker) Name() string {
 // State returns the current state of the CircuitBreaker.
 func (cb *CircuitBreaker) State() State {
 	cb.mutex.Lock()
+
 	defer cb.mutex.Unlock()
 
 	now := time.Now()
+
 	state, _ := cb.currentState(now)
+
 	return state
 }
 
 // Counts returns internal counters
 func (cb *CircuitBreaker) Counts() Counts {
 	cb.mutex.Lock()
+
 	defer cb.mutex.Unlock()
 
 	return cb.counts
@@ -229,6 +233,7 @@ func (cb *CircuitBreaker) Counts() Counts {
 // and causes the same panic again.
 func (cb *CircuitBreaker) Execute(req func() (interface{}, error)) (interface{}, error) {
 	generation, err := cb.beforeRequest()
+
 	if err != nil {
 		return nil, err
 	}
@@ -242,7 +247,9 @@ func (cb *CircuitBreaker) Execute(req func() (interface{}, error)) (interface{},
 	}()
 
 	result, err := req()
+
 	cb.afterRequest(generation, cb.isSuccessful(err))
+
 	return result, err
 }
 
@@ -266,6 +273,7 @@ func (tscb *TwoStepCircuitBreaker) Counts() Counts {
 // requests, it returns an error.
 func (tscb *TwoStepCircuitBreaker) Allow() (done func(success bool), err error) {
 	generation, err := tscb.cb.beforeRequest()
+
 	if err != nil {
 		return nil, err
 	}
@@ -277,9 +285,11 @@ func (tscb *TwoStepCircuitBreaker) Allow() (done func(success bool), err error) 
 
 func (cb *CircuitBreaker) beforeRequest() (uint64, error) {
 	cb.mutex.Lock()
+
 	defer cb.mutex.Unlock()
 
 	now := time.Now()
+
 	state, generation := cb.currentState(now)
 
 	if state == StateOpen {
@@ -289,15 +299,19 @@ func (cb *CircuitBreaker) beforeRequest() (uint64, error) {
 	}
 
 	cb.counts.onRequest()
+
 	return generation, nil
 }
 
 func (cb *CircuitBreaker) afterRequest(before uint64, success bool) {
 	cb.mutex.Lock()
+
 	defer cb.mutex.Unlock()
 
 	now := time.Now()
+
 	state, generation := cb.currentState(now)
+
 	if generation != before {
 		return
 	}
@@ -311,8 +325,10 @@ func (cb *CircuitBreaker) afterRequest(before uint64, success bool) {
 
 func (cb *CircuitBreaker) onSuccess(state State, now time.Time) {
 	switch state {
+
 	case StateClosed:
 		cb.counts.onSuccess()
+
 	case StateHalfOpen:
 		cb.counts.onSuccess()
 		if cb.counts.ConsecutiveSuccesses >= cb.maxRequests {
@@ -323,11 +339,13 @@ func (cb *CircuitBreaker) onSuccess(state State, now time.Time) {
 
 func (cb *CircuitBreaker) onFailure(state State, now time.Time) {
 	switch state {
+
 	case StateClosed:
 		cb.counts.onFailure()
 		if cb.readyToTrip(cb.counts) {
 			cb.setState(StateOpen, now)
 		}
+
 	case StateHalfOpen:
 		cb.setState(StateOpen, now)
 	}
@@ -335,15 +353,18 @@ func (cb *CircuitBreaker) onFailure(state State, now time.Time) {
 
 func (cb *CircuitBreaker) currentState(now time.Time) (State, uint64) {
 	switch cb.state {
+
 	case StateClosed:
 		if !cb.expiry.IsZero() && cb.expiry.Before(now) {
 			cb.toNewGeneration(now)
 		}
+
 	case StateOpen:
 		if cb.expiry.Before(now) {
 			cb.setState(StateHalfOpen, now)
 		}
 	}
+
 	return cb.state, cb.generation
 }
 
@@ -368,14 +389,17 @@ func (cb *CircuitBreaker) toNewGeneration(now time.Time) {
 
 	var zero time.Time
 	switch cb.state {
+
 	case StateClosed:
 		if cb.interval == 0 {
 			cb.expiry = zero
 		} else {
 			cb.expiry = now.Add(cb.interval)
 		}
+
 	case StateOpen:
 		cb.expiry = now.Add(cb.timeout)
+
 	default: // StateHalfOpen
 		cb.expiry = zero
 	}
