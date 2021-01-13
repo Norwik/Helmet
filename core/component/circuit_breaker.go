@@ -21,7 +21,7 @@ const (
 	StateOpen
 
 	defaultInterval = time.Duration(0) * time.Second
-	defaultTimeout = time.Duration(60) * time.Second
+	defaultTimeout  = time.Duration(60) * time.Second
 )
 
 var (
