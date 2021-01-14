@@ -23,6 +23,7 @@ import (
 	"github.com/drone/envsubst"
 	"github.com/gin-gonic/gin"
 	"github.com/markbates/pkger"
+	opentracing "github.com/opentracing/opentracing-go"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -135,13 +136,27 @@ var serverCmd = &cobra.Command{
 		r.Use(middleware.Metric())
 		r.Use(middleware.Auth())
 
+		tracing := component.NewTracingClient(
+			viper.GetString("app.name"),
+		)
+
+		closer := tracing.Init()
+		opentracing.SetGlobalTracer(tracing.GetTracer())
+		defer closer.Close()
+
 		r.GET("/favicon.ico", func(c *gin.Context) {
 			c.String(http.StatusNoContent, "")
 		})
 
 		r.GET("/", controller.Home)
-		r.GET("/_health", controller.Health)
-		r.GET("/_ready", controller.Ready)
+
+		r.GET("/_health", func(c *gin.Context) {
+			controller.Health(c, tracing)
+		})
+
+		r.GET("/_ready", func(c *gin.Context) {
+			controller.Ready(c, tracing)
+		})
 
 		r.GET(
 			viper.GetString("app.metrics.prometheus.endpoint"),

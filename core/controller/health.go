@@ -12,11 +12,12 @@ import (
 	"github.com/clivern/walnut/core/component"
 
 	"github.com/gin-gonic/gin"
+	otlog "github.com/opentracing/opentracing-go/log"
 	log "github.com/sirupsen/logrus"
 )
 
 // Health controller
-func Health(c *gin.Context) {
+func Health(c *gin.Context, tracing *component.Tracing) {
 	profiler := component.NewProfiler(context.Background())
 
 	defer profiler.WithCorrelation(
@@ -26,6 +27,16 @@ func Health(c *gin.Context) {
 		"healthController",
 		component.Info,
 	)
+
+	if tracing.IsEnabled() {
+		span := tracing.GetTracer().StartSpan("api.healthController")
+		span.SetTag("correlation_id", c.Request.Header.Get("X-Correlation-ID"))
+		span.LogFields(
+			otlog.String("status", "ok"),
+		)
+
+		defer span.Finish()
+	}
 
 	log.WithFields(log.Fields{
 		"correlation_id": c.Request.Header.Get("X-Correlation-ID"),

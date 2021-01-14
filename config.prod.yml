@@ -1,5 +1,7 @@
 # App configs
 app:
+    # App name
+    name: ${WALNUT_APP_NAME:-walnut}
     # Env mode (dev or prod)
     mode: ${WALNUT_APP_MODE:-prod}
     # HTTP port
@@ -46,6 +48,26 @@ app:
             endpoints: ${WALNUT_DB_ETCD_ENDPOINTS:-http://127.0.0.1:2379}
             # Timeout in seconds
             timeout: 30
+
+    # Components Configs
+    component:
+        # Tracing Component
+        tracing:
+            # Status on or off
+            status: ${WALNUT_TRACING_STATUS:-on}
+            # Tracing driver, jaeger supported so far
+            driver: ${WALNUT_TRACING_DRIVER:-jaeger}
+            # Tracing backend URL
+            collectorEndpoint: ${WALNUT_TRACING_ENDPOINT:-http://jaeger.local:14268/api/traces}
+            # Batch Size
+            queueSize: ${WALNUT_TRACING_QUEUE_SIZE:-20}
+
+        # Profiler Component
+        profiler:
+            # Profiler Status
+            status: ${WALNUT_PROFILER_STATUS:-on}
+            # Profiler Driver
+            driver: ${WALNUT_PROFILER_DRIVER:-log}
 
     # Log configs
     log:

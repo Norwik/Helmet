@@ -13,20 +13,30 @@ import (
 	"github.com/clivern/walnut/core/driver"
 
 	"github.com/gin-gonic/gin"
+	opentracing "github.com/opentracing/opentracing-go"
+	otlog "github.com/opentracing/opentracing-go/log"
 	log "github.com/sirupsen/logrus"
 )
 
 // Ready controller
-func Ready(c *gin.Context) {
+func Ready(c *gin.Context, tracing *component.Tracing) {
+	var span opentracing.Span
+
 	profiler := component.NewProfiler(context.Background())
 
 	defer profiler.WithCorrelation(
 		c.Request.Header.Get("X-Correlation-ID"),
 	).LogDuration(
 		time.Now(),
-		"healthController",
+		"readyController",
 		component.Info,
 	)
+
+	if tracing.IsEnabled() {
+		span = tracing.GetTracer().StartSpan("api.readyController")
+		span.SetTag("correlation_id", c.Request.Header.Get("X-Correlation-ID"))
+		defer span.Finish()
+	}
 
 	db := driver.NewEtcdDriver()
 
@@ -37,6 +47,12 @@ func Ready(c *gin.Context) {
 			"correlation_id": c.Request.Header.Get("X-Correlation-ID"),
 			"status":         "NotOk",
 		}).Info(`Ready check`)
+
+		if tracing.IsEnabled() {
+			span.LogFields(
+				otlog.String("status", "not_ok"),
+			)
+		}
 
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": "NotOk",
@@ -55,11 +71,23 @@ func Ready(c *gin.Context) {
 			"status":         "NotOk",
 		}).Info(`Ready check`)
 
+		if tracing.IsEnabled() {
+			span.LogFields(
+				otlog.String("status", "not_ok"),
+			)
+		}
+
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": "NotOk",
 		})
 
 		return
+	}
+
+	if tracing.IsEnabled() {
+		span.LogFields(
+			otlog.String("status", "ok"),
+		)
 	}
 
 	log.WithFields(log.Fields{
