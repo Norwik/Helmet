@@ -148,7 +148,9 @@ var serverCmd = &cobra.Command{
 			c.String(http.StatusNoContent, "")
 		})
 
-		r.GET("/", controller.Home)
+		r.GET("/_ui", func(c *gin.Context) {
+			controller.Dashboard(c, tracing)
+		})
 
 		r.GET("/_health", func(c *gin.Context) {
 			controller.Health(c, tracing)
@@ -157,6 +159,12 @@ var serverCmd = &cobra.Command{
 		r.GET("/_ready", func(c *gin.Context) {
 			controller.Ready(c, tracing)
 		})
+
+		/*
+			r.Any("/", func(c *gin.Context) {
+				controller.Home(c, tracing)
+			})
+		*/
 
 		r.GET(
 			viper.GetString("app.metrics.prometheus.endpoint"),

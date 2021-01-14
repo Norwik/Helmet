@@ -22,7 +22,7 @@ func Auth(c *gin.Context) {
 		c.Request.Header.Get("X-Correlation-ID"),
 	).LogDuration(
 		time.Now(),
-		"healthController",
+		"authController",
 		component.Info,
 	)
 
