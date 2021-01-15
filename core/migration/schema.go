@@ -6,7 +6,6 @@ package migration
 
 import (
 	"encoding/json"
-	"time"
 
 	"github.com/jinzhu/gorm"
 )
@@ -31,9 +30,6 @@ type Option struct {
 
 	Key   string `json:"key"`
 	Value string `json:"value"`
-
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadFromJSON update object from json
@@ -64,9 +60,6 @@ type AuthMethod struct {
 
 	Type string `json:"type"`
 	UUID string `json:"uuid"`
-
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadFromJSON update object from json
@@ -97,9 +90,6 @@ type AuthData struct {
 
 	APIKey     string `json:"api_key"`
 	MethodUUID string `json:"method_uuid"`
-
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadFromJSON update object from json

@@ -17,6 +17,7 @@ import (
 
 	"github.com/clivern/walnut/core/component"
 	"github.com/clivern/walnut/core/controller"
+	"github.com/clivern/walnut/core/module"
 
 	"github.com/drone/envsubst"
 	"github.com/labstack/echo-contrib/prometheus"
@@ -118,6 +119,23 @@ var serverCmd = &cobra.Command{
 			log.SetFormatter(&log.TextFormatter{})
 		}
 
+		// Init DB Connection
+		db := module.Database{}
+		err = db.AutoConnect()
+
+		if err != nil {
+			panic(err.Error())
+		}
+
+		// Migrate Database
+		success := db.Migrate()
+
+		if !success {
+			panic("Error! Unable to migrate database tables.")
+		}
+
+		defer db.Close()
+
 		e := echo.New()
 
 		if viper.GetString("app.mode") == "dev" {
@@ -135,6 +153,7 @@ var serverCmd = &cobra.Command{
 		})
 
 		e.GET("/_health", controller.Health)
+		e.Any("/*", controller.Home)
 
 		var runerr error
 

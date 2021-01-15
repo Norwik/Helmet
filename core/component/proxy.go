@@ -5,7 +5,6 @@
 package component
 
 import (
-	"context"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -13,24 +12,18 @@ import (
 
 // Proxy type
 type Proxy struct {
-	ctx context.Context
-
 	Upstream string
-
-	CorralationID string
 
 	HTTPRequest *http.Request
 	HTTPWriter  http.ResponseWriter
 }
 
 // NewProxy creates a new instance
-func NewProxy(ctx context.Context, httpRequest *http.Request, httpWriter http.ResponseWriter, upstream, corralationID string) *Proxy {
+func NewProxy(httpRequest *http.Request, httpWriter http.ResponseWriter, upstream string) *Proxy {
 	return &Proxy{
-		ctx:           ctx,
-		CorralationID: corralationID,
-		Upstream:      upstream,
-		HTTPRequest:   httpRequest,
-		HTTPWriter:    httpWriter,
+		Upstream:    upstream,
+		HTTPRequest: httpRequest,
+		HTTPWriter:  httpWriter,
 	}
 }
 
@@ -39,9 +32,8 @@ func (p *Proxy) Redirect() {
 	origin, _ := url.Parse(p.Upstream)
 
 	director := func(req *http.Request) {
-		req.Header.Add("X-Forwarded-Host", req.Host)
-		req.Header.Add("X-Origin-Host", origin.Host)
-		req.Header.Add("X-Correlation-ID", p.CorralationID)
+		req.Header.Add("X-Forwarded-Host", origin.Host)
+		req.Header.Add("X-Origin-Host", req.Host)
 		req.URL.Scheme = origin.Scheme
 		req.URL.Host = origin.Host
 		req.URL.Path = origin.Path

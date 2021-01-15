@@ -5,22 +5,20 @@
 package controller
 
 import (
-	"context"
-
 	"github.com/clivern/walnut/core/component"
 
 	"github.com/labstack/echo/v4"
 )
 
 // Home controller
-func Home(c echo.Context) {
+func Home(c echo.Context) error {
 	proxy := component.NewProxy(
-		context.Background(),
 		c.Request(),
 		c.Response().Writer,
-		"http://127.0.0.1:8000/_health?v=23&fg=34&ok=372he",
-		c.Request().Header.Get("X-Correlation-ID"),
+		"https://httpbin.org/headers",
 	)
 
 	proxy.Redirect()
+
+	return nil
 }

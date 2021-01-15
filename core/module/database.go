@@ -124,3 +124,8 @@ func (db *Database) Rollback() bool {
 func (db *Database) HasTable(table string) bool {
 	return db.Connection.HasTable(table)
 }
+
+// Close closes MySQL database connection
+func (db *Database) Close() error {
+	return db.Connection.Close()
+}
