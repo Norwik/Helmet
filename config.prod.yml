@@ -11,7 +11,7 @@ app:
     # TLS configs
     tls:
         status: ${WALNUT_API_TLS_STATUS:-off}
-        pemPath: ${WALNUT_API_TLS_PEMPATH:-cert/server.pem}
+        crtPath: ${WALNUT_API_TLS_PEMPATH:-cert/server.crt}
         keyPath: ${WALNUT_API_TLS_KEYPATH:-cert/server.key}
 
     # API Configs
@@ -29,25 +29,22 @@ app:
     metrics:
         prometheus:
             # Route for the metrics endpoint
-            endpoint: ${WALNUT_METRICS_PROM_ENDPOINT:-/metrics}
+            endpoint: ${WALNUT_METRICS_PROM_ENDPOINT:-/_metrics}
 
     # Application Database
     database:
-        # Database driver
-        driver: ${WALNUT_DB_DRIVER:-etcd}
-
-        # Etcd Configs
-        etcd:
-            # Etcd database name or prefix
-            databaseName: ${WALNUT_DB_ETCD_DB:-walnut}
-            # Etcd username
-            username: ${WALNUT_DB_ETCD_USERNAME:- }
-            # Etcd password
-            password: ${WALNUT_DB_ETCD_PASSWORD:- }
-            # Etcd endpoints
-            endpoints: ${WALNUT_DB_ETCD_ENDPOINTS:-http://127.0.0.1:2379}
-            # Timeout in seconds
-            timeout: 30
+        # Database driver (sqlite3, mysql)
+        driver: ${BEETLE_DATABASE_DRIVER:-sqlite3}
+        # Database Host
+        host: ${BEETLE_DATABASE_MYSQL_HOST:-localhost}
+        # Database Port
+        port: ${BEETLE_DATABASE_MYSQL_PORT:-3306}
+        # Database Name
+        name: ${BEETLE_DATABASE_MYSQL_DATABASE:-walnut.db}
+        # Database Username
+        username: ${BEETLE_DATABASE_MYSQL_USERNAME:-root}
+        # Database Password
+        password: ${BEETLE_DATABASE_MYSQL_PASSWORD:-root}
 
     # Components Configs
     component:

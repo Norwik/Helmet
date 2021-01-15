@@ -11,7 +11,7 @@ app:
     # TLS configs
     tls:
         status: ${WALNUT_API_TLS_STATUS:-off}
-        pemPath: ${WALNUT_API_TLS_PEMPATH:-cert/server.pem}
+        crtPath: ${WALNUT_API_TLS_PEMPATH:-cert/server.crt}
         keyPath: ${WALNUT_API_TLS_KEYPATH:-cert/server.key}
 
     # API Configs
@@ -29,32 +29,29 @@ app:
     metrics:
         prometheus:
             # Route for the metrics endpoint
-            endpoint: ${WALNUT_METRICS_PROM_ENDPOINT:-/metrics}
+            endpoint: ${WALNUT_METRICS_PROM_ENDPOINT:-/_metrics}
 
     # Application Database
     database:
-        # Database driver
-        driver: ${WALNUT_DB_DRIVER:-etcd}
-
-        # Etcd Configs
-        etcd:
-            # Etcd database name or prefix
-            databaseName: ${WALNUT_DB_ETCD_DB:-walnut}
-            # Etcd username
-            username: ${WALNUT_DB_ETCD_USERNAME:- }
-            # Etcd password
-            password: ${WALNUT_DB_ETCD_PASSWORD:- }
-            # Etcd endpoints
-            endpoints: ${WALNUT_DB_ETCD_ENDPOINTS:-http://127.0.0.1:2379}
-            # Timeout in seconds
-            timeout: 30
+        # Database driver (sqlite3, mysql)
+        driver: ${BEETLE_DATABASE_DRIVER:-sqlite3}
+        # Database Host
+        host: ${BEETLE_DATABASE_MYSQL_HOST:-localhost}
+        # Database Port
+        port: ${BEETLE_DATABASE_MYSQL_PORT:-3306}
+        # Database Name
+        name: ${BEETLE_DATABASE_MYSQL_DATABASE:-walnut.db}
+        # Database Username
+        username: ${BEETLE_DATABASE_MYSQL_USERNAME:-root}
+        # Database Password
+        password: ${BEETLE_DATABASE_MYSQL_PASSWORD:-root}
 
     # Components Configs
     component:
         # Tracing Component
         tracing:
             # Status on or off
-            status: ${WALNUT_TRACING_STATUS:-on}
+            status: ${WALNUT_TRACING_STATUS:-off}
             # Tracing driver, jaeger supported so far
             driver: ${WALNUT_TRACING_DRIVER:-jaeger}
             # Tracing backend URL
@@ -68,6 +65,36 @@ app:
             status: ${WALNUT_PROFILER_STATUS:-on}
             # Profiler Driver
             driver: ${WALNUT_PROFILER_DRIVER:-log}
+
+    # Endpoints Configs
+    endpoints:
+        - name: orders
+          active: true
+          proxy:
+            listen_path: "/orders/v2/*path"
+            upstreams:
+              balancing: roundrobin
+              targets:
+              - target: http://www.mocky.io/v2/595625d22900008702cd71e8
+            methods:
+            - GET
+            # Auth Methods UUIDs
+            authentication:
+            - uuid: 6c68b836-6f8e-465e-b59f-89c1db53afca
+
+        - name: customers
+          active: true
+          proxy:
+            listen_path: "/customer/v3/*"
+            upstreams:
+              balancing: roundrobin
+              targets:
+              - target: http://www.mocky.io/v2/595625d22900008702cd71e8
+            methods:
+            - GET
+            # Auth Methods UUIDs
+            authentication:
+            - uuid: 6c68b836-6f8e-465e-b59f-89c1db53afca
 
     # Log configs
     log:

@@ -76,24 +76,6 @@ app:
             # Route for the metrics endpoint
             endpoint: ${WALNUT_METRICS_PROM_ENDPOINT:-/metrics}
 
-    # Application Database
-    database:
-        # Database driver
-        driver: ${WALNUT_DB_DRIVER:-etcd}
-
-        # Etcd Configs
-        etcd:
-            # Etcd database name or prefix
-            databaseName: ${WALNUT_DB_ETCD_DB:-walnut}
-            # Etcd username
-            username: ${WALNUT_DB_ETCD_USERNAME:- }
-            # Etcd password
-            password: ${WALNUT_DB_ETCD_PASSWORD:- }
-            # Etcd endpoints
-            endpoints: ${WALNUT_DB_ETCD_ENDPOINTS:-http://127.0.0.1:2379}
-            # Timeout in seconds
-            timeout: 30
-
     # Components Configs
     component:
         # Tracing Component
@@ -128,51 +110,6 @@ The run the `walnut` with `systemd`
 
 ```zsh
 $ walnut server -c /path/to/config.yml
-```
-
-#### To run the Admin Dashboard (Development Only):
-
-Clone the project or your own fork:
-
-```zsh
-$ git clone https://github.com/Clivern/Walnut.git
-```
-
-Create the dashboard config file `web/.env` from `web/.env.dist`. Something like the following:
-
-```
-VUE_APP_API_URL=http://localhost:8080
-```
-
-Then you can either build or run the dashboard
-
-```zsh
-# Install npm packages
-$ cd web
-$ npm install
-$ npm install -g npx
-
-# Add api server url to frontend
-$ echo "VUE_APP_API_URL=http://127.0.0.1:8000" > .env
-
-$ cd ..
-
-# Validate js code format
-$ make check_ui_format
-
-# Format UI
-$ make format_ui
-
-# Run Vuejs app
-$ make serve_ui
-
-# Build Vuejs app
-$ make build_ui
-
-# Any changes to the dashboard, must be reflected to cmd/pkged.go
-# You can use these commands to do so
-$ go get github.com/markbates/pkger/cmd/pkger
-$ make package
 ```
 
 

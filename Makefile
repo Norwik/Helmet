@@ -1,10 +1,6 @@
 GO           ?= go
 GOFMT        ?= $(GO)fmt
-NPM          ?= npm
-NPX          ?= npx
-RHINO        ?= rhino
 pkgs          = ./...
-PKGER        ?= pkger
 
 
 help: Makefile
@@ -110,34 +106,6 @@ coverage:
 	go tool cover -html=cover.out -o coverage.html
 
 
-## serve_ui: Serve admin dashboard
-.PHONY: serve_ui
-serve_ui:
-	@echo ">> ============= Run Vuejs App ============= <<"
-	cd web;$(NPM) run serve
-
-
-## build_ui: Builds admin dashboard for production
-.PHONY: build_ui
-build_ui:
-	@echo ">> ============= Build Vuejs App ============= <<"
-	cd web;$(NPM) run build
-
-
-## check_ui_format: Check dashboard code format
-.PHONY: check_ui_format
-check_ui_format:
-	@echo ">> ============= Validate js format ============= <<"
-	cd web;$(NPX) prettier  --check .
-
-
-## format_ui: Format dashboard code
-.PHONY: format_ui
-format_ui:
-	@echo ">> ============= Format js Code ============= <<"
-	cd web;$(NPX) prettier  --write .
-
-
 ## package: Package assets
 .PHONY: package
 package:
@@ -152,7 +120,7 @@ package:
 ## run: Run the API Server
 .PHONY: run
 run:
-	@echo ">> ============= Run Tower ============= <<"
+	@echo ">> ============= Run API Server ============= <<"
 	$(GO) run walnut.go server -c config.dist.yml
 
 

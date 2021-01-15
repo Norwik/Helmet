@@ -9,8 +9,6 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-
-	"github.com/gin-gonic/gin"
 )
 
 // Proxy type
@@ -22,11 +20,11 @@ type Proxy struct {
 	CorralationID string
 
 	HTTPRequest *http.Request
-	HTTPWriter  gin.ResponseWriter
+	HTTPWriter  http.ResponseWriter
 }
 
 // NewProxy creates a new instance
-func NewProxy(ctx context.Context, httpRequest *http.Request, httpWriter gin.ResponseWriter, upstream, corralationID string) *Proxy {
+func NewProxy(ctx context.Context, httpRequest *http.Request, httpWriter http.ResponseWriter, upstream, corralationID string) *Proxy {
 	return &Proxy{
 		ctx:           ctx,
 		CorralationID: corralationID,

@@ -8,7 +8,6 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -18,12 +17,11 @@ import (
 
 	"github.com/clivern/walnut/core/component"
 	"github.com/clivern/walnut/core/controller"
-	"github.com/clivern/walnut/core/middleware"
 
 	"github.com/drone/envsubst"
-	"github.com/gin-gonic/gin"
-	"github.com/markbates/pkger"
-	opentracing "github.com/opentracing/opentracing-go"
+	"github.com/labstack/echo-contrib/prometheus"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -94,13 +92,15 @@ var serverCmd = &cobra.Command{
 			}
 		}
 
+		defaultLogger := middleware.DefaultLoggerConfig
+
 		if viper.GetString("app.log.output") == "stdout" {
-			gin.DefaultWriter = os.Stdout
 			log.SetOutput(os.Stdout)
+			defaultLogger.Output = os.Stdout
 		} else {
 			f, _ := os.Create(viper.GetString("app.log.output"))
-			gin.DefaultWriter = io.MultiWriter(f)
 			log.SetOutput(f)
+			defaultLogger.Output = f
 		}
 
 		lvl := strings.ToLower(viper.GetString("app.log.level"))
@@ -112,82 +112,45 @@ var serverCmd = &cobra.Command{
 
 		log.SetLevel(level)
 
-		if viper.GetString("app.mode") == "prod" {
-			gin.SetMode(gin.ReleaseMode)
-			gin.DefaultWriter = ioutil.Discard
-			gin.DisableConsoleColor()
-		}
-
 		if viper.GetString("app.log.format") == "json" {
 			log.SetFormatter(&log.JSONFormatter{})
 		} else {
 			log.SetFormatter(&log.TextFormatter{})
 		}
 
-		r := gin.Default()
+		e := echo.New()
 
-		// Allow CORS only for development
 		if viper.GetString("app.mode") == "dev" {
-			r.Use(middleware.Cors())
+			e.Debug = true
 		}
 
-		r.Use(middleware.Correlation())
-		r.Use(middleware.Logger())
-		r.Use(middleware.Metric())
-		r.Use(middleware.Auth())
+		e.Use(middleware.LoggerWithConfig(defaultLogger))
+		e.Use(middleware.RequestID())
 
-		tracing := component.NewTracingClient(
-			viper.GetString("app.name"),
-		)
+		p := prometheus.NewPrometheus(viper.GetString("app.name"), nil)
+		p.Use(e)
 
-		closer := tracing.Init()
-		opentracing.SetGlobalTracer(tracing.GetTracer())
-		defer closer.Close()
-
-		r.GET("/favicon.ico", func(c *gin.Context) {
-			c.String(http.StatusNoContent, "")
+		e.GET("/favicon.ico", func(c echo.Context) error {
+			return c.String(http.StatusNoContent, "")
 		})
 
-		r.GET("/_ui", func(c *gin.Context) {
-			controller.Dashboard(c, tracing)
-		})
-
-		r.GET("/_health", func(c *gin.Context) {
-			controller.Health(c, tracing)
-		})
-
-		r.GET("/_ready", func(c *gin.Context) {
-			controller.Ready(c, tracing)
-		})
-
-		/*
-			r.Any("/", func(c *gin.Context) {
-				controller.Home(c, tracing)
-			})
-		*/
-
-		r.GET(
-			viper.GetString("app.metrics.prometheus.endpoint"),
-			gin.WrapH(controller.Metrics()),
-		)
-
-		r.NoRoute(gin.WrapH(http.FileServer(pkger.Dir("/web/dist"))))
+		e.GET("/_health", controller.Health)
 
 		var runerr error
 
 		if viper.GetBool("app.tls.status") {
-			runerr = r.RunTLS(
+			runerr = e.StartTLS(
 				fmt.Sprintf(":%s", strconv.Itoa(viper.GetInt("app.port"))),
-				viper.GetString("app.tls.pemPath"),
+				viper.GetString("app.tls.crtPath"),
 				viper.GetString("app.tls.keyPath"),
 			)
 		} else {
-			runerr = r.Run(
+			runerr = e.Start(
 				fmt.Sprintf(":%s", strconv.Itoa(viper.GetInt("app.port"))),
 			)
 		}
 
-		if runerr != nil {
+		if runerr != nil && runerr != http.ErrServerClosed {
 			panic(runerr.Error())
 		}
 	},

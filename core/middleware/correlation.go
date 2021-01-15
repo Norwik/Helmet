@@ -9,17 +9,28 @@ import (
 
 	"github.com/clivern/walnut/core/component"
 
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo/v4"
 )
 
 // Correlation middleware
-func Correlation() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		corralationID := c.GetHeader("x-correlation-id")
+func Correlation(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		corralationID := c.Request().Header.Get("x-correlation-id")
 
 		if strings.TrimSpace(corralationID) == "" {
-			c.Request.Header.Add("X-Correlation-ID", component.NewCorrelation().UUIDv4())
+			corralationID = component.NewCorrelation().UUIDv4()
+
+			c.Request().Header.Set(
+				"X-Correlation-ID",
+				corralationID,
+			)
 		}
-		c.Next()
+
+		c.Response().Header().Set(
+			"X-Correlation-ID",
+			corralationID,
+		)
+
+		return next(c)
 	}
 }
