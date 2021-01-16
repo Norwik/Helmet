@@ -32,7 +32,7 @@ Walnut is Cloud Native API Gateway that control who accesses your API whether fr
 - Basic, API Key Based and OAuth2 Authentication Support.
 - Multiple Backends Support with Load Balancing, Health Checks.
 - OpenTracing support for Distributed tracing.
-- Runtime Metrics ready for Prometheus.
+- Runtime Metrics exposed for Prometheus.
 - CORS Support.
 - HTTP/2 support.
 - Rate Limiting Support.
