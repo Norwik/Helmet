@@ -160,8 +160,8 @@ var serverCmd = &cobra.Command{
 		if viper.GetBool("app.tls.status") {
 			runerr = e.StartTLS(
 				fmt.Sprintf(":%s", strconv.Itoa(viper.GetInt("app.port"))),
-				viper.GetString("app.tls.crtPath"),
-				viper.GetString("app.tls.keyPath"),
+				viper.GetString("app.tls.crt_path"),
+				viper.GetString("app.tls.key_path"),
 			)
 		} else {
 			runerr = e.Start(

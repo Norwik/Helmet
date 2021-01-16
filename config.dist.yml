@@ -11,19 +11,12 @@ app:
     # TLS configs
     tls:
         status: ${WALNUT_API_TLS_STATUS:-off}
-        crtPath: ${WALNUT_API_TLS_PEMPATH:-cert/server.crt}
-        keyPath: ${WALNUT_API_TLS_KEYPATH:-cert/server.key}
+        crt_path: ${WALNUT_API_TLS_PEMPATH:-cert/server.crt}
+        key_path: ${WALNUT_API_TLS_KEYPATH:-cert/server.key}
 
     # API Configs
     api:
         key: ${WALNUT_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
-
-    # Async Workers
-    workers:
-        # Queue max capacity
-        buffer: ${WALNUT_WORKERS_CHAN_CAPACITY:-5000}
-        # Number of concurrent workers
-        count: ${WALNUT_WORKERS_COUNT:-4}
 
     # Runtime, Requests/Response and Walnut Metrics
     metrics:
@@ -46,26 +39,6 @@ app:
         # Database Password
         password: ${BEETLE_DATABASE_MYSQL_PASSWORD:-root}
 
-    # Components Configs
-    component:
-        # Tracing Component
-        tracing:
-            # Status on or off
-            status: ${WALNUT_TRACING_STATUS:-off}
-            # Tracing driver, jaeger supported so far
-            driver: ${WALNUT_TRACING_DRIVER:-jaeger}
-            # Tracing backend URL
-            collectorEndpoint: ${WALNUT_TRACING_ENDPOINT:-http://jaeger.local:14268/api/traces}
-            # Batch Size
-            queueSize: ${WALNUT_TRACING_QUEUE_SIZE:-20}
-
-        # Profiler Component
-        profiler:
-            # Profiler Status
-            status: ${WALNUT_PROFILER_STATUS:-on}
-            # Profiler Driver
-            driver: ${WALNUT_PROFILER_DRIVER:-log}
-
     # Endpoints Configs
     endpoints:
         - name: orders
@@ -81,6 +54,8 @@ app:
             # Auth Methods UUIDs
             authentication:
             - uuid: 6c68b836-6f8e-465e-b59f-89c1db53afca
+            rate_limit:
+
 
         - name: customers
           active: true
