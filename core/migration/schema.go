@@ -10,18 +10,15 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// AuthenticationType type
-type AuthenticationType int
-
 const (
 	// KeyAuthentication const
-	KeyAuthentication AuthenticationType = iota
+	KeyAuthentication = "key_authentication"
 
 	// BasicAuthentication const
-	BasicAuthentication
+	BasicAuthentication = "basic_authentication"
 
 	// OAuthAuthentication const
-	OAuthAuthentication
+	OAuthAuthentication = "oauth_authentication"
 )
 
 // Option struct
@@ -61,7 +58,6 @@ type AuthMethod struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Type        string `json:"type"`
-	UUID        string `json:"uuid"`
 }
 
 // LoadFromJSON update object from json
@@ -90,10 +86,11 @@ func (a *AuthMethod) ConvertToJSON() (string, error) {
 type KeyBasedAuthData struct {
 	gorm.Model
 
-	Name       string `json:"name"`
-	APIKey     string `json:"api_key"`
-	MethodUUID string `json:"method_uuid"`
-	Meta       string `json:"meta"`
+	Name         string     `json:"name"`
+	APIKey       string     `json:"apiKey"`
+	Meta         string     `json:"meta"`
+	AuthMethodID int        `json:"authMethodID"`
+	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 // LoadFromJSON update object from json

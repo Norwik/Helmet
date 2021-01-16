@@ -25,10 +25,24 @@
 </p>
 <br/>
 
+Walnut is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more. here is some of the key features:
+
+- Manage service to service Authentication and Authorization.
+- Manage user to service Authentication and Authorization.
+- Basic, API Key Based and OAuth2 Authentication Support.
+- Multiple Backends Support with Load Balancing, Health Checks.
+- OpenTracing support for Distributed tracing.
+- Runtime Metrics ready for Prometheus.
+- CORS Support.
+- HTTP/2 support.
+- Rate Limiting Support.
+- Caching Layer to make it even more faster.
+- Lightweight, Easy to Deploy and Operate.
+
 
 ## Documentation
 
-#### Linux Deployment Explained
+#### Linux Deployment
 
 Download [the latest walnut binary](https://github.com/Clivern/Walnut/releases). Make it executable from everywhere.
 

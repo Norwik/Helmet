@@ -17,3 +17,5 @@ dist
 sync
 
 *.db
+
+config.test.yml

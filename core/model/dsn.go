@@ -37,12 +37,12 @@ func (d *DSN) ToString() string {
 }
 
 // LoadFromJSON update object from json
-func (d *DSN) LoadFromJSON(data []byte) (bool, error) {
+func (d *DSN) LoadFromJSON(data []byte) error {
 	err := json.Unmarshal(data, &d)
 	if err != nil {
-		return false, err
+		return err
 	}
-	return true, nil
+	return nil
 }
 
 // ConvertToJSON convert object to json

@@ -152,6 +152,7 @@ var serverCmd = &cobra.Command{
 
 		e.Use(middleware.LoggerWithConfig(defaultLogger))
 		e.Use(middleware.RequestID())
+		e.Use(middleware.BodyLimit("2M"))
 
 		// Protect /_api/v1/* routes
 		e.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{

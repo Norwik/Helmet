@@ -6,6 +6,9 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
+
+	"github.com/clivern/walnut/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
@@ -24,9 +27,19 @@ func Me(c echo.Context) error {
 
 // CreateAuthMethod controller
 func CreateAuthMethod(c echo.Context) error {
-	log.WithFields(log.Fields{
-		"status": "ok",
-	}).Info(`Create auth method`)
+	db := module.Database{}
+
+	err := db.AutoConnect()
+
+	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err.Error(),
+		}).Error(`Failure while connecting database`)
+
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	defer db.Close()
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"status": "ok",
@@ -35,12 +48,43 @@ func CreateAuthMethod(c echo.Context) error {
 
 // GetAuthMethod controller
 func GetAuthMethod(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	db := module.Database{}
+
+	err := db.AutoConnect()
+
+	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err.Error(),
+		}).Error(`Failure while connecting database`)
+
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	defer db.Close()
+
+	authMethod := db.GetAuthMethodByID(id)
+
+	if authMethod.ID < 1 {
+		log.WithFields(log.Fields{
+			"id": id,
+		}).Info(`Auth method not found`)
+
+		return c.NoContent(http.StatusNotFound)
+	}
+
 	log.WithFields(log.Fields{
-		"status": "ok",
-	}).Info(`Get auth method`)
+		"id": id,
+	}).Info(`Get an auth method`)
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "ok",
+		"id":          authMethod.ID,
+		"name":        authMethod.Name,
+		"description": authMethod.Description,
+		"type":        authMethod.Type,
+		"createdAt":   authMethod.CreatedAt,
+		"updatedAt":   authMethod.CreatedAt,
 	})
 }
 
@@ -57,13 +101,39 @@ func GetAuthMethods(c echo.Context) error {
 
 // DeleteAuthMethod controller
 func DeleteAuthMethod(c echo.Context) error {
-	log.WithFields(log.Fields{
-		"status": "ok",
-	}).Info(`Delete auth method`)
+	id, _ := strconv.Atoi(c.Param("id"))
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "ok",
-	})
+	db := module.Database{}
+
+	err := db.AutoConnect()
+
+	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err.Error(),
+		}).Error(`Failure while connecting database`)
+
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	defer db.Close()
+
+	authMethod := db.GetAuthMethodByID(id)
+
+	if authMethod.ID < 1 {
+		log.WithFields(log.Fields{
+			"id": id,
+		}).Info(`Auth method not found`)
+
+		return c.NoContent(http.StatusNotFound)
+	}
+
+	log.WithFields(log.Fields{
+		"id": id,
+	}).Info(`Deleting an auth method`)
+
+	db.DeleteAuthMethodByID(authMethod.ID)
+
+	return c.NoContent(http.StatusNoContent)
 }
 
 // UpdateAuthMethod controller
