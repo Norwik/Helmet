@@ -58,8 +58,10 @@ func (o *Option) ConvertToJSON() (string, error) {
 type AuthMethod struct {
 	gorm.Model
 
-	Type string `json:"type"`
-	UUID string `json:"uuid"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Type        string `json:"type"`
+	UUID        string `json:"uuid"`
 }
 
 // LoadFromJSON update object from json
@@ -84,16 +86,18 @@ func (a *AuthMethod) ConvertToJSON() (string, error) {
 	return string(data), nil
 }
 
-// AuthData struct
-type AuthData struct {
+// KeyBasedAuthData struct
+type KeyBasedAuthData struct {
 	gorm.Model
 
+	Name       string `json:"name"`
 	APIKey     string `json:"api_key"`
 	MethodUUID string `json:"method_uuid"`
+	Meta       string `json:"meta"`
 }
 
 // LoadFromJSON update object from json
-func (a *AuthData) LoadFromJSON(data []byte) error {
+func (a *KeyBasedAuthData) LoadFromJSON(data []byte) error {
 	err := json.Unmarshal(data, &a)
 
 	if err != nil {
@@ -104,7 +108,7 @@ func (a *AuthData) LoadFromJSON(data []byte) error {
 }
 
 // ConvertToJSON convert object to json
-func (a *AuthData) ConvertToJSON() (string, error) {
+func (a *KeyBasedAuthData) ConvertToJSON() (string, error) {
 	data, err := json.Marshal(&a)
 
 	if err != nil {

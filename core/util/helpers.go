@@ -38,6 +38,7 @@ func Unset(a []string, i int) []string {
 // LoadFromJSON update object from json
 func LoadFromJSON(item interface{}, data []byte) error {
 	err := json.Unmarshal(data, &item)
+
 	if err != nil {
 		return err
 	}
@@ -48,9 +49,11 @@ func LoadFromJSON(item interface{}, data []byte) error {
 // ConvertToJSON convert object to json
 func ConvertToJSON(item interface{}) (string, error) {
 	data, err := json.Marshal(&item)
+
 	if err != nil {
 		return "", err
 	}
+
 	return string(data), nil
 }
 

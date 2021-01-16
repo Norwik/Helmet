@@ -54,25 +54,16 @@ app:
               - target: http://www.mocky.io/v2/595625d22900008702cd71e8
             methods:
             - GET
-            # Auth Methods UUIDs
             authentication:
-            - uuid: 6c68b836-6f8e-465e-b59f-89c1db53afca
+                status: off
+                methods:
+                    -
+                        uuid: 6c68b836-6f8e-465e-b59f-89c1db53afca
             rate_limit:
+                status: off
 
-
-        - name: customers
-          active: true
-          proxy:
-            listen_path: "/customer/v3/*"
-            upstreams:
-              balancing: roundrobin
-              targets:
-              - target: http://www.mocky.io/v2/595625d22900008702cd71e8
-            methods:
-            - GET
-            # Auth Methods UUIDs
-            authentication:
-            - uuid: 6c68b836-6f8e-465e-b59f-89c1db53afca
+            circuit_breaker:
+                status: off
 
     # Log configs
     log:
