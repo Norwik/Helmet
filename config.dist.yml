@@ -14,6 +14,9 @@ app:
         crt_path: ${WALNUT_API_TLS_PEMPATH:-cert/server.crt}
         key_path: ${WALNUT_API_TLS_KEYPATH:-cert/server.key}
 
+    # Global timeout
+    timeout: ${WALNUT_API_TIMEOUT:-50}
+
     # API Configs
     api:
         key: ${WALNUT_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}

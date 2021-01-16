@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/clivern/walnut/core/component"
 	"github.com/clivern/walnut/core/controller"
@@ -145,6 +146,10 @@ var serverCmd = &cobra.Command{
 		e.Use(middleware.LoggerWithConfig(defaultLogger))
 		e.Use(middleware.RequestID())
 
+		e.Use(middleware.TimeoutWithConfig(middleware.TimeoutConfig{
+			Timeout: time.Duration(viper.GetInt("app.timeout")) * time.Second,
+		}))
+
 		p := prometheus.NewPrometheus(viper.GetString("app.name"), nil)
 		p.Use(e)
 
@@ -153,7 +158,7 @@ var serverCmd = &cobra.Command{
 		})
 
 		e.GET("/_health", controller.Health)
-		e.Any("/*", controller.Home)
+		e.Any("/*remote", controller.Home)
 
 		var runerr error
 
