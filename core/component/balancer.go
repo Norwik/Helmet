@@ -92,7 +92,9 @@ func (b *CommonBalancer) RemoveTarget(url string) bool {
 // Next randomly returns an upstream target.
 func (b *RandomBalancer) Next() *Target {
 	if b.random == nil {
-		b.random = rand.New(rand.NewSource(int64(time.Now().Nanosecond())))
+		b.random = rand.New(rand.NewSource(
+			int64(time.Now().Nanosecond()),
+		))
 	}
 
 	b.mutex.RLock()
