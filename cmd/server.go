@@ -137,6 +137,8 @@ var serverCmd = &cobra.Command{
 
 		defer db.Close()
 
+		viper.SetDefault("config", config)
+
 		e := echo.New()
 
 		if viper.GetString("app.mode") == "dev" {
