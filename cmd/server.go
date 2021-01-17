@@ -16,9 +16,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/clivern/walnut/core/component"
-	"github.com/clivern/walnut/core/controller"
-	"github.com/clivern/walnut/core/module"
+	"github.com/clivern/drifter/core/component"
+	"github.com/clivern/drifter/core/controller"
+	"github.com/clivern/drifter/core/module"
 
 	"github.com/drone/envsubst"
 	"github.com/labstack/echo-contrib/prometheus"
@@ -31,7 +31,7 @@ import (
 
 var serverCmd = &cobra.Command{
 	Use:   "server",
-	Short: "Start walnut server",
+	Short: "Start drifter server",
 	Run: func(cmd *cobra.Command, args []string) {
 		configUnparsed, err := ioutil.ReadFile(config)
 
@@ -145,7 +145,7 @@ var serverCmd = &cobra.Command{
 
 		e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 			return func(c echo.Context) error {
-				cc := &controller.WalnutContext{Context: c}
+				cc := &controller.DrifterContext{Context: c}
 				return next(cc)
 			}
 		})

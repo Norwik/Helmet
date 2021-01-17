@@ -5,7 +5,7 @@
 package controller
 
 import (
-	"github.com/clivern/walnut/core/component"
+	"github.com/clivern/drifter/core/component"
 
 	"github.com/labstack/echo/v4"
 )

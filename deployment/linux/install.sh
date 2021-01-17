@@ -68,39 +68,39 @@ WantedBy=multi-user.target" > /etc/systemd/system/etcd.service
     echo "etcd installation done!"
 }
 
-function walnut {
-    echo "Installing walnut ..."
+function drifter {
+    echo "Installing drifter ..."
 
     apt-get install jq -y
 
-    mkdir -p /etc/walnut/storage
+    mkdir -p /etc/drifter/storage
 
-    cd /etc/walnut
+    cd /etc/drifter
 
-    WALNUT_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Clivern/Walnut/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
+    DRIFTER_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Clivern/Drifter/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
 
-    curl -sL https://github.com/Clivern/Walnut/releases/download/v{$WALNUT_LATEST_VERSION}/walnut_{$WALNUT_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
+    curl -sL https://github.com/Clivern/Drifter/releases/download/v{$DRIFTER_LATEST_VERSION}/drifter_{$DRIFTER_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
 
 
     echo "[Unit]
-Description=Walnut
-Documentation=https://github.com/clivern/walnut
+Description=Drifter
+Documentation=https://github.com/clivern/drifter
 
 [Service]
-ExecStart=/etc/walnut/walnut api -c /etc/walnut/config.prod.yml
+ExecStart=/etc/drifter/drifter api -c /etc/drifter/config.prod.yml
 Restart=on-failure
 RestartSec=2
 
 [Install]
-WantedBy=multi-user.target" > /etc/systemd/system/walnut.service
+WantedBy=multi-user.target" > /etc/systemd/system/drifter.service
 
     systemctl daemon-reload
-    systemctl start walnut.service
+    systemctl start drifter.service
 
-    echo "walnut installation done!"
+    echo "drifter installation done!"
 }
 
 docker
 docker_compose
 etcd
-walnut
+drifter

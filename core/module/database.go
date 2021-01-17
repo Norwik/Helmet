@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/clivern/walnut/core/migration"
-	"github.com/clivern/walnut/core/model"
+	"github.com/clivern/drifter/core/migration"
+	"github.com/clivern/drifter/core/model"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"

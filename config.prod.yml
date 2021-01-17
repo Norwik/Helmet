@@ -1,28 +1,28 @@
 # App configs
 app:
     # App name
-    name: ${WALNUT_APP_NAME:-walnut}
+    name: ${DRIFTER_APP_NAME:-drifter}
     # Env mode (dev or prod)
-    mode: ${WALNUT_APP_MODE:-prod}
+    mode: ${DRIFTER_APP_MODE:-prod}
     # HTTP port
-    port: ${WALNUT_API_PORT:-80}
+    port: ${DRIFTER_API_PORT:-80}
     # Hostname
-    hostname: ${WALNUT_API_HOSTNAME:-127.0.0.1}
+    hostname: ${DRIFTER_API_HOSTNAME:-127.0.0.1}
     # TLS configs
     tls:
-        status: ${WALNUT_API_TLS_STATUS:-off}
-        crt_path: ${WALNUT_API_TLS_PEMPATH:-cert/server.crt}
-        key_path: ${WALNUT_API_TLS_KEYPATH:-cert/server.key}
+        status: ${DRIFTER_API_TLS_STATUS:-off}
+        crt_path: ${DRIFTER_API_TLS_PEMPATH:-cert/server.crt}
+        key_path: ${DRIFTER_API_TLS_KEYPATH:-cert/server.key}
 
     # API Configs
     api:
-        key: ${WALNUT_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
+        key: ${DRIFTER_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
 
-    # Runtime, Requests/Response and Walnut Metrics
+    # Runtime, Requests/Response and Drifter Metrics
     metrics:
         prometheus:
             # Route for the metrics endpoint
-            endpoint: ${WALNUT_METRICS_PROM_ENDPOINT:-/_metrics}
+            endpoint: ${DRIFTER_METRICS_PROM_ENDPOINT:-/_metrics}
 
     # Application Database
     database:
@@ -33,17 +33,40 @@ app:
         # Database Port
         port: ${BEETLE_DATABASE_MYSQL_PORT:-3306}
         # Database Name
-        name: ${BEETLE_DATABASE_MYSQL_DATABASE:-walnut.db}
+        name: ${BEETLE_DATABASE_MYSQL_DATABASE:-drifter.db}
         # Database Username
         username: ${BEETLE_DATABASE_MYSQL_USERNAME:-root}
         # Database Password
         password: ${BEETLE_DATABASE_MYSQL_PASSWORD:-root}
 
+    # Endpoints Configs
+    endpoints:
+        - name: orders
+          active: true
+          proxy:
+            listen_path: "/orders/v2/*"
+            upstreams:
+              balancing: roundrobin
+              targets:
+              - target: http://www.mocky.io/v2/595625d22900008702cd71e8
+            methods:
+            - GET
+            authentication:
+                status: off
+                methods:
+                    -
+                        id: 1
+            rate_limit:
+                status: off
+
+            circuit_breaker:
+                status: off
+
     # Log configs
     log:
         # Log level, it can be debug, info, warn, error, panic, fatal
-        level: ${WALNUT_LOG_LEVEL:-info}
-        # Output can be stdout or abs path to log file /var/logs/walnut.log
-        output: ${WALNUT_LOG_OUTPUT:-stdout}
+        level: ${DRIFTER_LOG_LEVEL:-info}
+        # Output can be stdout or abs path to log file /var/logs/drifter.log
+        output: ${DRIFTER_LOG_OUTPUT:-stdout}
         # Format can be json
-        format: ${WALNUT_LOG_FORMAT:-json}
+        format: ${DRIFTER_LOG_FORMAT:-json}

@@ -5,8 +5,8 @@
 package module
 
 import (
-	"github.com/clivern/walnut/core/migration"
-	"github.com/clivern/walnut/core/model"
+	"github.com/clivern/drifter/core/migration"
+	"github.com/clivern/drifter/core/model"
 )
 
 // CreateKeyBasedAuthData creates a new entity

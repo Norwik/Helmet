@@ -1,21 +1,21 @@
 #!/bin/bash
 
-function walnut {
-    echo "Upgrade walnut ..."
+function drifter {
+    echo "Upgrade drifter ..."
 
-    cd /etc/walnut
+    cd /etc/drifter
     mv config.prod.yml config.back.yml
 
-    WALNUT_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Clivern/Walnut/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
+    DRIFTER_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Clivern/Drifter/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
 
-    curl -sL https://github.com/Clivern/Walnut/releases/download/v{$WALNUT_LATEST_VERSION}/walnut_{$WALNUT_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
+    curl -sL https://github.com/Clivern/Drifter/releases/download/v{$DRIFTER_LATEST_VERSION}/drifter_{$DRIFTER_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
 
     rm config.prod.yml
     mv config.back.yml config.prod.yml
 
-    systemctl restart walnut
+    systemctl restart drifter
 
-    echo "walnut upgrade done!"
+    echo "drifter upgrade done!"
 }
 
-walnut
+drifter

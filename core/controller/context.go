@@ -8,12 +8,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// WalnutContext type
-type WalnutContext struct {
+// DrifterContext type
+type DrifterContext struct {
 	echo.Context
 }
 
 // Foo returns foo
-func (c *WalnutContext) Foo() string {
+func (c *DrifterContext) Foo() string {
 	return "foo"
 }

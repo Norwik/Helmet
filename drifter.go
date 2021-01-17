@@ -5,7 +5,7 @@
 package main
 
 import (
-	"github.com/clivern/walnut/cmd"
+	"github.com/clivern/drifter/cmd"
 )
 
 var (

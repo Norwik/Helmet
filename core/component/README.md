@@ -9,7 +9,7 @@ import (
     "net/http"
     "time"
 
-    "github.com/clivern/walnut/core/component"
+    "github.com/clivern/drifter/core/component"
 )
 
 var cb *component.CircuitBreaker

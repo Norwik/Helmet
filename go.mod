@@ -1,4 +1,4 @@
-module github.com/clivern/walnut
+module github.com/clivern/drifter
 
 go 1.16
 
