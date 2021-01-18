@@ -16,7 +16,15 @@ func (db *Database) CreateKeyBasedAuthData(keyBasedAuthData *model.KeyBasedAuthD
 	return keyBasedAuthData
 }
 
-// GetKeyBasedAuthDataByAPIKey gets an entity by uuid
+// GetKeyBasedAuthDataByID gets an entity by uuid
+func (db *Database) GetKeyBasedAuthDataByID(id int) model.KeyBasedAuthData {
+	keyBasedAuthData := model.KeyBasedAuthData{}
+	db.Connection.Where("id = ?", id).First(&keyBasedAuthData)
+
+	return keyBasedAuthData
+}
+
+// GetKeyBasedAuthDataByAPIKey gets an entity by api key
 func (db *Database) GetKeyBasedAuthDataByAPIKey(apiKey string) model.KeyBasedAuthData {
 	keyBasedAuthData := model.KeyBasedAuthData{}
 	db.Connection.Where("api_key = ?", apiKey).First(&keyBasedAuthData)

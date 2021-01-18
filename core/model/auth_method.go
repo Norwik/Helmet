@@ -6,16 +6,21 @@ package model
 
 import (
 	"encoding/json"
+	"fmt"
+	"strings"
 	"time"
+
+	"github.com/clivern/drifter/core/migration"
+	"github.com/clivern/drifter/core/util"
 )
 
 // AuthMethod struct
 type AuthMethod struct {
 	ID int `json:"id"`
 
-	Name        string `json:"name" validate:"required"`
+	Name        string `json:"name"`
 	Description string `json:"description"`
-	Type        string `json:"type" validate:"required"`
+	Type        string `json:"type"`
 
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -46,6 +51,25 @@ func (a *AuthMethod) ConvertToJSON() (string, error) {
 	}
 
 	return string(data), nil
+}
+
+// Validate validates a request payload
+func (a *AuthMethod) Validate() error {
+	lst := []string{
+		migration.KeyAuthentication,
+		migration.BasicAuthentication,
+		migration.OAuthAuthentication,
+	}
+
+	if !util.InArray(a.Type, lst) {
+		return fmt.Errorf("Auth method type %s is invalid", a.Type)
+	}
+
+	if strings.TrimSpace(a.Name) == "" {
+		return fmt.Errorf("Auth method name is required")
+	}
+
+	return nil
 }
 
 // LoadFromJSON update object from json

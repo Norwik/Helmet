@@ -16,6 +16,13 @@ func (db *Database) CreateAuthMethod(authMethod *model.AuthMethod) *model.AuthMe
 	return authMethod
 }
 
+// UpdateAuthMethodByID updates an entity by ID
+func (db *Database) UpdateAuthMethodByID(authMethod *model.AuthMethod) *model.AuthMethod {
+	db.Connection.Save(&authMethod)
+
+	return authMethod
+}
+
 // GetAuthMethodByID gets an entity by uuid
 func (db *Database) GetAuthMethodByID(id int) model.AuthMethod {
 	authMethod := model.AuthMethod{}

@@ -6,6 +6,8 @@ package model
 
 import (
 	"encoding/json"
+	"fmt"
+	"strings"
 	"time"
 )
 
@@ -13,10 +15,10 @@ import (
 type KeyBasedAuthData struct {
 	ID int `json:"id"`
 
-	Name         string `json:"name" validate:"required"`
-	APIKey       string `json:"apiKey" validate:"required"`
-	Meta         string `json:"meta"`
-	AuthMethodID int    `json:"authMethodID"`
+	Name         string            `json:"name"`
+	APIKey       string            `json:"apiKey"`
+	Meta         map[string]string `json:"meta"`
+	AuthMethodID int               `json:"authMethodID"`
 
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -33,6 +35,23 @@ func (k *KeyBasedAuthData) LoadFromJSON(data []byte) error {
 
 	if err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// Validate validates a request payload
+func (k *KeyBasedAuthData) Validate() error {
+	if strings.TrimSpace(k.Name) == "" {
+		return fmt.Errorf("API key name is required")
+	}
+
+	if strings.TrimSpace(k.APIKey) == "" {
+		return fmt.Errorf("API key is required")
+	}
+
+	if k.AuthMethodID == 0 {
+		return fmt.Errorf("Auth method id is required")
 	}
 
 	return nil
