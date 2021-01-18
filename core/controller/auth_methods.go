@@ -63,16 +63,9 @@ func CreateAuthMethod(c echo.Context) error {
 		})
 	}
 
-	dc.DB().CreateAuthMethod(authMethod)
+	authMethod = dc.DB().CreateAuthMethod(authMethod)
 
-	return c.JSON(http.StatusCreated, map[string]interface{}{
-		"id":          authMethod.ID,
-		"name":        authMethod.Name,
-		"description": authMethod.Description,
-		"type":        authMethod.Type,
-		"createdAt":   authMethod.CreatedAt,
-		"updatedAt":   authMethod.UpdatedAt,
-	})
+	return c.JSON(http.StatusCreated, authMethod)
 }
 
 // GetAuthMethod controller
@@ -105,14 +98,7 @@ func GetAuthMethod(c echo.Context) error {
 		"id": id,
 	}).Info(`Get an auth method`)
 
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"id":          authMethod.ID,
-		"name":        authMethod.Name,
-		"description": authMethod.Description,
-		"type":        authMethod.Type,
-		"createdAt":   authMethod.CreatedAt,
-		"updatedAt":   authMethod.UpdatedAt,
-	})
+	return c.JSON(http.StatusOK, authMethod)
 }
 
 // GetAuthMethods controller
@@ -129,9 +115,7 @@ func GetAuthMethods(c echo.Context) error {
 
 	defer dc.Close()
 
-	log.WithFields(log.Fields{
-		"status": "ok",
-	}).Info(`Get auth methods`)
+	log.Info(`Get auth methods`)
 
 	authMethods := dc.DB().GetAuthMethods()
 
@@ -227,139 +211,5 @@ func UpdateAuthMethod(c echo.Context) error {
 
 	dc.DB().UpdateAuthMethodByID(&authMethod)
 
-	return c.JSON(http.StatusCreated, map[string]interface{}{
-		"id":          authMethod.ID,
-		"name":        authMethod.Name,
-		"description": authMethod.Description,
-		"type":        authMethod.Type,
-		"createdAt":   authMethod.CreatedAt,
-		"updatedAt":   authMethod.UpdatedAt,
-	})
-}
-
-// CreateKeyBasedAuthData controller
-func CreateKeyBasedAuthData(c echo.Context) error {
-	dc := c.(*DrifterContext)
-
-	if err := dc.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer dc.Close()
-
-	log.WithFields(log.Fields{
-		"status": "ok",
-	}).Info(`Create key based auth data`)
-
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "ok",
-	})
-}
-
-// GetKeyBasedAuthData controller
-func GetKeyBasedAuthData(c echo.Context) error {
-	dc := c.(*DrifterContext)
-
-	if err := dc.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer dc.Close()
-
-	log.WithFields(log.Fields{
-		"status": "ok",
-	}).Info(`Get key based auth data`)
-
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "ok",
-	})
-}
-
-// GetKeysBasedAuthData controller
-func GetKeysBasedAuthData(c echo.Context) error {
-	dc := c.(*DrifterContext)
-
-	if err := dc.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer dc.Close()
-
-	log.WithFields(log.Fields{
-		"status": "ok",
-	}).Info(`Get keys based auth data`)
-
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "ok",
-	})
-}
-
-// DeleteKeyBasedAuthData controller
-func DeleteKeyBasedAuthData(c echo.Context) error {
-	dc := c.(*DrifterContext)
-
-	id, _ := strconv.Atoi(c.Param("id"))
-
-	if err := dc.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer dc.Close()
-
-	key := dc.DB().GetKeyBasedAuthDataByID(id)
-
-	if key.ID < 1 {
-		log.WithFields(log.Fields{
-			"id": id,
-		}).Info(`API key not found`)
-
-		return c.NoContent(http.StatusNotFound)
-	}
-
-	log.WithFields(log.Fields{
-		"id": id,
-	}).Info(`Deleting an API key`)
-
-	dc.DB().DeleteKeyBasedAuthDataByID(key.ID)
-
-	return c.NoContent(http.StatusNoContent)
-}
-
-// UpdateKeyBasedAuthData controller
-func UpdateKeyBasedAuthData(c echo.Context) error {
-	dc := c.(*DrifterContext)
-
-	if err := dc.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer dc.Close()
-
-	log.WithFields(log.Fields{
-		"status": "ok",
-	}).Info(`Delete key based auth data`)
-
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "ok",
-	})
+	return c.JSON(http.StatusCreated, authMethod)
 }

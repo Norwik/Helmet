@@ -16,6 +16,13 @@ func (db *Database) CreateKeyBasedAuthData(keyBasedAuthData *model.KeyBasedAuthD
 	return keyBasedAuthData
 }
 
+// UpdateKeyBasedAuthDataByID updates an entity by ID
+func (db *Database) UpdateKeyBasedAuthDataByID(keyBasedAuthData *model.KeyBasedAuthData) *model.KeyBasedAuthData {
+	db.Connection.Save(&keyBasedAuthData)
+
+	return keyBasedAuthData
+}
+
 // GetKeyBasedAuthDataByID gets an entity by uuid
 func (db *Database) GetKeyBasedAuthDataByID(id int) model.KeyBasedAuthData {
 	keyBasedAuthData := model.KeyBasedAuthData{}
@@ -35,4 +42,13 @@ func (db *Database) GetKeyBasedAuthDataByAPIKey(apiKey string) model.KeyBasedAut
 // DeleteKeyBasedAuthDataByID deletes an entity by id
 func (db *Database) DeleteKeyBasedAuthDataByID(id int) {
 	db.Connection.Unscoped().Where("id = ?", id).Delete(&migration.KeyBasedAuthData{})
+}
+
+// GetKeyBasedAuthItems gets api keys items
+func (db *Database) GetKeyBasedAuthItems() []model.KeyBasedAuthData {
+	keys := []model.KeyBasedAuthData{}
+
+	db.Connection.Select("*").Find(&keys)
+
+	return keys
 }

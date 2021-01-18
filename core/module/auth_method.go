@@ -26,6 +26,7 @@ func (db *Database) UpdateAuthMethodByID(authMethod *model.AuthMethod) *model.Au
 // GetAuthMethodByID gets an entity by uuid
 func (db *Database) GetAuthMethodByID(id int) model.AuthMethod {
 	authMethod := model.AuthMethod{}
+
 	db.Connection.Where("id = ?", id).First(&authMethod)
 
 	return authMethod

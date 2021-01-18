@@ -99,24 +99,30 @@ func (db *Database) AutoConnect() error {
 // Migrate migrates the database
 func (db *Database) Migrate() bool {
 	status := true
+
 	db.Connection.AutoMigrate(&migration.Option{})
 	db.Connection.AutoMigrate(&migration.AuthMethod{})
 	db.Connection.AutoMigrate(&migration.KeyBasedAuthData{})
+
 	status = status && db.Connection.HasTable(&migration.Option{})
 	status = status && db.Connection.HasTable(&migration.AuthMethod{})
 	status = status && db.Connection.HasTable(&migration.KeyBasedAuthData{})
+
 	return status
 }
 
 // Rollback drop tables
 func (db *Database) Rollback() bool {
 	status := true
+
 	db.Connection.DropTableIfExists(&migration.Option{})
 	db.Connection.DropTableIfExists(&migration.AuthMethod{})
 	db.Connection.DropTableIfExists(&migration.KeyBasedAuthData{})
+
 	status = status && !db.Connection.HasTable(&migration.Option{})
 	status = status && !db.Connection.HasTable(&migration.AuthMethod{})
 	status = status && !db.Connection.HasTable(&migration.KeyBasedAuthData{})
+
 	return status
 }
 
