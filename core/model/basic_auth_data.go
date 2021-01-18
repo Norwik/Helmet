@@ -9,12 +9,13 @@ import (
 	"time"
 )
 
-// KeyBasedAuthData struct
-type KeyBasedAuthData struct {
+// BasicAuthData struct
+type BasicAuthData struct {
 	ID int `json:"id"`
 
 	Name         string `json:"name" validate:"required"`
-	APIKey       string `json:"apiKey" validate:"required"`
+	Username     string `json:"username" validate:"required"`
+	Password     string `json:"password" validate:"required"`
 	Meta         string `json:"meta"`
 	AuthMethodID int    `json:"authMethodID"`
 
@@ -22,14 +23,14 @@ type KeyBasedAuthData struct {
 	UpdatedAt time.Time `json:"updatedAt"`
 }
 
-// KeyBasedAuthDataItems struct
-type KeyBasedAuthDataItems struct {
-	KeyBasedAuthDataItems []KeyBasedAuthData `json:"items"`
+// BasicAuthDataItems struct
+type BasicAuthDataItems struct {
+	BasicAuthDataItems []BasicAuthData `json:"items"`
 }
 
 // LoadFromJSON update object from json
-func (k *KeyBasedAuthData) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &k)
+func (b *BasicAuthData) LoadFromJSON(data []byte) error {
+	err := json.Unmarshal(data, &b)
 
 	if err != nil {
 		return err
@@ -39,8 +40,8 @@ func (k *KeyBasedAuthData) LoadFromJSON(data []byte) error {
 }
 
 // ConvertToJSON convert object to json
-func (k *KeyBasedAuthData) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&k)
+func (b *BasicAuthData) ConvertToJSON() (string, error) {
+	data, err := json.Marshal(&b)
 
 	if err != nil {
 		return "", err
@@ -50,8 +51,8 @@ func (k *KeyBasedAuthData) ConvertToJSON() (string, error) {
 }
 
 // LoadFromJSON update object from json
-func (k *KeyBasedAuthDataItems) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &k)
+func (b *BasicAuthDataItems) LoadFromJSON(data []byte) error {
+	err := json.Unmarshal(data, &b)
 
 	if err != nil {
 		return err
@@ -61,8 +62,8 @@ func (k *KeyBasedAuthDataItems) LoadFromJSON(data []byte) error {
 }
 
 // ConvertToJSON convert object to json
-func (k *KeyBasedAuthDataItems) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&k)
+func (b *BasicAuthDataItems) ConvertToJSON() (string, error) {
+	data, err := json.Marshal(&b)
 
 	if err != nil {
 		return "", err

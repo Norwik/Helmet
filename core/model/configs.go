@@ -15,11 +15,11 @@ type Configs struct {
 
 // App type
 type App struct {
-	Endpoints []Endpoints `yaml:"endpoints"`
+	Endpoint []Endpoint `yaml:"endpoint"`
 }
 
-// Endpoints type
-type Endpoints struct {
+// Endpoint type
+type Endpoint struct {
 	Name   string `yaml:"name"`
 	Active bool   `yaml:"active"`
 	Proxy  Proxy  `yaml:"proxy"`

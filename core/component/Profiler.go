@@ -10,7 +10,6 @@ import (
 	"time"
 
 	log "github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 )
 
 // Level log level type
@@ -63,10 +62,6 @@ func (p *Profiler) WithCorrelation(correlation string) *Profiler {
 
 // LogDuration logs a call duration
 func (p *Profiler) LogDuration(invocation time.Time, name string, level Level) {
-	if !viper.GetBool("app.component.profiler.status") {
-		return
-	}
-
 	elapsed := time.Since(invocation)
 
 	corralationID, ok := p.ctx.Value(CorralationID).(string)

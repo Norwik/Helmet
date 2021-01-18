@@ -39,8 +39,8 @@ func (t *Tracing) IsEnabled() bool {
 
 // Init inits tracer
 func (t *Tracing) Init() io.Closer {
-	var closer io.Closer
 	var err error
+	var closer io.Closer
 
 	cfg := &config.Configuration{
 		ServiceName: t.Service,

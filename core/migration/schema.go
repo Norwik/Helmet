@@ -1,4 +1,4 @@
-// Copyright 2020 Clivern. All rights reserved.
+// Copyright 2021 Clivern. All rights reserved.
 // Use of this source code is governed by the MIT
 // license that can be found in the LICENSE file.
 
@@ -94,8 +94,8 @@ type KeyBasedAuthData struct {
 }
 
 // LoadFromJSON update object from json
-func (a *KeyBasedAuthData) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &a)
+func (k *KeyBasedAuthData) LoadFromJSON(data []byte) error {
+	err := json.Unmarshal(data, &k)
 
 	if err != nil {
 		return err
@@ -105,8 +105,42 @@ func (a *KeyBasedAuthData) LoadFromJSON(data []byte) error {
 }
 
 // ConvertToJSON convert object to json
-func (a *KeyBasedAuthData) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&a)
+func (k *KeyBasedAuthData) ConvertToJSON() (string, error) {
+	data, err := json.Marshal(&k)
+
+	if err != nil {
+		return "", err
+	}
+
+	return string(data), nil
+}
+
+// BasicAuthData struct
+type BasicAuthData struct {
+	gorm.Model
+
+	Name         string     `json:"name"`
+	Username     string     `json:"username"`
+	Password     string     `json:"password"`
+	Meta         string     `json:"meta"`
+	AuthMethodID int        `json:"authMethodID"`
+	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+}
+
+// LoadFromJSON update object from json
+func (b *BasicAuthData) LoadFromJSON(data []byte) error {
+	err := json.Unmarshal(data, &b)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ConvertToJSON convert object to json
+func (b *BasicAuthData) ConvertToJSON() (string, error) {
+	data, err := json.Marshal(&b)
 
 	if err != nil {
 		return "", err
