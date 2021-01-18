@@ -7,7 +7,6 @@ package component
 import (
 	"encoding/base64"
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/clivern/drifter/core/model"
@@ -44,7 +43,7 @@ type OAuthAuthMethod struct {
 func (k *KeyBasedAuthMethod) Authenticate(endpoint model.Endpoint, apiKey string) (bool, error) {
 	data := k.Database.GetKeyBasedAuthDataByAPIKey(apiKey)
 
-	if !util.InArray(strconv.Itoa(data.AuthMethodID), endpoint.Proxy.Methods) {
+	if !util.InArray(data.AuthMethodID, endpoint.Proxy.Authentication.AuthMethods) {
 		return false, fmt.Errorf("API key is invalid")
 	}
 
@@ -70,7 +69,7 @@ func (b *BasicAuthMethod) Authenticate(endpoint model.Endpoint, authKey string) 
 
 	data := b.Database.GetBasicAuthData(username, password)
 
-	if !util.InArray(strconv.Itoa(data.AuthMethodID), endpoint.Proxy.Methods) {
+	if !util.InArray(data.AuthMethodID, endpoint.Proxy.Authentication.AuthMethods) {
 		return false, fmt.Errorf("Basic auth credentials are invalid")
 	}
 

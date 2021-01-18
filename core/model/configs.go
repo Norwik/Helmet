@@ -28,7 +28,7 @@ type Endpoint struct {
 // Proxy type
 type Proxy struct {
 	Upstreams      Upstreams      `yaml:"upstreams"`
-	Methods        []string       `yaml:"methods"`
+	HTTPMethods    []string       `yaml:"http_methods"`
 	Authentication Authentication `yaml:"authentication"`
 	RateLimit      RateLimit      `yaml:"rate_limit"`
 	CircuitBreaker CircuitBreaker `yaml:"circuit_breaker"`
@@ -37,13 +37,8 @@ type Proxy struct {
 
 // Authentication type
 type Authentication struct {
-	Status  bool      `yaml:"status"`
-	Methods []Methods `yaml:"methods"`
-}
-
-// Methods type
-type Methods struct {
-	ID int `yaml:"id"`
+	Status      bool  `yaml:"status"`
+	AuthMethods []int `yaml:"auth_methods"`
 }
 
 // Upstreams type

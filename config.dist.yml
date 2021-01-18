@@ -52,13 +52,13 @@ app:
               balancing: roundrobin
               targets:
               - target: http://www.mocky.io/v2/595625d22900008702cd71e8
-            methods:
+            http_methods:
+            - ANY
             - GET
             authentication:
                 status: off
-                methods:
-                    -
-                        id: 1
+                auth_methods:
+                - 1
             rate_limit:
                 status: off
 
