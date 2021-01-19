@@ -17,16 +17,16 @@ type Authorization struct {
 }
 
 // Authorize validates http method
-func (k *KeyBasedAuthMethod) Authorize(endpoint model.Endpoint, httpMethod string) (bool, error) {
+func (k *KeyBasedAuthMethod) Authorize(endpoint model.Endpoint, httpMethod string) error {
 	if util.InArray("ANY", endpoint.Proxy.HTTPMethods) {
-		return true, nil
+		return nil
 	}
 
 	httpMethod = strings.ToUpper(httpMethod)
 
 	if !util.InArray(httpMethod, endpoint.Proxy.HTTPMethods) {
-		return false, fmt.Errorf("HTTP method %s not allowed for endpoint %s", httpMethod, endpoint.Name)
+		return fmt.Errorf("HTTP method %s not allowed for endpoint %s", httpMethod, endpoint.Name)
 	}
 
-	return true, nil
+	return nil
 }

@@ -19,3 +19,7 @@ func NewRouter(ctx context.Context) *Router {
 		ctx: ctx,
 	}
 }
+
+func (r *Router) GetEndpoint(path string) (model.Endpoint, error) {
+
+}

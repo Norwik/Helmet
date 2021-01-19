@@ -40,28 +40,28 @@ type OAuthAuthMethod struct {
 }
 
 // Authenticate validates auth headers
-func (k *KeyBasedAuthMethod) Authenticate(endpoint model.Endpoint, apiKey string) (bool, error) {
+func (k *KeyBasedAuthMethod) Authenticate(endpoint model.Endpoint, apiKey string) error {
 	data := k.Database.GetKeyBasedAuthDataByAPIKey(apiKey)
 
 	if !util.InArray(data.AuthMethodID, endpoint.Proxy.Authentication.AuthMethods) {
-		return false, fmt.Errorf("API key is invalid")
+		return fmt.Errorf("API key is invalid")
 	}
 
-	return true, nil
+	return nil
 }
 
 // Authenticate validates auth headers
-func (b *BasicAuthMethod) Authenticate(endpoint model.Endpoint, authKey string) (bool, error) {
+func (b *BasicAuthMethod) Authenticate(endpoint model.Endpoint, authKey string) error {
 	payload, err := base64.StdEncoding.DecodeString(authKey)
 
 	if err != nil {
-		return false, fmt.Errorf("Basic auth credentials are invalid")
+		return fmt.Errorf("Basic auth credentials are invalid")
 	}
 
 	pair := strings.SplitN(string(payload), ":", 2)
 
 	if len(pair) != 2 {
-		return false, fmt.Errorf("Basic auth credentials are invalid")
+		return fmt.Errorf("Basic auth credentials are invalid")
 	}
 
 	username := pair[0]
@@ -70,22 +70,22 @@ func (b *BasicAuthMethod) Authenticate(endpoint model.Endpoint, authKey string) 
 	data := b.Database.GetBasicAuthData(username, password)
 
 	if !util.InArray(data.AuthMethodID, endpoint.Proxy.Authentication.AuthMethods) {
-		return false, fmt.Errorf("Basic auth credentials are invalid")
+		return fmt.Errorf("Basic auth credentials are invalid")
 	}
 
-	return true, nil
+	return nil
 }
 
 // Authenticate validates auth headers
-func (n *NoAuthMethod) Authenticate(endpoint model.Endpoint) (bool, error) {
+func (n *NoAuthMethod) Authenticate(endpoint model.Endpoint) error {
 	if endpoint.Proxy.Authentication.Status {
-		return false, fmt.Errorf("Authentication is enabled for %s", endpoint.Name)
+		return fmt.Errorf("Authentication is enabled for %s", endpoint.Name)
 	}
 
-	return true, nil
+	return nil
 }
 
 // Authenticate validates auth headers
-func (o *OAuthAuthMethod) Authenticate(endpoint model.Endpoint, accessToken string) (bool, error) {
-	return false, nil
+func (o *OAuthAuthMethod) Authenticate(endpoint model.Endpoint, accessToken string) error {
+	return nil
 }

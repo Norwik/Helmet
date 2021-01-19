@@ -15,27 +15,11 @@ import (
 
 // FileSystem struct
 type FileSystem struct {
-	ctx context.Context
 }
 
 // NewFileSystem creates a new instance
-func NewFileSystem(ctx context.Context) *FileSystem {
-	fs := &FileSystem{
-		ctx: ctx,
-	}
-
-	return fs
-}
-
-// WithCorrelation adds correlation id to context
-func (fs *FileSystem) WithCorrelation(correlation string) *FileSystem {
-	fs.ctx = context.WithValue(
-		fs.ctx,
-		CorralationID,
-		correlation,
-	)
-
-	return fs
+func NewFileSystem() *FileSystem {
+	return &FileSystem{}
 }
 
 // ReadFile get the file content

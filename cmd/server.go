@@ -185,27 +185,20 @@ var serverCmd = &cobra.Command{
 			return c.String(http.StatusNoContent, "")
 		})
 
-		// Auth Methods CRUD
 		e.GET("/_api/v1/auth/method", controller.GetAuthMethods)
 		e.GET("/_api/v1/auth/method/:id", controller.GetAuthMethod)
 		e.DELETE("/_api/v1/auth/method/:id", controller.DeleteAuthMethod)
 		e.POST("/_api/v1/auth/method", controller.CreateAuthMethod)
 		e.PUT("/_api/v1/auth/method/:id", controller.UpdateAuthMethod)
 
-		// Key Based Auth Data CRUD
 		e.GET("/_api/v1/auth/key", controller.GetKeysBasedAuthData)
 		e.GET("/_api/v1/auth/key/:id", controller.GetKeyBasedAuthData)
 		e.DELETE("/_api/v1/auth/key/:id", controller.DeleteKeyBasedAuthData)
 		e.POST("/_api/v1/auth/key", controller.CreateKeyBasedAuthData)
 		e.PUT("/_api/v1/auth/key/:id", controller.UpdateKeyBasedAuthData)
 
-		// Me
 		e.GET("/_me", controller.Me)
-
-		// App Health
 		e.GET("/_health", controller.Health)
-
-		// Proxy
 		e.Any("/*remote", controller.Home)
 
 		var runerr error
