@@ -57,11 +57,11 @@ func CreateKeyBasedAuthData(c echo.Context) error {
 		})
 	}
 
-	authMethod := dc.DB().GetAuthMethodByID(key.AuthMethodID)
+	method := dc.DB().GetAuthMethodByID(key.AuthMethodID)
 
-	if authMethod.ID < 1 {
+	if method.ID < 1 {
 		log.WithFields(log.Fields{
-			"id": authMethod.ID,
+			"id": method.ID,
 		}).Info(`Auth method not found`)
 
 		return c.NoContent(http.StatusNotFound)
@@ -211,9 +211,9 @@ func UpdateKeyBasedAuthData(c echo.Context) error {
 		})
 	}
 
-	authMethod := dc.DB().GetAuthMethodByID(key.AuthMethodID)
+	method := dc.DB().GetAuthMethodByID(key.AuthMethodID)
 
-	if authMethod.ID < 1 {
+	if method.ID < 1 {
 		log.WithFields(log.Fields{
 			"id": id,
 		}).Info(`Auth method not found`)

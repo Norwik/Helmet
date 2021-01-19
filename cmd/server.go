@@ -186,18 +186,18 @@ var serverCmd = &cobra.Command{
 		})
 
 		// Auth Methods CRUD
-		e.GET("/_api/v1/authMethod", controller.GetAuthMethods)
-		e.GET("/_api/v1/authMethod/:id", controller.GetAuthMethod)
-		e.DELETE("/_api/v1/authMethod/:id", controller.DeleteAuthMethod)
-		e.POST("/_api/v1/authMethod", controller.CreateAuthMethod)
-		e.PUT("/_api/v1/authMethod/:id", controller.UpdateAuthMethod)
+		e.GET("/_api/v1/auth/method", controller.GetAuthMethods)
+		e.GET("/_api/v1/auth/method/:id", controller.GetAuthMethod)
+		e.DELETE("/_api/v1/auth/method/:id", controller.DeleteAuthMethod)
+		e.POST("/_api/v1/auth/method", controller.CreateAuthMethod)
+		e.PUT("/_api/v1/auth/method/:id", controller.UpdateAuthMethod)
 
 		// Key Based Auth Data CRUD
-		e.GET("/_api/v1/keyBasedAuthData", controller.GetKeysBasedAuthData)
-		e.GET("/_api/v1/keyBasedAuthData/:id", controller.GetKeyBasedAuthData)
-		e.DELETE("/_api/v1/keyBasedAuthData/:id", controller.DeleteKeyBasedAuthData)
-		e.POST("/_api/v1/keyBasedAuthData", controller.CreateKeyBasedAuthData)
-		e.PUT("/_api/v1/keyBasedAuthData/:id", controller.UpdateKeyBasedAuthData)
+		e.GET("/_api/v1/auth/key", controller.GetKeysBasedAuthData)
+		e.GET("/_api/v1/auth/key/:id", controller.GetKeyBasedAuthData)
+		e.DELETE("/_api/v1/auth/key/:id", controller.DeleteKeyBasedAuthData)
+		e.POST("/_api/v1/auth/key", controller.CreateKeyBasedAuthData)
+		e.PUT("/_api/v1/auth/key/:id", controller.UpdateKeyBasedAuthData)
 
 		// Me
 		e.GET("/_me", controller.Me)

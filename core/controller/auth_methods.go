@@ -43,9 +43,9 @@ func CreateAuthMethod(c echo.Context) error {
 
 	data, _ := ioutil.ReadAll(dc.Request().Body)
 
-	authMethod := &model.AuthMethod{}
+	method := &model.AuthMethod{}
 
-	err := authMethod.LoadFromJSON(data)
+	err := method.LoadFromJSON(data)
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -54,7 +54,7 @@ func CreateAuthMethod(c echo.Context) error {
 		})
 	}
 
-	err = authMethod.Validate()
+	err = method.Validate()
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -63,9 +63,9 @@ func CreateAuthMethod(c echo.Context) error {
 		})
 	}
 
-	authMethod = dc.DB().CreateAuthMethod(authMethod)
+	method = dc.DB().CreateAuthMethod(method)
 
-	return c.JSON(http.StatusCreated, authMethod)
+	return c.JSON(http.StatusCreated, method)
 }
 
 // GetAuthMethod controller
@@ -84,9 +84,9 @@ func GetAuthMethod(c echo.Context) error {
 
 	defer dc.Close()
 
-	authMethod := dc.DB().GetAuthMethodByID(id)
+	method := dc.DB().GetAuthMethodByID(id)
 
-	if authMethod.ID < 1 {
+	if method.ID < 1 {
 		log.WithFields(log.Fields{
 			"id": id,
 		}).Info(`Auth method not found`)
@@ -98,7 +98,7 @@ func GetAuthMethod(c echo.Context) error {
 		"id": id,
 	}).Info(`Get an auth method`)
 
-	return c.JSON(http.StatusOK, authMethod)
+	return c.JSON(http.StatusOK, method)
 }
 
 // GetAuthMethods controller
@@ -117,9 +117,9 @@ func GetAuthMethods(c echo.Context) error {
 
 	log.Info(`Get auth methods`)
 
-	authMethods := dc.DB().GetAuthMethods()
+	methods := dc.DB().GetAuthMethods()
 
-	return c.JSON(http.StatusOK, authMethods)
+	return c.JSON(http.StatusOK, methods)
 }
 
 // DeleteAuthMethod controller
@@ -138,9 +138,9 @@ func DeleteAuthMethod(c echo.Context) error {
 
 	defer dc.Close()
 
-	authMethod := dc.DB().GetAuthMethodByID(id)
+	method := dc.DB().GetAuthMethodByID(id)
 
-	if authMethod.ID < 1 {
+	if method.ID < 1 {
 		log.WithFields(log.Fields{
 			"id": id,
 		}).Info(`Auth method not found`)
@@ -152,7 +152,7 @@ func DeleteAuthMethod(c echo.Context) error {
 		"id": id,
 	}).Info(`Deleting an auth method`)
 
-	dc.DB().DeleteAuthMethodByID(authMethod.ID)
+	dc.DB().DeleteAuthMethodByID(method.ID)
 
 	return c.NoContent(http.StatusNoContent)
 }
@@ -173,9 +173,9 @@ func UpdateAuthMethod(c echo.Context) error {
 
 	defer dc.Close()
 
-	authMethod := dc.DB().GetAuthMethodByID(id)
+	method := dc.DB().GetAuthMethodByID(id)
 
-	if authMethod.ID < 1 {
+	if method.ID < 1 {
 		log.WithFields(log.Fields{
 			"id": id,
 		}).Info(`Auth method not found`)
@@ -185,9 +185,9 @@ func UpdateAuthMethod(c echo.Context) error {
 
 	data, _ := ioutil.ReadAll(dc.Request().Body)
 
-	err := authMethod.LoadFromJSON(data)
+	err := method.LoadFromJSON(data)
 
-	authMethod.ID = id
+	method.ID = id
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -196,7 +196,7 @@ func UpdateAuthMethod(c echo.Context) error {
 		})
 	}
 
-	err = authMethod.Validate()
+	err = method.Validate()
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -209,7 +209,7 @@ func UpdateAuthMethod(c echo.Context) error {
 		"id": id,
 	}).Info(`Update an auth method`)
 
-	dc.DB().UpdateAuthMethodByID(&authMethod)
+	dc.DB().UpdateAuthMethodByID(&method)
 
-	return c.JSON(http.StatusCreated, authMethod)
+	return c.JSON(http.StatusCreated, method)
 }
