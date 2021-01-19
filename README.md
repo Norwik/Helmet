@@ -30,8 +30,8 @@
 
 Drifter is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more. here is some of the key features:
 
-- Manage service to service Authentication, Authorization and Communication.
-- Manage end user to service Authentication, Authorization and Communication.
+- Manage Service to Service Authentication, Authorization and Communication.
+- Manage End User to Service Authentication, Authorization and Communication.
 - Basic, API Key Based and OAuth2 Authentication Support.
 - Multiple Backends Support with Load Balancing, Health Checks.
 - OpenTracing support for Distributed tracing.
