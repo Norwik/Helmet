@@ -5,7 +5,6 @@
 package component
 
 import (
-	"context"
 	"fmt"
 	"io/ioutil"
 	"os"

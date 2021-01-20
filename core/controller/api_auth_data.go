@@ -19,9 +19,9 @@ import (
 
 // CreateKeyBasedAuthData controller
 func CreateKeyBasedAuthData(c echo.Context) error {
-	dc := c.(*DrifterContext)
+	helpers := &Helpers{}
 
-	if err := dc.DatabaseConnect(); err != nil {
+	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err.Error(),
 		}).Error(`Failure while connecting database`)
@@ -29,9 +29,9 @@ func CreateKeyBasedAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	defer dc.Close()
+	defer helpers.Close()
 
-	data, _ := ioutil.ReadAll(dc.Request().Body)
+	data, _ := ioutil.ReadAll(c.Request().Body)
 
 	key := &model.KeyBasedAuthData{}
 
@@ -57,7 +57,7 @@ func CreateKeyBasedAuthData(c echo.Context) error {
 		})
 	}
 
-	method := dc.DB().GetAuthMethodByID(key.AuthMethodID)
+	method := helpers.DB().GetAuthMethodByID(key.AuthMethodID)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -67,18 +67,18 @@ func CreateKeyBasedAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	key = dc.DB().CreateKeyBasedAuthData(key)
+	key = helpers.DB().CreateKeyBasedAuthData(key)
 
 	return c.JSON(http.StatusCreated, key)
 }
 
 // GetKeyBasedAuthData controller
 func GetKeyBasedAuthData(c echo.Context) error {
-	dc := c.(*DrifterContext)
+	helpers := &Helpers{}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := dc.DatabaseConnect(); err != nil {
+	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err.Error(),
 		}).Error(`Failure while connecting database`)
@@ -86,9 +86,9 @@ func GetKeyBasedAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	defer dc.Close()
+	defer helpers.Close()
 
-	key := dc.DB().GetKeyBasedAuthDataByID(id)
+	key := helpers.DB().GetKeyBasedAuthDataByID(id)
 
 	if key.ID < 1 {
 		log.WithFields(log.Fields{
@@ -107,9 +107,9 @@ func GetKeyBasedAuthData(c echo.Context) error {
 
 // GetKeysBasedAuthData controller
 func GetKeysBasedAuthData(c echo.Context) error {
-	dc := c.(*DrifterContext)
+	helpers := &Helpers{}
 
-	if err := dc.DatabaseConnect(); err != nil {
+	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err.Error(),
 		}).Error(`Failure while connecting database`)
@@ -117,9 +117,9 @@ func GetKeysBasedAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	defer dc.Close()
+	defer helpers.Close()
 
-	keys := dc.DB().GetKeyBasedAuthItems()
+	keys := helpers.DB().GetKeyBasedAuthItems()
 
 	log.Info(`Get api keys`)
 
@@ -128,11 +128,11 @@ func GetKeysBasedAuthData(c echo.Context) error {
 
 // DeleteKeyBasedAuthData controller
 func DeleteKeyBasedAuthData(c echo.Context) error {
-	dc := c.(*DrifterContext)
+	helpers := &Helpers{}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := dc.DatabaseConnect(); err != nil {
+	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err.Error(),
 		}).Error(`Failure while connecting database`)
@@ -140,9 +140,9 @@ func DeleteKeyBasedAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	defer dc.Close()
+	defer helpers.Close()
 
-	key := dc.DB().GetKeyBasedAuthDataByID(id)
+	key := helpers.DB().GetKeyBasedAuthDataByID(id)
 
 	if key.ID < 1 {
 		log.WithFields(log.Fields{
@@ -156,18 +156,18 @@ func DeleteKeyBasedAuthData(c echo.Context) error {
 		"id": id,
 	}).Info(`Deleting an API key`)
 
-	dc.DB().DeleteKeyBasedAuthDataByID(key.ID)
+	helpers.DB().DeleteKeyBasedAuthDataByID(key.ID)
 
 	return c.NoContent(http.StatusNoContent)
 }
 
 // UpdateKeyBasedAuthData controller
 func UpdateKeyBasedAuthData(c echo.Context) error {
-	dc := c.(*DrifterContext)
+	helpers := &Helpers{}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := dc.DatabaseConnect(); err != nil {
+	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err.Error(),
 		}).Error(`Failure while connecting database`)
@@ -175,9 +175,9 @@ func UpdateKeyBasedAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	defer dc.Close()
+	defer helpers.Close()
 
-	key := dc.DB().GetKeyBasedAuthDataByID(id)
+	key := helpers.DB().GetKeyBasedAuthDataByID(id)
 
 	if key.ID < 1 {
 		log.WithFields(log.Fields{
@@ -187,7 +187,7 @@ func UpdateKeyBasedAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	data, _ := ioutil.ReadAll(dc.Request().Body)
+	data, _ := ioutil.ReadAll(c.Request().Body)
 
 	err := key.LoadFromJSON(data)
 
@@ -211,7 +211,7 @@ func UpdateKeyBasedAuthData(c echo.Context) error {
 		})
 	}
 
-	method := dc.DB().GetAuthMethodByID(key.AuthMethodID)
+	method := helpers.DB().GetAuthMethodByID(key.AuthMethodID)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -221,7 +221,7 @@ func UpdateKeyBasedAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	dc.DB().UpdateKeyBasedAuthDataByID(&key)
+	helpers.DB().UpdateKeyBasedAuthDataByID(&key)
 
 	return c.JSON(http.StatusOK, key)
 }

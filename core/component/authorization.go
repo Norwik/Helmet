@@ -17,7 +17,7 @@ type Authorization struct {
 }
 
 // Authorize validates http method
-func (k *KeyBasedAuthMethod) Authorize(endpoint model.Endpoint, httpMethod string) error {
+func (a *Authorization) Authorize(endpoint model.Endpoint, httpMethod string) error {
 	if util.InArray("ANY", endpoint.Proxy.HTTPMethods) {
 		return nil
 	}

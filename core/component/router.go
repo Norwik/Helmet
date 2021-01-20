@@ -5,21 +5,43 @@
 package component
 
 import (
-	"context"
+	"fmt"
+	"strings"
+
+	"github.com/clivern/drifter/core/model"
 )
 
 // Router type
 type Router struct {
-	ctx context.Context
 }
 
 // NewRouter creates a new instance
-func NewRouter(ctx context.Context) *Router {
-	return &Router{
-		ctx: ctx,
-	}
+func NewRouter() *Router {
+	return &Router{}
 }
 
-func (r *Router) GetEndpoint(path string) (model.Endpoint, error) {
+func (r *Router) GetEndpoint(endpoints []model.Endpoint, path string) (model.Endpoint, error) {
+	var uri string
 
+	if strings.Contains(path, "?") {
+		items := strings.Split(path, "?")
+		uri = items[0]
+	} else {
+		uri = strings.TrimRight(path, "/")
+	}
+
+	for _, endpoint := range endpoints {
+		if !endpoint.Active {
+			continue
+		}
+
+		fmt.Println(strings.TrimRight(endpoint.Proxy.ListenPath, "/*"))
+		fmt.Println(uri)
+
+		if strings.TrimRight(endpoint.Proxy.ListenPath, "/*") == uri {
+			return endpoint, nil
+		}
+	}
+
+	return model.Endpoint{}, fmt.Errorf("Endpoint not found")
 }

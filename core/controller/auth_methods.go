@@ -29,9 +29,9 @@ func Me(c echo.Context) error {
 
 // CreateAuthMethod controller
 func CreateAuthMethod(c echo.Context) error {
-	dc := c.(*DrifterContext)
+	helpers := &Helpers{}
 
-	if err := dc.DatabaseConnect(); err != nil {
+	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err.Error(),
 		}).Error(`Failure while connecting database`)
@@ -39,9 +39,9 @@ func CreateAuthMethod(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	defer dc.Close()
+	defer helpers.Close()
 
-	data, _ := ioutil.ReadAll(dc.Request().Body)
+	data, _ := ioutil.ReadAll(c.Request().Body)
 
 	method := &model.AuthMethod{}
 
@@ -63,18 +63,18 @@ func CreateAuthMethod(c echo.Context) error {
 		})
 	}
 
-	method = dc.DB().CreateAuthMethod(method)
+	method = helpers.DB().CreateAuthMethod(method)
 
 	return c.JSON(http.StatusCreated, method)
 }
 
 // GetAuthMethod controller
 func GetAuthMethod(c echo.Context) error {
-	dc := c.(*DrifterContext)
+	helpers := &Helpers{}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := dc.DatabaseConnect(); err != nil {
+	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err.Error(),
 		}).Error(`Failure while connecting database`)
@@ -82,9 +82,9 @@ func GetAuthMethod(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	defer dc.Close()
+	defer helpers.Close()
 
-	method := dc.DB().GetAuthMethodByID(id)
+	method := helpers.DB().GetAuthMethodByID(id)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -103,9 +103,9 @@ func GetAuthMethod(c echo.Context) error {
 
 // GetAuthMethods controller
 func GetAuthMethods(c echo.Context) error {
-	dc := c.(*DrifterContext)
+	helpers := &Helpers{}
 
-	if err := dc.DatabaseConnect(); err != nil {
+	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err.Error(),
 		}).Error(`Failure while connecting database`)
@@ -113,22 +113,22 @@ func GetAuthMethods(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	defer dc.Close()
+	defer helpers.Close()
 
 	log.Info(`Get auth methods`)
 
-	methods := dc.DB().GetAuthMethods()
+	methods := helpers.DB().GetAuthMethods()
 
 	return c.JSON(http.StatusOK, methods)
 }
 
 // DeleteAuthMethod controller
 func DeleteAuthMethod(c echo.Context) error {
-	dc := c.(*DrifterContext)
+	helpers := &Helpers{}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := dc.DatabaseConnect(); err != nil {
+	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err.Error(),
 		}).Error(`Failure while connecting database`)
@@ -136,9 +136,9 @@ func DeleteAuthMethod(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	defer dc.Close()
+	defer helpers.Close()
 
-	method := dc.DB().GetAuthMethodByID(id)
+	method := helpers.DB().GetAuthMethodByID(id)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -152,18 +152,18 @@ func DeleteAuthMethod(c echo.Context) error {
 		"id": id,
 	}).Info(`Deleting an auth method`)
 
-	dc.DB().DeleteAuthMethodByID(method.ID)
+	helpers.DB().DeleteAuthMethodByID(method.ID)
 
 	return c.NoContent(http.StatusNoContent)
 }
 
 // UpdateAuthMethod controller
 func UpdateAuthMethod(c echo.Context) error {
-	dc := c.(*DrifterContext)
+	helpers := &Helpers{}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := dc.DatabaseConnect(); err != nil {
+	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err.Error(),
 		}).Error(`Failure while connecting database`)
@@ -171,9 +171,9 @@ func UpdateAuthMethod(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	defer dc.Close()
+	defer helpers.Close()
 
-	method := dc.DB().GetAuthMethodByID(id)
+	method := helpers.DB().GetAuthMethodByID(id)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -183,7 +183,7 @@ func UpdateAuthMethod(c echo.Context) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	data, _ := ioutil.ReadAll(dc.Request().Body)
+	data, _ := ioutil.ReadAll(c.Request().Body)
 
 	err := method.LoadFromJSON(data)
 
@@ -209,7 +209,7 @@ func UpdateAuthMethod(c echo.Context) error {
 		"id": id,
 	}).Info(`Update an auth method`)
 
-	dc.DB().UpdateAuthMethodByID(&method)
+	helpers.DB().UpdateAuthMethodByID(&method)
 
 	return c.JSON(http.StatusCreated, method)
 }

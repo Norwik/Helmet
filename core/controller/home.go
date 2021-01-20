@@ -5,20 +5,78 @@
 package controller
 
 import (
+	"net/http"
+
 	"github.com/clivern/drifter/core/component"
 
 	"github.com/labstack/echo/v4"
+	log "github.com/sirupsen/logrus"
 )
 
 // Home controller
 func Home(c echo.Context) error {
-	proxy := component.NewProxy(
-		c.Request(),
-		c.Response().Writer,
-		"https://httpbin.org/headers",
+	helpers := &Helpers{}
+
+	log.WithFields(log.Fields{
+		"path":        c.Request().URL.Path,
+		"query_param": c.Request().URL.RawQuery,
+		"http_method": c.Request().Method,
+	}).Info(`Incoming request`)
+
+	// --------------------
+	// Fetch the endpoint
+	// --------------------
+	router := component.NewRouter()
+	configs, err := helpers.GetConfigs()
+
+	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err.Error(),
+		}).Error(`Internal server error`)
+
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	endpoint, err := router.GetEndpoint(
+		configs.App.Endpoint,
+		c.Request().URL.Path,
 	)
 
-	proxy.Redirect()
+	if err != nil {
+		log.WithFields(log.Fields{
+			"path":        c.Request().URL.Path,
+			"query_param": c.Request().URL.RawQuery,
+			"http_method": c.Request().Method,
+		}).Info(`Endpoint not found`)
+
+		return c.NoContent(http.StatusNotFound)
+	}
+
+	// ---------------------------------
+	// Validate the Request HTTP Method
+	// ---------------------------------
+	authorization := &component.Authorization{}
+	err = authorization.Authorize(endpoint, c.Request().Method)
+
+	if err != nil {
+		log.WithFields(log.Fields{
+			"path":        c.Request().URL.Path,
+			"query_param": c.Request().URL.RawQuery,
+			"http_method": c.Request().Method,
+		}).Info(`Unauthorized Request`)
+
+		return c.NoContent(http.StatusUnauthorized)
+	}
+
+	/*
+		proxy := component.NewProxy(
+			c.Request(),
+			c.Response().Writer,
+			"https://httpbin.org/headers",
+		)
+
+		proxy.Redirect()
+	*/
 
 	return nil
 }

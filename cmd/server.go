@@ -6,7 +6,6 @@ package cmd
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -64,9 +63,7 @@ var serverCmd = &cobra.Command{
 			))
 		}
 
-		fs := component.NewFileSystem(
-			context.Background(),
-		)
+		fs := component.NewFileSystem()
 
 		if viper.GetString("app.log.output") != "stdout" {
 			dir, _ := filepath.Split(viper.GetString("app.log.output"))
@@ -145,16 +142,6 @@ var serverCmd = &cobra.Command{
 			e.Debug = true
 		}
 
-		e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
-			return func(c echo.Context) error {
-				cc := &controller.DrifterContext{
-					Context:  c,
-					Database: &module.Database{},
-				}
-				return next(cc)
-			}
-		})
-
 		e.Use(middleware.LoggerWithConfig(defaultLogger))
 		e.Use(middleware.RequestID())
 		e.Use(middleware.BodyLimit("2M"))
@@ -171,6 +158,14 @@ var serverCmd = &cobra.Command{
 				apiKey := viper.GetString("app.api.key")
 
 				return apiKey == "" || key == viper.GetString("app.api.key"), nil
+			},
+			ErrorHandler: func(err error, c echo.Context) error {
+				// Workaround to make header optional
+				if !strings.Contains(c.Request().URL.Path, "/_api/v1/") {
+					return nil
+				}
+
+				return err
 			},
 		}))
 
@@ -199,7 +194,7 @@ var serverCmd = &cobra.Command{
 
 		e.GET("/_me", controller.Me)
 		e.GET("/_health", controller.Health)
-		e.Any("/*remote", controller.Home)
+		e.Any("/*", controller.Home)
 
 		var runerr error
 

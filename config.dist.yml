@@ -49,19 +49,18 @@ app:
           proxy:
             listen_path: "/orders/v2/*"
             upstreams:
-              balancing: roundrobin
-              targets:
-              - target: http://www.mocky.io/v2/595625d22900008702cd71e8
+                balancing: roundrobin
+                targets:
+                    - target: http://www.mocky.io/v2/595625d22900008702cd71e8
             http_methods:
-            - ANY
-            - GET
+                - ANY
+                - GET
             authentication:
                 status: off
                 auth_methods:
-                - 1
+                    - 1
             rate_limit:
                 status: off
-
             circuit_breaker:
                 status: off
 
