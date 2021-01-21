@@ -146,29 +146,6 @@ var serverCmd = &cobra.Command{
 		e.Use(middleware.RequestID())
 		e.Use(middleware.BodyLimit("2M"))
 
-		// Protect /_api/v1/* routes
-		e.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
-			KeyLookup:  "header:x-api-key",
-			AuthScheme: "",
-			Validator: func(key string, c echo.Context) (bool, error) {
-				if !strings.Contains(c.Request().URL.Path, "/_api/v1/") {
-					return true, nil
-				}
-
-				apiKey := viper.GetString("app.api.key")
-
-				return apiKey == "" || key == viper.GetString("app.api.key"), nil
-			},
-			ErrorHandler: func(err error, c echo.Context) error {
-				// Workaround to make header optional
-				if !strings.Contains(c.Request().URL.Path, "/_api/v1/") {
-					return nil
-				}
-
-				return err
-			},
-		}))
-
 		e.Use(middleware.TimeoutWithConfig(middleware.TimeoutConfig{
 			Timeout: time.Duration(viper.GetInt("app.timeout")) * time.Second,
 		}))
@@ -180,17 +157,34 @@ var serverCmd = &cobra.Command{
 			return c.String(http.StatusNoContent, "")
 		})
 
-		e.GET("/_api/v1/auth/method", controller.GetAuthMethods)
-		e.GET("/_api/v1/auth/method/:id", controller.GetAuthMethod)
-		e.DELETE("/_api/v1/auth/method/:id", controller.DeleteAuthMethod)
-		e.POST("/_api/v1/auth/method", controller.CreateAuthMethod)
-		e.PUT("/_api/v1/auth/method/:id", controller.UpdateAuthMethod)
+		e1 := e.Group("/_api/v1")
+		{
+			e1.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
+				KeyLookup:  "header:x-api-key",
+				AuthScheme: "",
+				Validator: func(key string, c echo.Context) (bool, error) {
+					if !strings.Contains(c.Request().URL.Path, "/_api/v1/") {
+						return true, nil
+					}
 
-		e.GET("/_api/v1/auth/key", controller.GetKeysBasedAuthData)
-		e.GET("/_api/v1/auth/key/:id", controller.GetKeyBasedAuthData)
-		e.DELETE("/_api/v1/auth/key/:id", controller.DeleteKeyBasedAuthData)
-		e.POST("/_api/v1/auth/key", controller.CreateKeyBasedAuthData)
-		e.PUT("/_api/v1/auth/key/:id", controller.UpdateKeyBasedAuthData)
+					apiKey := viper.GetString("app.api.key")
+
+					return apiKey == "" || key == viper.GetString("app.api.key"), nil
+				},
+			}))
+
+			e1.GET("/auth/method", controller.GetAuthMethods)
+			e1.GET("/auth/method/:id", controller.GetAuthMethod)
+			e1.DELETE("/auth/method/:id", controller.DeleteAuthMethod)
+			e1.POST("/auth/method", controller.CreateAuthMethod)
+			e1.PUT("/auth/method/:id", controller.UpdateAuthMethod)
+
+			e1.GET("/auth/key", controller.GetKeysBasedAuthData)
+			e1.GET("/auth/key/:id", controller.GetKeyBasedAuthData)
+			e1.DELETE("/auth/key/:id", controller.DeleteKeyBasedAuthData)
+			e1.POST("/auth/key", controller.CreateKeyBasedAuthData)
+			e1.PUT("/auth/key/:id", controller.UpdateKeyBasedAuthData)
+		}
 
 		e.GET("/_me", controller.Me)
 		e.GET("/_health", controller.Health)

@@ -56,7 +56,7 @@ app:
                 - ANY
                 - GET
             authentication:
-                status: off
+                status: on
                 auth_methods:
                     - 1
             rate_limit:

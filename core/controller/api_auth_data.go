@@ -12,6 +12,7 @@ import (
 
 	"github.com/clivern/drifter/core/component"
 	"github.com/clivern/drifter/core/model"
+	"github.com/clivern/drifter/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
@@ -19,7 +20,7 @@ import (
 
 // CreateKeyBasedAuthData controller
 func CreateKeyBasedAuthData(c echo.Context) error {
-	helpers := &Helpers{}
+	helpers := &Helpers{Database: &module.Database{}}
 
 	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
@@ -74,7 +75,7 @@ func CreateKeyBasedAuthData(c echo.Context) error {
 
 // GetKeyBasedAuthData controller
 func GetKeyBasedAuthData(c echo.Context) error {
-	helpers := &Helpers{}
+	helpers := &Helpers{Database: &module.Database{}}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
@@ -107,7 +108,7 @@ func GetKeyBasedAuthData(c echo.Context) error {
 
 // GetKeysBasedAuthData controller
 func GetKeysBasedAuthData(c echo.Context) error {
-	helpers := &Helpers{}
+	helpers := &Helpers{Database: &module.Database{}}
 
 	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
@@ -128,7 +129,7 @@ func GetKeysBasedAuthData(c echo.Context) error {
 
 // DeleteKeyBasedAuthData controller
 func DeleteKeyBasedAuthData(c echo.Context) error {
-	helpers := &Helpers{}
+	helpers := &Helpers{Database: &module.Database{}}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
@@ -163,7 +164,7 @@ func DeleteKeyBasedAuthData(c echo.Context) error {
 
 // UpdateKeyBasedAuthData controller
 func UpdateKeyBasedAuthData(c echo.Context) error {
-	helpers := &Helpers{}
+	helpers := &Helpers{Database: &module.Database{}}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 

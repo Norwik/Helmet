@@ -35,9 +35,6 @@ func (r *Router) GetEndpoint(endpoints []model.Endpoint, path string) (model.End
 			continue
 		}
 
-		fmt.Println(strings.TrimRight(endpoint.Proxy.ListenPath, "/*"))
-		fmt.Println(uri)
-
 		if strings.TrimRight(endpoint.Proxy.ListenPath, "/*") == uri {
 			return endpoint, nil
 		}

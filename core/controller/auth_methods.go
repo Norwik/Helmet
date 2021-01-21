@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/clivern/drifter/core/model"
+	"github.com/clivern/drifter/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
@@ -29,7 +30,7 @@ func Me(c echo.Context) error {
 
 // CreateAuthMethod controller
 func CreateAuthMethod(c echo.Context) error {
-	helpers := &Helpers{}
+	helpers := &Helpers{Database: &module.Database{}}
 
 	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
@@ -70,7 +71,7 @@ func CreateAuthMethod(c echo.Context) error {
 
 // GetAuthMethod controller
 func GetAuthMethod(c echo.Context) error {
-	helpers := &Helpers{}
+	helpers := &Helpers{Database: &module.Database{}}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
@@ -103,7 +104,7 @@ func GetAuthMethod(c echo.Context) error {
 
 // GetAuthMethods controller
 func GetAuthMethods(c echo.Context) error {
-	helpers := &Helpers{}
+	helpers := &Helpers{Database: &module.Database{}}
 
 	if err := helpers.DatabaseConnect(); err != nil {
 		log.WithFields(log.Fields{
@@ -124,7 +125,7 @@ func GetAuthMethods(c echo.Context) error {
 
 // DeleteAuthMethod controller
 func DeleteAuthMethod(c echo.Context) error {
-	helpers := &Helpers{}
+	helpers := &Helpers{Database: &module.Database{}}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
@@ -159,7 +160,7 @@ func DeleteAuthMethod(c echo.Context) error {
 
 // UpdateAuthMethod controller
 func UpdateAuthMethod(c echo.Context) error {
-	helpers := &Helpers{}
+	helpers := &Helpers{Database: &module.Database{}}
 
 	id, _ := strconv.Atoi(c.Param("id"))
 

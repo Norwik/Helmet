@@ -15,11 +15,11 @@ import (
 type BasicAuthData struct {
 	ID int `json:"id"`
 
-	Name         string            `json:"name"`
-	Username     string            `json:"username"`
-	Password     string            `json:"password"`
-	Meta         map[string]string `json:"meta"`
-	AuthMethodID int               `json:"authMethodID"`
+	Name         string `json:"name"`
+	Username     string `json:"username"`
+	Password     string `json:"password"`
+	Meta         string `json:"meta"`
+	AuthMethodID int    `json:"authMethodID"`
 
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`

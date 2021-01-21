@@ -19,22 +19,22 @@ type Helpers struct {
 }
 
 // DB connect to database
-func (d *Helpers) DB() *module.Database {
-	return d.Database
+func (h *Helpers) DB() *module.Database {
+	return h.Database
 }
 
 // DatabaseConnect connect to database
-func (d *Helpers) DatabaseConnect() error {
-	return d.Database.AutoConnect()
+func (h *Helpers) DatabaseConnect() error {
+	return h.Database.AutoConnect()
 }
 
 // Close closed database connections
-func (d *Helpers) Close() {
-	d.Database.Close()
+func (h *Helpers) Close() {
+	h.Database.Close()
 }
 
 // GetConfigs gets a config instance
-func (d *Helpers) GetConfigs() (*model.Configs, error) {
+func (h *Helpers) GetConfigs() (*model.Configs, error) {
 	configs := &model.Configs{}
 
 	data, err := ioutil.ReadFile(viper.GetString("config"))

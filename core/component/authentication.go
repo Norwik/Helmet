@@ -14,75 +14,70 @@ import (
 	"github.com/clivern/drifter/core/util"
 )
 
-// Authentication type
-type Authentication struct {
-	Database module.Database
-}
-
 // KeyBasedAuthMethod type
 type KeyBasedAuthMethod struct {
-	*Authentication
+	Database *module.Database
 }
 
 // BasicAuthMethod type
 type BasicAuthMethod struct {
-	*Authentication
-}
-
-// NoAuthMethod type
-type NoAuthMethod struct {
-	*Authentication
+	Database *module.Database
 }
 
 // OAuthAuthMethod type
 type OAuthAuthMethod struct {
-	*Authentication
+	Database *module.Database
 }
 
 // Authenticate validates auth headers
-func (k *KeyBasedAuthMethod) Authenticate(endpoint model.Endpoint, apiKey string) error {
-	data := k.Database.GetKeyBasedAuthDataByAPIKey(apiKey)
+func (k *KeyBasedAuthMethod) Authenticate(endpoint model.Endpoint, apiKey string) (model.KeyBasedAuthData, error) {
+	var data model.KeyBasedAuthData
 
-	if !util.InArray(data.AuthMethodID, endpoint.Proxy.Authentication.AuthMethods) {
-		return fmt.Errorf("API key is invalid")
+	if apiKey == "" {
+		return data, fmt.Errorf("API key is missing")
 	}
 
-	return nil
+	data = k.Database.GetKeyBasedAuthDataByAPIKey(apiKey)
+
+	if !util.InArray(data.AuthMethodID, endpoint.Proxy.Authentication.AuthMethods) {
+		return data, fmt.Errorf("API key is invalid")
+	}
+
+	return data, nil
 }
 
 // Authenticate validates auth headers
-func (b *BasicAuthMethod) Authenticate(endpoint model.Endpoint, authKey string) error {
+func (b *BasicAuthMethod) Authenticate(endpoint model.Endpoint, authKey string) (model.BasicAuthData, error) {
+	var data model.BasicAuthData
+
+	if authKey == "" {
+		return data, fmt.Errorf("Basic auth credentials are missing")
+	}
+
+	authKey = strings.Replace(authKey, "Basic ", "", -1)
+
 	payload, err := base64.StdEncoding.DecodeString(authKey)
 
 	if err != nil {
-		return fmt.Errorf("Basic auth credentials are invalid")
+		return data, fmt.Errorf("Basic auth credentials are invalid")
 	}
 
 	pair := strings.SplitN(string(payload), ":", 2)
 
 	if len(pair) != 2 {
-		return fmt.Errorf("Basic auth credentials are invalid")
+		return data, fmt.Errorf("Basic auth credentials are invalid")
 	}
 
 	username := pair[0]
 	password := pair[1]
 
-	data := b.Database.GetBasicAuthData(username, password)
+	data = b.Database.GetBasicAuthData(username, password)
 
 	if !util.InArray(data.AuthMethodID, endpoint.Proxy.Authentication.AuthMethods) {
-		return fmt.Errorf("Basic auth credentials are invalid")
+		return data, fmt.Errorf("Basic auth credentials are invalid")
 	}
 
-	return nil
-}
-
-// Authenticate validates auth headers
-func (n *NoAuthMethod) Authenticate(endpoint model.Endpoint) error {
-	if endpoint.Proxy.Authentication.Status {
-		return fmt.Errorf("Authentication is enabled for %s", endpoint.Name)
-	}
-
-	return nil
+	return data, nil
 }
 
 // Authenticate validates auth headers
