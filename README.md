@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/assets/logo1.png?v=0.1.0" width="240" />
+    <img src="/assets/logo1.png?v=0.1.0" width="200" />
     <h3 align="center">Drifter</h3>
     <p align="center">A Lightweight Cloud Native API Gateway.</p>
     <p align="center">
