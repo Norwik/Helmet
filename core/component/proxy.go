@@ -24,28 +24,16 @@ type Proxy struct {
 
 // NewProxy creates a new instance
 func NewProxy(httpRequest *http.Request, httpWriter http.ResponseWriter, name, upstream, meta string) *Proxy {
-	metaItems := map[string]string{}
-	items := strings.Split(meta, ";")
-
-	if len(items) > 0 {
-		for _, v := range items {
-			if strings.Contains(v, ":") {
-				item := strings.Split(v, ":")
-				metaItems[item[0]] = item[1]
-			}
-		}
-	}
-
 	return &Proxy{
 		Name:        name,
-		Meta:        metaItems,
+		Meta:        p.ConvertMetaData(meta),
 		Upstream:    upstream,
 		HTTPRequest: httpRequest,
 		HTTPWriter:  httpWriter,
 	}
 }
 
-// Redirect sends the request to the upstream
+// Redirect proxy the request to the remote service
 func (p *Proxy) Redirect() {
 	origin, _ := url.Parse(p.Upstream)
 
@@ -68,4 +56,23 @@ func (p *Proxy) Redirect() {
 	}
 
 	proxy.ServeHTTP(p.HTTPWriter, p.HTTPRequest)
+}
+
+// ConvertMetaData converts meta data format into map
+// meta in the form of key1:value1;key2:value2 ---> map{"key1": "value1", "key2": "value2"}
+func (p *Proxy) ConvertMetaData(meta string) map[string]string {
+	metaItems := map[string]string{}
+
+	items := strings.Split(meta, ";")
+
+	if len(items) > 0 {
+		for _, v := range items {
+			if strings.Contains(v, ":") {
+				item := strings.Split(v, ":")
+				metaItems[item[0]] = item[1]
+			}
+		}
+	}
+
+	return metaItems
 }
