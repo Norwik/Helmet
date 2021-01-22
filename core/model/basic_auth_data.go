@@ -5,10 +5,11 @@
 package model
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
+
+	"github.com/clivern/drifter/core/util"
 )
 
 // BasicAuthData struct
@@ -32,24 +33,12 @@ type BasicAuthDataItems struct {
 
 // LoadFromJSON update object from json
 func (b *BasicAuthData) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &b)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return util.LoadFromJSON(b, data)
 }
 
 // ConvertToJSON convert object to json
 func (b *BasicAuthData) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&b)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
+	return util.ConvertToJSON(b)
 }
 
 // Validate validates a request payload
@@ -75,22 +64,10 @@ func (b *BasicAuthData) Validate() error {
 
 // LoadFromJSON update object from json
 func (b *BasicAuthDataItems) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &b)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return util.LoadFromJSON(b, data)
 }
 
 // ConvertToJSON convert object to json
 func (b *BasicAuthDataItems) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&b)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
+	return util.ConvertToJSON(b)
 }

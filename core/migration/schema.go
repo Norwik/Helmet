@@ -5,7 +5,7 @@
 package migration
 
 import (
-	"encoding/json"
+	"github.com/clivern/drifter/core/util"
 
 	"github.com/jinzhu/gorm"
 )
@@ -31,24 +31,12 @@ type Option struct {
 
 // LoadFromJSON update object from json
 func (o *Option) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &o)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return util.LoadFromJSON(o, data)
 }
 
 // ConvertToJSON convert object to json
 func (o *Option) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&o)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
+	return util.ConvertToJSON(o)
 }
 
 // AuthMethod struct
@@ -62,24 +50,12 @@ type AuthMethod struct {
 
 // LoadFromJSON update object from json
 func (a *AuthMethod) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &a)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return util.LoadFromJSON(a, data)
 }
 
 // ConvertToJSON convert object to json
 func (a *AuthMethod) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&a)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
+	return util.ConvertToJSON(a)
 }
 
 // KeyBasedAuthData struct
@@ -95,24 +71,12 @@ type KeyBasedAuthData struct {
 
 // LoadFromJSON update object from json
 func (k *KeyBasedAuthData) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &k)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return util.LoadFromJSON(k, data)
 }
 
 // ConvertToJSON convert object to json
 func (k *KeyBasedAuthData) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&k)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
+	return util.ConvertToJSON(k)
 }
 
 // BasicAuthData struct
@@ -129,22 +93,10 @@ type BasicAuthData struct {
 
 // LoadFromJSON update object from json
 func (b *BasicAuthData) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &b)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return util.LoadFromJSON(b, data)
 }
 
 // ConvertToJSON convert object to json
 func (b *BasicAuthData) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&b)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
+	return util.ConvertToJSON(b)
 }

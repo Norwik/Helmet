@@ -5,10 +5,11 @@
 package model
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
+
+	"github.com/clivern/drifter/core/util"
 )
 
 // KeyBasedAuthData struct
@@ -31,13 +32,7 @@ type KeyBasedAuthDataItems struct {
 
 // LoadFromJSON update object from json
 func (k *KeyBasedAuthData) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &k)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return util.LoadFromJSON(k, data)
 }
 
 // Validate validates a request payload
@@ -59,33 +54,15 @@ func (k *KeyBasedAuthData) Validate() error {
 
 // ConvertToJSON convert object to json
 func (k *KeyBasedAuthData) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&k)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
+	return util.ConvertToJSON(k)
 }
 
 // LoadFromJSON update object from json
 func (k *KeyBasedAuthDataItems) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &k)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return util.LoadFromJSON(k, data)
 }
 
 // ConvertToJSON convert object to json
 func (k *KeyBasedAuthDataItems) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&k)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
+	return util.ConvertToJSON(k)
 }

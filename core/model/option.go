@@ -5,8 +5,9 @@
 package model
 
 import (
-	"encoding/json"
 	"time"
+
+	"github.com/clivern/drifter/core/util"
 )
 
 // Option struct
@@ -25,44 +26,20 @@ type Options struct {
 
 // LoadFromJSON update object from json
 func (o *Option) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &o)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return util.LoadFromJSON(o, data)
 }
 
 // ConvertToJSON convert object to json
 func (o *Option) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&o)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
+	return util.ConvertToJSON(o)
 }
 
 // LoadFromJSON update object from json
 func (o *Options) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &o)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return util.LoadFromJSON(o, data)
 }
 
 // ConvertToJSON convert object to json
 func (o *Options) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&o)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
+	return util.ConvertToJSON(o)
 }

@@ -5,9 +5,10 @@
 package service
 
 import (
-	"encoding/json"
 	"fmt"
 	"strconv"
+
+	"github.com/clivern/drifter/core/util"
 
 	"github.com/prometheus/client_golang/prometheus"
 	log "github.com/sirupsen/logrus"
@@ -36,21 +37,13 @@ type Metric struct {
 }
 
 // LoadFromJSON update object from json
-func (m *Metric) LoadFromJSON(data []byte) (bool, error) {
-	err := json.Unmarshal(data, &m)
-	if err != nil {
-		return false, err
-	}
-	return true, nil
+func (m *Metric) LoadFromJSON(data []byte) error {
+	return util.LoadFromJSON(m, data)
 }
 
 // ConvertToJSON convert object to json
 func (m *Metric) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&m)
-	if err != nil {
-		return "", err
-	}
-	return string(data), nil
+	return util.ConvertToJSON(m)
 }
 
 // LabelKeys gets a list of label keys

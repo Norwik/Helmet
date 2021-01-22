@@ -16,23 +16,23 @@ import (
 
 // Tracing type
 type Tracing struct {
-	Service string
-	Tracer  opentracing.Tracer
+	ServiceName string
+	Tracer      opentracing.Tracer
 }
 
 // NewTracingClient gets a new tracing client instance
-func NewTracingClient(service string) *Tracing {
+func NewTracingClient(serviceName string) *Tracing {
 	return &Tracing{
-		Service: service,
+		ServiceName: serviceName,
 	}
 }
 
-// GetTracer gets tracer
+// GetTracer gets tracer instance
 func (t *Tracing) GetTracer() opentracing.Tracer {
 	return t.Tracer
 }
 
-// IsEnabled gets tracing status
+// IsEnabled checks if tracing is enabled
 func (t *Tracing) IsEnabled() bool {
 	return viper.GetBool("app.component.tracing.status")
 }
@@ -43,7 +43,7 @@ func (t *Tracing) Init() io.Closer {
 	var closer io.Closer
 
 	cfg := &config.Configuration{
-		ServiceName: t.Service,
+		ServiceName: t.ServiceName,
 
 		// "const" sampler is a binary sampling strategy:
 		// 0 = never sample,

@@ -5,8 +5,9 @@
 package model
 
 import (
-	"encoding/json"
 	"fmt"
+
+	"github.com/clivern/drifter/core/util"
 )
 
 // DSN struct
@@ -38,18 +39,10 @@ func (d *DSN) ToString() string {
 
 // LoadFromJSON update object from json
 func (d *DSN) LoadFromJSON(data []byte) error {
-	err := json.Unmarshal(data, &d)
-	if err != nil {
-		return err
-	}
-	return nil
+	return util.LoadFromJSON(d, data)
 }
 
 // ConvertToJSON convert object to json
 func (d *DSN) ConvertToJSON() (string, error) {
-	data, err := json.Marshal(&d)
-	if err != nil {
-		return "", err
-	}
-	return string(data), nil
+	return util.ConvertToJSON(d)
 }
