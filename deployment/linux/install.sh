@@ -14,7 +14,7 @@ function drifter {
 
     echo "[Unit]
 Description=Drifter
-Documentation=https://github.com/clivern/drifter
+Documentation=https://github.com/spacemanio/drifter
 
 [Service]
 ExecStart=/etc/drifter/drifter server -c /etc/drifter/config.prod.yml

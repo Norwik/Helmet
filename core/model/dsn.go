@@ -7,7 +7,7 @@ package model
 import (
 	"fmt"
 
-	"github.com/clivern/drifter/core/util"
+	"github.com/spacemanio/drifter/core/util"
 )
 
 // DSN struct

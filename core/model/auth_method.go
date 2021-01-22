@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/clivern/drifter/core/migration"
-	"github.com/clivern/drifter/core/util"
+	"github.com/spacemanio/drifter/core/migration"
+	"github.com/spacemanio/drifter/core/util"
 )
 
 // AuthMethod struct

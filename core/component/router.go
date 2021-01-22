@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/clivern/drifter/core/model"
+	"github.com/spacemanio/drifter/core/model"
 )
 
 // Router type

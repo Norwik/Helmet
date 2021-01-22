@@ -5,7 +5,7 @@
 package main
 
 import (
-	"github.com/clivern/drifter/cmd"
+	"github.com/spacemanio/drifter/cmd"
 )
 
 var (

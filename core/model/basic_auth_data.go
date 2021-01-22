@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/clivern/drifter/core/util"
+	"github.com/spacemanio/drifter/core/util"
 )
 
 // BasicAuthData struct

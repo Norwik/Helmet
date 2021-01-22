@@ -10,8 +10,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/clivern/drifter/core/model"
-	"github.com/clivern/drifter/core/module"
+	"github.com/spacemanio/drifter/core/model"
+	"github.com/spacemanio/drifter/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"

@@ -15,9 +15,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/clivern/drifter/core/component"
-	"github.com/clivern/drifter/core/controller"
-	"github.com/clivern/drifter/core/module"
+	"github.com/spacemanio/drifter/core/component"
+	"github.com/spacemanio/drifter/core/controller"
+	"github.com/spacemanio/drifter/core/module"
 
 	"github.com/drone/envsubst"
 	"github.com/labstack/echo-contrib/prometheus"

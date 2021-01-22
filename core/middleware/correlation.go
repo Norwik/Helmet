@@ -7,7 +7,7 @@ package middleware
 import (
 	"strings"
 
-	"github.com/clivern/drifter/core/component"
+	"github.com/spacemanio/drifter/core/component"
 
 	"github.com/labstack/echo/v4"
 )

@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/clivern/drifter/core/model"
-	"github.com/clivern/drifter/core/module"
-	"github.com/clivern/drifter/core/util"
+	"github.com/spacemanio/drifter/core/model"
+	"github.com/spacemanio/drifter/core/module"
+	"github.com/spacemanio/drifter/core/util"
 )
 
 // KeyBasedAuthMethod type

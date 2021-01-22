@@ -5,8 +5,8 @@
 package module
 
 import (
-	"github.com/clivern/drifter/core/migration"
-	"github.com/clivern/drifter/core/model"
+	"github.com/spacemanio/drifter/core/migration"
+	"github.com/spacemanio/drifter/core/model"
 )
 
 // CreateKeyBasedAuthData creates a new entity

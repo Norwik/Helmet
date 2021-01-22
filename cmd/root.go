@@ -18,7 +18,7 @@ var rootCmd = &cobra.Command{
 	Short: `🐺 A Lightweight Cloud Native API Gateway
 
 If you have any suggestions, bug reports, or annoyances please report
-them to our issue tracker at <https://github.com/clivern/drifter/issues>`,
+them to our issue tracker at <https://github.com/spacemanio/drifter/issues>`,
 }
 
 // Execute runs cmd tool
