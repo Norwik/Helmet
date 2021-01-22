@@ -7,6 +7,7 @@ package controller
 import (
 	"io/ioutil"
 
+	"github.com/clivern/drifter/core/component"
 	"github.com/clivern/drifter/core/model"
 	"github.com/clivern/drifter/core/module"
 
@@ -50,4 +51,40 @@ func (h *Helpers) GetConfigs() (*model.Configs, error) {
 	}
 
 	return configs, nil
+}
+
+// GetBalancer gets load balancer
+func (h *Helpers) GetBalancer() (map[string]component.Balancer, error) {
+	result := make(map[string]component.Balancer)
+
+	configs, err := h.GetConfigs()
+
+	if err != nil {
+		return result, err
+	}
+
+	for _, endpoint := range configs.App.Endpoint {
+
+		if endpoint.Proxy.Upstreams.Balancing == "roundrobin" {
+			result[endpoint.Name] = component.NewRoundRobinBalancer([]*component.Target{})
+
+			for _, target := range endpoint.Proxy.Upstreams.Targets {
+				result[endpoint.Name].AddTarget(&component.Target{
+					URL: target.Target,
+				})
+			}
+		}
+
+		if endpoint.Proxy.Upstreams.Balancing == "random" {
+			result[endpoint.Name] = component.NewRandomBalancer([]*component.Target{})
+
+			for _, target := range endpoint.Proxy.Upstreams.Targets {
+				result[endpoint.Name].AddTarget(&component.Target{
+					URL: target.Target,
+				})
+			}
+		}
+	}
+
+	return result, nil
 }

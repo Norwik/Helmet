@@ -44,17 +44,46 @@ app:
 
     # Endpoint Configs
     endpoint:
-        - name: orders
+        # Orders Internal Service
+        - name: order_service
           active: true
           proxy:
             listen_path: "/orders/v2/*"
             upstreams:
                 balancing: roundrobin
                 targets:
-                    - target: http://www.mocky.io/v2/595625d22900008702cd71e8
+                    - target: https://httpbin.org/anything/orderService1/v2
+                    - target: https://httpbin.org/anything/orderService2/v2
+                    - target: https://httpbin.org/anything/orderService3/v2
+                    - target: https://httpbin.org/anything/orderService4/v2
             http_methods:
                 - ANY
+            authentication:
+                status: on
+                auth_methods:
+                    - 1
+            rate_limit:
+                status: off
+            circuit_breaker:
+                status: off
+
+        # Customers Internal Service
+        - name: customer_service
+          active: true
+          proxy:
+            listen_path: "/customer/v2/*"
+            upstreams:
+                balancing: random
+                targets:
+                    - target: https://httpbin.org/anything/customerService1/v2
+                    - target: https://httpbin.org/anything/customerService2/v2
+                    - target: https://httpbin.org/anything/customerService3/v2
+                    - target: https://httpbin.org/anything/customerService4/v2
+            http_methods:
                 - GET
+                - POST
+                - PUT
+                - DELETE
             authentication:
                 status: on
                 auth_methods:

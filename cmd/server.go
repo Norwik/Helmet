@@ -153,6 +153,13 @@ var serverCmd = &cobra.Command{
 		p := prometheus.NewPrometheus(viper.GetString("app.name"), nil)
 		p.Use(e)
 
+		helpers := controller.Helpers{}
+		balancer, err := helpers.GetBalancer()
+
+		if err != nil {
+			panic(fmt.Sprintf("Error while loading configs: %s", err.Error()))
+		}
+
 		e.GET("/favicon.ico", func(c echo.Context) error {
 			return c.String(http.StatusNoContent, "")
 		})
@@ -188,7 +195,10 @@ var serverCmd = &cobra.Command{
 
 		e.GET("/_me", controller.Me)
 		e.GET("/_health", controller.Health)
-		e.Any("/*", controller.Home)
+
+		e.Any("/*", func(c echo.Context) error {
+			return controller.ReverseProxy(c, balancer)
+		})
 
 		var runerr error
 

@@ -5,7 +5,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/clivern/drifter/core/component"
@@ -15,9 +14,11 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// Home controller
-func Home(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
+// ReverseProxy controller
+func ReverseProxy(c echo.Context, balancer map[string]component.Balancer) error {
+	helpers := &Helpers{
+		Database: &module.Database{},
+	}
 
 	err := helpers.DatabaseConnect()
 
@@ -70,6 +71,7 @@ func Home(c echo.Context) error {
 	// Validate the Request HTTP Method
 	// ---------------------------------
 	authorization := &component.Authorization{}
+
 	err = authorization.Authorize(
 		endpoint,
 		c.Request().Method,
@@ -91,7 +93,7 @@ func Home(c echo.Context) error {
 	apiMethod := &component.KeyBasedAuthMethod{Database: helpers.DB()}
 	basicMethod := &component.BasicAuthMethod{Database: helpers.DB()}
 
-	meta := "{}"
+	meta := ""
 	name := ""
 	success := false
 	apiKey := c.Request().Header.Get("x-api-key")
@@ -129,18 +131,24 @@ func Home(c echo.Context) error {
 		return c.NoContent(http.StatusUnauthorized)
 	}
 
-	fmt.Println(name)
-	fmt.Println(meta)
+	// -------------------------------------
+	// Redirect The Request to The Upstream
+	// -------------------------------------
+	remote := router.BuildRemote(
+		balancer[endpoint.Name].Next().URL,
+		endpoint.Proxy.ListenPath,
+		c.Request().URL.Path,
+	)
 
-	/*
-		proxy := component.NewProxy(
-			c.Request(),
-			c.Response().Writer,
-			"https://httpbin.org/headers",
-		)
+	proxy := component.NewProxy(
+		c.Request(),
+		c.Response().Writer,
+		name,
+		remote,
+		meta,
+	)
 
-		proxy.Redirect()
-	*/
+	proxy.Redirect()
 
 	return nil
 }

@@ -13,8 +13,7 @@ import (
 
 // Target type
 type Target struct {
-	URL  string
-	Meta map[string]string
+	URL string
 }
 
 // Balancer interface
