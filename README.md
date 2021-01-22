@@ -3,22 +3,22 @@
     <h3 align="center">Drifter</h3>
     <p align="center">A Lightweight Cloud Native API Gateway.</p>
     <p align="center">
-        <a href="https://github.com/Clivern/Drifter/actions/workflows/build.yml">
-            <img src="https://github.com/Clivern/Drifter/actions/workflows/build.yml/badge.svg">
+        <a href="https://github.com/Spacemanio/Drifter/actions/workflows/build.yml">
+            <img src="https://github.com/Spacemanio/Drifter/actions/workflows/build.yml/badge.svg">
         </a>
-        <a href="https://github.com/Clivern/Drifter/actions">
-            <img src="https://github.com/Clivern/Drifter/workflows/Release/badge.svg">
+        <a href="https://github.com/Spacemanio/Drifter/actions">
+            <img src="https://github.com/Spacemanio/Drifter/workflows/Release/badge.svg">
         </a>
-        <a href="https://github.com/Clivern/Drifter/releases">
+        <a href="https://github.com/Spacemanio/Drifter/releases">
             <img src="https://img.shields.io/badge/Version-0.1.0-red.svg">
         </a>
-        <a href="https://goreportcard.com/report/github.com/Clivern/Drifter">
-            <img src="https://goreportcard.com/badge/github.com/Clivern/Drifter?v=0.1.0">
+        <a href="https://goreportcard.com/report/github.com/Spacemanio/Drifter">
+            <img src="https://goreportcard.com/badge/github.com/Spacemanio/Drifter?v=0.1.0">
         </a>
-        <a href="https://godoc.org/github.com/clivern/drifter">
-            <img src="https://godoc.org/github.com/clivern/drifter?status.svg">
+        <a href="https://godoc.org/github.com/spacemanio/drifter">
+            <img src="https://godoc.org/github.com/spacemanio/drifter?status.svg">
         </a>
-        <a href="https://github.com/Clivern/Drifter/blob/master/LICENSE">
+        <a href="https://github.com/Spacemanio/Drifter/blob/master/LICENSE">
             <img src="https://img.shields.io/badge/LICENSE-MIT-orange.svg">
         </a>
     </p>
@@ -47,12 +47,12 @@ Drifter is Cloud Native API Gateway that control who accesses your API whether f
 
 #### Linux Deployment
 
-Download [the latest drifter binary](https://github.com/Clivern/Drifter/releases). Make it executable from everywhere.
+Download [the latest drifter binary](https://github.com/Spacemanio/Drifter/releases). Make it executable from everywhere.
 
 ```zsh
-$ export DRIFTER_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Clivern/Drifter/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
+$ export DRIFTER_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Spacemanio/Drifter/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
 
-$ curl -sL https://github.com/Clivern/Drifter/releases/download/v{$DRIFTER_LATEST_VERSION}/drifter_{$DRIFTER_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
+$ curl -sL https://github.com/Spacemanio/Drifter/releases/download/v{$DRIFTER_LATEST_VERSION}/drifter_{$DRIFTER_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
 ```
 
 Then install `etcd` cluster or a single node! please [refer to etcd docs](https://etcd.io/docs/v3.5/) or bin directory inside this repository.
@@ -176,12 +176,12 @@ $ drifter server -c /path/to/config.yml
 
 For transparency into our release cycle and in striving to maintain backward compatibility, Drifter is maintained under the [Semantic Versioning guidelines](https://semver.org/) and release process is predictable and business-friendly.
 
-See the [Releases section of our GitHub project](https://github.com/clivern/drifter/releases) for changelogs for each release version of Drifter. It contains summaries of the most noteworthy changes made in each release.
+See the [Releases section of our GitHub project](https://github.com/spacemanio/drifter/releases) for changelogs for each release version of Drifter. It contains summaries of the most noteworthy changes made in each release.
 
 
 ## Bug tracker
 
-If you have any suggestions, bug reports, or annoyances please report them to our issue tracker at https://github.com/clivern/drifter/issues
+If you have any suggestions, bug reports, or annoyances please report them to our issue tracker at https://github.com/spacemanio/drifter/issues
 
 
 ## Security Issues
@@ -196,6 +196,6 @@ We are an open source, community-driven project so please feel free to join us. 
 
 ## License
 
-© 2021, Clivern. Released under [MIT License](https://opensource.org/licenses/mit-license.php).
+© 2021, Spacemanio. Released under [MIT License](https://opensource.org/licenses/mit-license.php).
 
 **Drifter** is authored and maintained by [@clivern](http://github.com/clivern).

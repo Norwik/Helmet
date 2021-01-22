@@ -1,4 +1,4 @@
-module github.com/clivern/drifter
+module github.com/spacemanio/drifter
 
 go 1.16
 

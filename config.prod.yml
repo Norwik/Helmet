@@ -96,8 +96,8 @@ app:
     # Log configs
     log:
         # Log level, it can be debug, info, warn, error, panic, fatal
-        level: ${DRIFTER_LOG_LEVEL:-info}
+        level: ${PEANUT_LOG_LEVEL:-info}
         # Output can be stdout or abs path to log file /var/logs/drifter.log
-        output: ${DRIFTER_LOG_OUTPUT:-stdout}
+        output: ${PEANUT_LOG_OUTPUT:-/var/logs/drifter.log}
         # Format can be json
-        format: ${DRIFTER_LOG_FORMAT:-json}
+        format: ${PEANUT_LOG_FORMAT:-json}
