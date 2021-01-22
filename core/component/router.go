@@ -26,6 +26,7 @@ func (r *Router) GetEndpoint(endpoints []model.Endpoint, path string) (model.End
 	var uri string
 
 	if strings.Contains(path, "?") {
+		// Remove query args if it is there
 		items := strings.Split(path, "?")
 		uri = items[0]
 	} else {
@@ -37,6 +38,7 @@ func (r *Router) GetEndpoint(endpoints []model.Endpoint, path string) (model.End
 			continue
 		}
 
+		// Use the listen path as a regex
 		r, _ := regexp.Compile(endpoint.Proxy.ListenPath)
 
 		if r.MatchString(uri) {
@@ -47,27 +49,34 @@ func (r *Router) GetEndpoint(endpoints []model.Endpoint, path string) (model.End
 	return model.Endpoint{}, fmt.Errorf("Endpoint not found")
 }
 
-// BuildRemote gets the final upstream URL
-func (r *Router) BuildRemote(upstream, listenPath, path string) string {
+// BuildRemote gets the final remote service URL to call
+func (r *Router) BuildRemote(serviceURL, listenPath, path string) string {
 	var uri string
 
 	if strings.Contains(path, "?") {
+		// Remove query args if it is there
 		items := strings.Split(path, "?")
 		uri = items[0]
 	} else {
 		uri = strings.TrimRight(path, "/")
 	}
 
+	// given a listen_path = /orders/v2/*
+	// and uri /orders/v2/order/1
+	// submatch will be the * part "order/1"
+	// the remote url will be http://service.url/submatch --> http://service.url/order/1
+
+	// Use the listen path as a regex
 	re := regexp.MustCompile(listenPath)
 
-	upstream = strings.TrimRight(upstream, "/")
-
-	sub := ""
+	submatch := ""
 	items := re.FindStringSubmatch(uri)
 
 	if len(items) > 0 {
-		sub = items[0]
+		submatch = items[0]
 	}
 
-	return fmt.Sprintf("%s/%s", upstream, strings.Replace(uri, sub, "", -1))
+	serviceURL = strings.TrimRight(serviceURL, "/")
+
+	return fmt.Sprintf("%s/%s", serviceURL, strings.Replace(uri, submatch, "", -1))
 }

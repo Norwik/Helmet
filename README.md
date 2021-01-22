@@ -73,45 +73,87 @@ app:
     # TLS configs
     tls:
         status: ${DRIFTER_API_TLS_STATUS:-off}
-        pemPath: ${DRIFTER_API_TLS_PEMPATH:-cert/server.pem}
-        keyPath: ${DRIFTER_API_TLS_KEYPATH:-cert/server.key}
+        crt_path: ${DRIFTER_API_TLS_PEMPATH:-cert/server.crt}
+        key_path: ${DRIFTER_API_TLS_KEYPATH:-cert/server.key}
+
+    # Global timeout
+    timeout: ${DRIFTER_API_TIMEOUT:-50}
 
     # API Configs
     api:
         key: ${DRIFTER_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
 
-    # Async Workers
-    workers:
-        # Queue max capacity
-        buffer: ${DRIFTER_WORKERS_CHAN_CAPACITY:-5000}
-        # Number of concurrent workers
-        count: ${DRIFTER_WORKERS_COUNT:-4}
-
     # Runtime, Requests/Response and Drifter Metrics
     metrics:
         prometheus:
             # Route for the metrics endpoint
-            endpoint: ${DRIFTER_METRICS_PROM_ENDPOINT:-/metrics}
+            endpoint: ${DRIFTER_METRICS_PROM_ENDPOINT:-/_metrics}
 
-    # Components Configs
-    component:
-        # Tracing Component
-        tracing:
-            # Status on or off
-            status: ${DRIFTER_TRACING_STATUS:-on}
-            # Tracing driver, jaeger supported so far
-            driver: ${DRIFTER_TRACING_DRIVER:-jaeger}
-            # Tracing backend URL
-            collectorEndpoint: ${DRIFTER_TRACING_ENDPOINT:-http://jaeger.local:14268/api/traces}
-            # Batch Size
-            queueSize: ${DRIFTER_TRACING_QUEUE_SIZE:-20}
+    # Application Database
+    database:
+        # Database driver (sqlite3, mysql)
+        driver: ${DRIFTER_DATABASE_DRIVER:-sqlite3}
+        # Database Host
+        host: ${DRIFTER_DATABASE_MYSQL_HOST:-localhost}
+        # Database Port
+        port: ${DRIFTER_DATABASE_MYSQL_PORT:-3306}
+        # Database Name
+        name: ${DRIFTER_DATABASE_MYSQL_DATABASE:-drifter.db}
+        # Database Username
+        username: ${DRIFTER_DATABASE_MYSQL_USERNAME:-root}
+        # Database Password
+        password: ${DRIFTER_DATABASE_MYSQL_PASSWORD:-root}
 
-        # Profiler Component
-        profiler:
-            # Profiler Status
-            status: ${DRIFTER_PROFILER_STATUS:-on}
-            # Profiler Driver
-            driver: ${DRIFTER_PROFILER_DRIVER:-log}
+    # Endpoint Configs
+    endpoint:
+        # Orders Internal Service
+        - name: order_service
+          active: true
+          proxy:
+            listen_path: "/orders/v2/*"
+            upstreams:
+                balancing: roundrobin
+                targets:
+                    - target: https://httpbin.org/anything/orderService1/v2
+                    - target: https://httpbin.org/anything/orderService2/v2
+                    - target: https://httpbin.org/anything/orderService3/v2
+                    - target: https://httpbin.org/anything/orderService4/v2
+            http_methods:
+                - ANY
+            authentication:
+                status: on
+                auth_methods:
+                    - 1
+            rate_limit:
+                status: off
+            circuit_breaker:
+                status: off
+
+        # Customers Internal Service
+        - name: customer_service
+          active: true
+          proxy:
+            listen_path: "/customer/v2/*"
+            upstreams:
+                balancing: random
+                targets:
+                    - target: https://httpbin.org/anything/customerService1/v2
+                    - target: https://httpbin.org/anything/customerService2/v2
+                    - target: https://httpbin.org/anything/customerService3/v2
+                    - target: https://httpbin.org/anything/customerService4/v2
+            http_methods:
+                - GET
+                - POST
+                - PUT
+                - DELETE
+            authentication:
+                status: on
+                auth_methods:
+                    - 1
+            rate_limit:
+                status: off
+            circuit_breaker:
+                status: off
 
     # Log configs
     log:

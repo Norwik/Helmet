@@ -24,13 +24,16 @@ type Proxy struct {
 
 // NewProxy creates a new instance
 func NewProxy(httpRequest *http.Request, httpWriter http.ResponseWriter, name, upstream, meta string) *Proxy {
-	return &Proxy{
+	p := &Proxy{
 		Name:        name,
-		Meta:        p.ConvertMetaData(meta),
 		Upstream:    upstream,
 		HTTPRequest: httpRequest,
 		HTTPWriter:  httpWriter,
 	}
+
+	p.Meta = p.ConvertMetaData(meta)
+
+	return p
 }
 
 // Redirect proxy the request to the remote service
