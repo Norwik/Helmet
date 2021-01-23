@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/assets/logo.png?v=0.1.0" width="200" />
+    <img src="/assets/logo.png?v=0.1.1" width="200" />
     <h3 align="center">Helmet</h3>
     <p align="center">A Lightweight Cloud Native API Gateway.</p>
     <p align="center">
@@ -10,10 +10,10 @@
             <img src="https://github.com/Spacemanio/Helmet/workflows/Release/badge.svg">
         </a>
         <a href="https://github.com/Spacemanio/Helmet/releases">
-            <img src="https://img.shields.io/badge/Version-0.1.0-red.svg">
+            <img src="https://img.shields.io/badge/Version-0.1.1-red.svg">
         </a>
         <a href="https://goreportcard.com/report/github.com/Spacemanio/Helmet">
-            <img src="https://goreportcard.com/badge/github.com/Spacemanio/Helmet?v=0.1.0">
+            <img src="https://goreportcard.com/badge/github.com/Spacemanio/Helmet?v=0.1.1">
         </a>
         <a href="https://godoc.org/github.com/spacemanio/helmet">
             <img src="https://godoc.org/github.com/spacemanio/helmet?status.svg">
@@ -25,7 +25,7 @@
 </p>
 <br/>
 <p align="center">
-    <img src="/assets/chart.png?v=0.1.0" width="80%" />
+    <img src="/assets/chart.png?v=0.1.1" width="80%" />
 </p>
 
 Helmet is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more!
