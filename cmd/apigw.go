@@ -6,7 +6,9 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )
 
@@ -33,7 +35,30 @@ var endpointsListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List API Gateway Endpoints",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("-->>")
+		data := [][]string{}
+
+		data = append(data, []string{
+			"customer_service",
+			"/customer/v2/*",
+			"On",
+			"On",
+		})
+
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"Name", "Listen Path", "Status", "Authentication"})
+		table.SetAutoWrapText(false)
+		table.SetAutoFormatHeaders(true)
+		table.SetHeaderAlignment(tablewriter.ALIGN_LEFT)
+		table.SetAlignment(tablewriter.ALIGN_LEFT)
+		table.SetCenterSeparator("")
+		table.SetColumnSeparator("")
+		table.SetRowSeparator("")
+		table.SetHeaderLine(false)
+		table.SetBorder(false)
+		table.SetTablePadding("\t")
+		table.SetNoWhiteSpace(true)
+		table.AppendBulk(data)
+		table.Render()
 	},
 }
 

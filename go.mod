@@ -10,6 +10,8 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/labstack/echo-contrib v0.11.0
 	github.com/labstack/echo/v4 v4.4.0
+	github.com/manifoldco/promptui v0.8.0
+	github.com/olekukonko/tablewriter v0.0.5
 	github.com/onsi/ginkgo v1.15.0 // indirect
 	github.com/onsi/gomega v1.10.5 // indirect
 	github.com/opentracing/opentracing-go v1.2.0
