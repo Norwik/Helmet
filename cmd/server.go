@@ -180,6 +180,8 @@ var serverCmd = &cobra.Command{
 				},
 			}))
 
+			e1.GET("/endpoint", controller.GetEndpoints)
+
 			e1.GET("/auth/method", controller.GetAuthMethods)
 			e1.GET("/auth/method/:id", controller.GetAuthMethod)
 			e1.DELETE("/auth/method/:id", controller.DeleteAuthMethod)
