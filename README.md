@@ -28,7 +28,9 @@
     <img src="/assets/chart.png?v=0.1.0" width="80%" />
 </p>
 
-Helmet is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more. here is some of the key features:
+Helmet is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more!
+
+Here is some of the key features:
 
 - Manage Service to Service Authentication, Authorization and Communication.
 - Manage End User to Service Authentication, Authorization and Communication.
@@ -39,6 +41,7 @@ Helmet is Cloud Native API Gateway that control who accesses your API whether fr
 - CORS Support.
 - HTTP/2 support.
 - Rate Limiting Support.
+- Circuit Breaker Support.
 - Caching Layer to make it even more faster.
 - Lightweight, Easy to Deploy and Operate.
 
