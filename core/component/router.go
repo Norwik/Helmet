@@ -78,5 +78,5 @@ func (r *Router) BuildRemote(serviceURL, listenPath, path string) string {
 
 	serviceURL = strings.TrimRight(serviceURL, "/")
 
-	return fmt.Sprintf("%s/%s", serviceURL, strings.Replace(uri, submatch, "", -1))
+	return strings.TrimRight(fmt.Sprintf("%s/%s", serviceURL, strings.Replace(uri, submatch, "", -1)), "/")
 }

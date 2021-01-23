@@ -54,8 +54,22 @@ func (p *Proxy) Redirect() {
 		req.URL.RawQuery = origin.RawQuery
 	}
 
+	modifyResponse := func(res *http.Response) error {
+
+		fmt.Println(res.StatusCode)
+
+		return nil
+	}
+
+	errorHandler := func(res http.ResponseWriter, req *http.Request, err error) {
+		fmt.Println(err.Error())
+	}
+
+	// Ref --> https://github.com/golang/go/blob/master/src/net/http/httputil/reverseproxy.go#L42
 	proxy := &httputil.ReverseProxy{
-		Director: director,
+		Director:       director,
+		ModifyResponse: modifyResponse,
+		ErrorHandler:   errorHandler,
 	}
 
 	proxy.ServeHTTP(p.HTTPWriter, p.HTTPRequest)

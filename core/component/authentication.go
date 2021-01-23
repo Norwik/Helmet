@@ -39,7 +39,13 @@ func (k *KeyBasedAuthMethod) Authenticate(endpoint model.Endpoint, apiKey string
 
 	data = k.Database.GetKeyBasedAuthDataByAPIKey(apiKey)
 
-	if !util.InArray(data.AuthMethodID, endpoint.Proxy.Authentication.AuthMethods) {
+	if data.ID < 1 {
+		return data, fmt.Errorf("API key is invalid")
+	}
+
+	authMethod := k.Database.GetAuthMethodByID(data.AuthMethodID)
+
+	if authMethod.Endpoints == "" || !util.InArray(endpoint.Name, strings.Split(authMethod.Endpoints, ";")) {
 		return data, fmt.Errorf("API key is invalid")
 	}
 
@@ -73,7 +79,13 @@ func (b *BasicAuthMethod) Authenticate(endpoint model.Endpoint, authKey string) 
 
 	data = b.Database.GetBasicAuthData(username, password)
 
-	if !util.InArray(data.AuthMethodID, endpoint.Proxy.Authentication.AuthMethods) {
+	if data.ID < 1 {
+		return data, fmt.Errorf("API key is invalid")
+	}
+
+	authMethod := b.Database.GetAuthMethodByID(data.AuthMethodID)
+
+	if authMethod.Endpoints == "" || !util.InArray(endpoint.Name, strings.Split(authMethod.Endpoints, ";")) {
 		return data, fmt.Errorf("Basic auth credentials are invalid")
 	}
 

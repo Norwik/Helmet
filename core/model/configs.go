@@ -37,8 +37,7 @@ type Proxy struct {
 
 // Authentication type
 type Authentication struct {
-	Status      bool  `yaml:"status"`
-	AuthMethods []int `yaml:"auth_methods"`
+	Status bool `yaml:"status"`
 }
 
 // Upstreams type

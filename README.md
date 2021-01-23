@@ -104,6 +104,19 @@ app:
         # Database Password
         password: ${HELMET_DATABASE_MYSQL_PASSWORD:-root}
 
+    # Key Store Configs
+    key_store:
+        # Cache Driver
+        driver: ${HELMET_CACHE_DRIVER:-redis}
+        # Redis Driver Configs
+        redis:
+            # Redis Address
+            address: ${HELMET_CACHE_REDIS_ADDR:-localhost:6379}
+            # Redis Password
+            password: ${HELMET_CACHE_REDIS_PASSWORD:-}
+            # Redis Database
+            database: ${HELMET_CACHE_REDIS_DB:-0}
+
     # Endpoint Configs
     endpoint:
         # Orders Internal Service
@@ -122,10 +135,10 @@ app:
                 - ANY
             authentication:
                 status: on
-                auth_methods:
-                    - 1
+            # Rate limit use the key store for fast read write
             rate_limit:
                 status: off
+            # Circuit Breaker use the key store for fast read write
             circuit_breaker:
                 status: off
 
@@ -148,10 +161,10 @@ app:
                 - DELETE
             authentication:
                 status: on
-                auth_methods:
-                    - 1
+            # Rate limit use the key store for fast read write
             rate_limit:
                 status: off
+            # Circuit Breaker use the key store for fast read write
             circuit_breaker:
                 status: off
 

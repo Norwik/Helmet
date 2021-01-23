@@ -6,11 +6,14 @@ package model
 
 import (
 	"fmt"
+	"io/ioutil"
 	"strings"
 	"time"
 
 	"github.com/spacemanio/helmet/core/migration"
 	"github.com/spacemanio/helmet/core/util"
+
+	"github.com/spf13/viper"
 )
 
 // AuthMethod struct
@@ -20,6 +23,7 @@ type AuthMethod struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Type        string `json:"type"`
+	Endpoints   string `json:"endpoints"`
 
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -48,6 +52,8 @@ func (a *AuthMethod) Validate() error {
 		migration.OAuthAuthentication,
 	}
 
+	endpoints, _ := a.GetEndpoints()
+
 	if !util.InArray(a.Type, lst) {
 		return fmt.Errorf("Auth method type %s is invalid", a.Type)
 	}
@@ -56,7 +62,40 @@ func (a *AuthMethod) Validate() error {
 		return fmt.Errorf("Auth method name is required")
 	}
 
+	if strings.TrimSpace(a.Endpoints) != "" {
+		items := strings.Split(a.Endpoints, ";")
+		for _, item := range items {
+			if !util.InArray(item, endpoints) {
+				return fmt.Errorf("Endpoint with a name %s is invalid", item)
+			}
+		}
+	}
+
 	return nil
+}
+
+// GetEndpoints gets a list of endpoints names
+func (a *AuthMethod) GetEndpoints() ([]string, error) {
+	result := []string{}
+	configs := &Configs{}
+
+	data, err := ioutil.ReadFile(viper.GetString("config"))
+
+	if err != nil {
+		return result, err
+	}
+
+	err = configs.LoadFromYAML(data)
+
+	if err != nil {
+		return result, err
+	}
+
+	for _, endpoint := range configs.App.Endpoint {
+		result = append(result, endpoint.Name)
+	}
+
+	return result, nil
 }
 
 // LoadFromJSON update object from json
