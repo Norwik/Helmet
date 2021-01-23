@@ -5,7 +5,7 @@ pkgs          = ./...
 
 help: Makefile
 	@echo
-	@echo " Choose a command run in Drifter:"
+	@echo " Choose a command run in Helmet:"
 	@echo
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
 	@echo
@@ -121,7 +121,7 @@ package:
 .PHONY: run
 run:
 	@echo ">> ============= Run API Server ============= <<"
-	$(GO) run drifter.go server -c config.dist.yml
+	$(GO) run helmet.go server -c config.dist.yml
 
 
 ## ci: Run all CI tests.

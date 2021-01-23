@@ -1,4 +1,4 @@
-// Copyright 2020 Clivern. All rights reserved.
+// Copyright 2021 Clivern. All rights reserved.
 // Use of this source code is governed by the MIT
 // license that can be found in the LICENSE file.
 
@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/spacemanio/drifter/core/migration"
-	"github.com/spacemanio/drifter/core/model"
+	"github.com/spacemanio/helmet/core/migration"
+	"github.com/spacemanio/helmet/core/model"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"

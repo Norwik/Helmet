@@ -11,7 +11,7 @@ RUN apt-get update
 
 WORKDIR /app
 
-RUN curl -sL https://github.com/Spacemanio/Drifter/releases/download/v${DRIFTER_VERSION}/walrus_${DRIFTER_VERSION}_Linux_x86_64.tar.gz | tar xz
+RUN curl -sL https://github.com/Spacemanio/Helmet/releases/download/v${DRIFTER_VERSION}/walrus_${DRIFTER_VERSION}_Linux_x86_64.tar.gz | tar xz
 RUN rm LICENSE
 RUN rm README.md
 
@@ -22,6 +22,6 @@ EXPOSE 8000
 VOLUME /app/configs
 VOLUME /app/var
 
-RUN ./drifter version
+RUN ./helmet version
 
-CMD ["./drifter", "server", "-c", "/app/configs/config.dist.yml"]
+CMD ["./helmet", "server", "-c", "/app/configs/config.dist.yml"]

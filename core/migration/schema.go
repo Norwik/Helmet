@@ -5,7 +5,7 @@
 package migration
 
 import (
-	"github.com/spacemanio/drifter/core/util"
+	"github.com/spacemanio/helmet/core/util"
 
 	"github.com/jinzhu/gorm"
 )

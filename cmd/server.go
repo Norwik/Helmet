@@ -15,9 +15,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spacemanio/drifter/core/component"
-	"github.com/spacemanio/drifter/core/controller"
-	"github.com/spacemanio/drifter/core/module"
+	"github.com/spacemanio/helmet/core/component"
+	"github.com/spacemanio/helmet/core/controller"
+	"github.com/spacemanio/helmet/core/module"
 
 	"github.com/drone/envsubst"
 	"github.com/labstack/echo-contrib/prometheus"
@@ -30,7 +30,7 @@ import (
 
 var serverCmd = &cobra.Command{
 	Use:   "server",
-	Short: "Start drifter server",
+	Short: "Start helmet server",
 	Run: func(cmd *cobra.Command, args []string) {
 		configUnparsed, err := ioutil.ReadFile(config)
 

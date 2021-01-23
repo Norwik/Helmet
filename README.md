@@ -1,24 +1,24 @@
 <p align="center">
-    <img src="/assets/logo1.png?v=0.1.0" width="200" />
-    <h3 align="center">Drifter</h3>
+    <img src="/assets/logo.png?v=0.1.0" width="200" />
+    <h3 align="center">Helmet</h3>
     <p align="center">A Lightweight Cloud Native API Gateway.</p>
     <p align="center">
-        <a href="https://github.com/Spacemanio/Drifter/actions/workflows/build.yml">
-            <img src="https://github.com/Spacemanio/Drifter/actions/workflows/build.yml/badge.svg">
+        <a href="https://github.com/Spacemanio/Helmet/actions/workflows/build.yml">
+            <img src="https://github.com/Spacemanio/Helmet/actions/workflows/build.yml/badge.svg">
         </a>
-        <a href="https://github.com/Spacemanio/Drifter/actions">
-            <img src="https://github.com/Spacemanio/Drifter/workflows/Release/badge.svg">
+        <a href="https://github.com/Spacemanio/Helmet/actions">
+            <img src="https://github.com/Spacemanio/Helmet/workflows/Release/badge.svg">
         </a>
-        <a href="https://github.com/Spacemanio/Drifter/releases">
+        <a href="https://github.com/Spacemanio/Helmet/releases">
             <img src="https://img.shields.io/badge/Version-0.1.0-red.svg">
         </a>
-        <a href="https://goreportcard.com/report/github.com/Spacemanio/Drifter">
-            <img src="https://goreportcard.com/badge/github.com/Spacemanio/Drifter?v=0.1.0">
+        <a href="https://goreportcard.com/report/github.com/Spacemanio/Helmet">
+            <img src="https://goreportcard.com/badge/github.com/Spacemanio/Helmet?v=0.1.0">
         </a>
-        <a href="https://godoc.org/github.com/spacemanio/drifter">
-            <img src="https://godoc.org/github.com/spacemanio/drifter?status.svg">
+        <a href="https://godoc.org/github.com/spacemanio/helmet">
+            <img src="https://godoc.org/github.com/spacemanio/helmet?status.svg">
         </a>
-        <a href="https://github.com/Spacemanio/Drifter/blob/master/LICENSE">
+        <a href="https://github.com/Spacemanio/Helmet/blob/master/LICENSE">
             <img src="https://img.shields.io/badge/LICENSE-MIT-orange.svg">
         </a>
     </p>
@@ -28,7 +28,7 @@
     <img src="/assets/chart.png?v=0.1.0" width="80%" />
 </p>
 
-Drifter is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more. here is some of the key features:
+Helmet is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more. here is some of the key features:
 
 - Manage Service to Service Authentication, Authorization and Communication.
 - Manage End User to Service Authentication, Authorization and Communication.
@@ -47,12 +47,12 @@ Drifter is Cloud Native API Gateway that control who accesses your API whether f
 
 #### Linux Deployment
 
-Download [the latest drifter binary](https://github.com/Spacemanio/Drifter/releases). Make it executable from everywhere.
+Download [the latest helmet binary](https://github.com/Spacemanio/Helmet/releases). Make it executable from everywhere.
 
 ```zsh
-$ export DRIFTER_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Spacemanio/Drifter/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
+$ export DRIFTER_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Spacemanio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
 
-$ curl -sL https://github.com/Spacemanio/Drifter/releases/download/v{$DRIFTER_LATEST_VERSION}/drifter_{$DRIFTER_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
+$ curl -sL https://github.com/Spacemanio/Helmet/releases/download/v{$DRIFTER_LATEST_VERSION}/helmet_{$DRIFTER_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
 ```
 
 Then install `etcd` cluster or a single node! please [refer to etcd docs](https://etcd.io/docs/v3.5/) or bin directory inside this repository.
@@ -63,7 +63,7 @@ Create the configs file `config.yml` from `config.dist.yml`. Something like the 
 # App configs
 app:
     # App name
-    name: ${DRIFTER_APP_NAME:-drifter}
+    name: ${DRIFTER_APP_NAME:-helmet}
     # Env mode (dev or prod)
     mode: ${DRIFTER_APP_MODE:-dev}
     # HTTP port
@@ -83,7 +83,7 @@ app:
     api:
         key: ${DRIFTER_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
 
-    # Runtime, Requests/Response and Drifter Metrics
+    # Runtime, Requests/Response and Helmet Metrics
     metrics:
         prometheus:
             # Route for the metrics endpoint
@@ -98,7 +98,7 @@ app:
         # Database Port
         port: ${DRIFTER_DATABASE_MYSQL_PORT:-3306}
         # Database Name
-        name: ${DRIFTER_DATABASE_MYSQL_DATABASE:-drifter.db}
+        name: ${DRIFTER_DATABASE_MYSQL_DATABASE:-helmet.db}
         # Database Username
         username: ${DRIFTER_DATABASE_MYSQL_USERNAME:-root}
         # Database Password
@@ -159,34 +159,34 @@ app:
     log:
         # Log level, it can be debug, info, warn, error, panic, fatal
         level: ${DRIFTER_LOG_LEVEL:-info}
-        # Output can be stdout or abs path to log file /var/logs/drifter.log
+        # Output can be stdout or abs path to log file /var/logs/helmet.log
         output: ${DRIFTER_LOG_OUTPUT:-stdout}
         # Format can be json
         format: ${DRIFTER_LOG_FORMAT:-json}
 ```
 
-The run the `drifter` with `systemd`
+The run the `helmet` with `systemd`
 
 ```zsh
-$ drifter server -c /path/to/config.yml
+$ helmet server -c /path/to/config.yml
 ```
 
 
 ## Versioning
 
-For transparency into our release cycle and in striving to maintain backward compatibility, Drifter is maintained under the [Semantic Versioning guidelines](https://semver.org/) and release process is predictable and business-friendly.
+For transparency into our release cycle and in striving to maintain backward compatibility, Helmet is maintained under the [Semantic Versioning guidelines](https://semver.org/) and release process is predictable and business-friendly.
 
-See the [Releases section of our GitHub project](https://github.com/spacemanio/drifter/releases) for changelogs for each release version of Drifter. It contains summaries of the most noteworthy changes made in each release.
+See the [Releases section of our GitHub project](https://github.com/spacemanio/helmet/releases) for changelogs for each release version of Helmet. It contains summaries of the most noteworthy changes made in each release.
 
 
 ## Bug tracker
 
-If you have any suggestions, bug reports, or annoyances please report them to our issue tracker at https://github.com/spacemanio/drifter/issues
+If you have any suggestions, bug reports, or annoyances please report them to our issue tracker at https://github.com/spacemanio/helmet/issues
 
 
 ## Security Issues
 
-If you discover a security vulnerability within Drifter, please send an email to [hello@clivern.com](mailto:hello@clivern.com)
+If you discover a security vulnerability within Helmet, please send an email to [hello@clivern.com](mailto:hello@clivern.com)
 
 
 ## Contributing
@@ -198,4 +198,4 @@ We are an open source, community-driven project so please feel free to join us. 
 
 © 2021, Spacemanio. Released under [MIT License](https://opensource.org/licenses/mit-license.php).
 
-**Drifter** is authored and maintained by [@clivern](http://github.com/clivern).
+**Helmet** is authored and maintained by [@clivern](http://github.com/clivern).

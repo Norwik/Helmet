@@ -1,4 +1,4 @@
-module github.com/spacemanio/drifter
+module github.com/spacemanio/helmet
 
 go 1.16
 

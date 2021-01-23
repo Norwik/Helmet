@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/spacemanio/drifter/pkg"
+	"github.com/spacemanio/helmet/pkg"
 
 	"github.com/franela/goblin"
 )

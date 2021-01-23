@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spacemanio/drifter/core/util"
+	"github.com/spacemanio/helmet/core/util"
 )
 
 // BasicAuthData struct

@@ -1,33 +1,33 @@
 #!/bin/bash
 
-function drifter {
-    echo "Installing drifter ..."
+function helmet {
+    echo "Installing helmet ..."
 
     apt-get install jq -y
 
-    cd /etc/drifter
+    cd /etc/helmet
 
-    DRIFTER_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Spacemanio/Drifter/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
+    DRIFTER_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Spacemanio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
 
-    curl -sL https://github.com/Spacemanio/Drifter/releases/download/v{$DRIFTER_LATEST_VERSION}/drifter_{$DRIFTER_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
+    curl -sL https://github.com/Spacemanio/Helmet/releases/download/v{$DRIFTER_LATEST_VERSION}/helmet_{$DRIFTER_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
 
 
     echo "[Unit]
-Description=Drifter
-Documentation=https://github.com/spacemanio/drifter
+Description=Helmet
+Documentation=https://github.com/spacemanio/helmet
 
 [Service]
-ExecStart=/etc/drifter/drifter server -c /etc/drifter/config.prod.yml
+ExecStart=/etc/helmet/helmet server -c /etc/helmet/config.prod.yml
 Restart=on-failure
 RestartSec=2
 
 [Install]
-WantedBy=multi-user.target" > /etc/systemd/system/drifter.service
+WantedBy=multi-user.target" > /etc/systemd/system/helmet.service
 
     systemctl daemon-reload
-    systemctl start drifter.service
+    systemctl start helmet.service
 
-    echo "drifter installation done!"
+    echo "helmet installation done!"
 }
 
-drifter
+helmet

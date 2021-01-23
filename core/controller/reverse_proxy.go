@@ -7,8 +7,8 @@ package controller
 import (
 	"net/http"
 
-	"github.com/spacemanio/drifter/core/component"
-	"github.com/spacemanio/drifter/core/module"
+	"github.com/spacemanio/helmet/core/component"
+	"github.com/spacemanio/helmet/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"

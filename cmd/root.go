@@ -14,11 +14,11 @@ import (
 var config string
 
 var rootCmd = &cobra.Command{
-	Use: "drifter",
+	Use: "helmet",
 	Short: `🐺 A Lightweight Cloud Native API Gateway
 
 If you have any suggestions, bug reports, or annoyances please report
-them to our issue tracker at <https://github.com/spacemanio/drifter/issues>`,
+them to our issue tracker at <https://github.com/spacemanio/helmet/issues>`,
 }
 
 // Execute runs cmd tool

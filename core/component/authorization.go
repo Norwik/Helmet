@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/spacemanio/drifter/core/model"
-	"github.com/spacemanio/drifter/core/util"
+	"github.com/spacemanio/helmet/core/model"
+	"github.com/spacemanio/helmet/core/util"
 )
 
 // Authorization type

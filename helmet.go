@@ -5,7 +5,7 @@
 package main
 
 import (
-	"github.com/spacemanio/drifter/cmd"
+	"github.com/spacemanio/helmet/cmd"
 )
 
 var (

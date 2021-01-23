@@ -1,7 +1,7 @@
 # App configs
 app:
     # App name
-    name: ${DRIFTER_APP_NAME:-drifter}
+    name: ${DRIFTER_APP_NAME:-helmet}
     # Env mode (dev or prod)
     mode: ${DRIFTER_APP_MODE:-dev}
     # HTTP port
@@ -21,7 +21,7 @@ app:
     api:
         key: ${DRIFTER_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
 
-    # Runtime, Requests/Response and Drifter Metrics
+    # Runtime, Requests/Response and Helmet Metrics
     metrics:
         prometheus:
             # Route for the metrics endpoint
@@ -36,7 +36,7 @@ app:
         # Database Port
         port: ${DRIFTER_DATABASE_MYSQL_PORT:-3306}
         # Database Name
-        name: ${DRIFTER_DATABASE_MYSQL_DATABASE:-drifter.db}
+        name: ${DRIFTER_DATABASE_MYSQL_DATABASE:-helmet.db}
         # Database Username
         username: ${DRIFTER_DATABASE_MYSQL_USERNAME:-root}
         # Database Password
@@ -97,7 +97,7 @@ app:
     log:
         # Log level, it can be debug, info, warn, error, panic, fatal
         level: ${DRIFTER_LOG_LEVEL:-info}
-        # Output can be stdout or abs path to log file /var/logs/drifter.log
+        # Output can be stdout or abs path to log file /var/logs/helmet.log
         output: ${DRIFTER_LOG_OUTPUT:-stdout}
         # Format can be json
         format: ${DRIFTER_LOG_FORMAT:-json}
