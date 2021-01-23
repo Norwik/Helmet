@@ -11,7 +11,7 @@ RUN apt-get update
 
 WORKDIR /app
 
-RUN curl -sL https://github.com/Spacemanio/Helmet/releases/download/v${HELMET_VERSION}/walrus_${HELMET_VERSION}_Linux_x86_64.tar.gz | tar xz
+RUN curl -sL https://github.com/Spacemanio/Helmet/releases/download/v${HELMET_VERSION}/helmet_${HELMET_VERSION}_Linux_x86_64.tar.gz | tar xz
 RUN rm LICENSE
 RUN rm README.md
 
