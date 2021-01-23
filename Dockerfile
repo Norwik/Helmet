@@ -1,6 +1,6 @@
 FROM golang:1.16.6
 
-ARG DRIFTER_VERSION=0.1.0
+ARG HELMET_VERSION=0.1.0
 
 ENV GO111MODULE=on
 
@@ -11,7 +11,7 @@ RUN apt-get update
 
 WORKDIR /app
 
-RUN curl -sL https://github.com/Spacemanio/Helmet/releases/download/v${DRIFTER_VERSION}/walrus_${DRIFTER_VERSION}_Linux_x86_64.tar.gz | tar xz
+RUN curl -sL https://github.com/Spacemanio/Helmet/releases/download/v${HELMET_VERSION}/walrus_${HELMET_VERSION}_Linux_x86_64.tar.gz | tar xz
 RUN rm LICENSE
 RUN rm README.md
 

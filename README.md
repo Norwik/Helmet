@@ -50,9 +50,9 @@ Helmet is Cloud Native API Gateway that control who accesses your API whether fr
 Download [the latest helmet binary](https://github.com/Spacemanio/Helmet/releases). Make it executable from everywhere.
 
 ```zsh
-$ export DRIFTER_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Spacemanio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
+$ export HELMET_LATEST_VERSION=$(curl --silent "https://api.github.com/repos/Spacemanio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
 
-$ curl -sL https://github.com/Spacemanio/Helmet/releases/download/v{$DRIFTER_LATEST_VERSION}/helmet_{$DRIFTER_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
+$ curl -sL https://github.com/Spacemanio/Helmet/releases/download/v{$HELMET_LATEST_VERSION}/helmet_{$HELMET_LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
 ```
 
 Then install `etcd` cluster or a single node! please [refer to etcd docs](https://etcd.io/docs/v3.5/) or bin directory inside this repository.
@@ -63,46 +63,46 @@ Create the configs file `config.yml` from `config.dist.yml`. Something like the 
 # App configs
 app:
     # App name
-    name: ${DRIFTER_APP_NAME:-helmet}
+    name: ${HELMET_APP_NAME:-helmet}
     # Env mode (dev or prod)
-    mode: ${DRIFTER_APP_MODE:-dev}
+    mode: ${HELMET_APP_MODE:-dev}
     # HTTP port
-    port: ${DRIFTER_API_PORT:-8000}
+    port: ${HELMET_API_PORT:-8000}
     # Hostname
-    hostname: ${DRIFTER_API_HOSTNAME:-127.0.0.1}
+    hostname: ${HELMET_API_HOSTNAME:-127.0.0.1}
     # TLS configs
     tls:
-        status: ${DRIFTER_API_TLS_STATUS:-off}
-        crt_path: ${DRIFTER_API_TLS_PEMPATH:-cert/server.crt}
-        key_path: ${DRIFTER_API_TLS_KEYPATH:-cert/server.key}
+        status: ${HELMET_API_TLS_STATUS:-off}
+        crt_path: ${HELMET_API_TLS_PEMPATH:-cert/server.crt}
+        key_path: ${HELMET_API_TLS_KEYPATH:-cert/server.key}
 
     # Global timeout
-    timeout: ${DRIFTER_API_TIMEOUT:-50}
+    timeout: ${HELMET_API_TIMEOUT:-50}
 
     # API Configs
     api:
-        key: ${DRIFTER_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
+        key: ${HELMET_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
 
     # Runtime, Requests/Response and Helmet Metrics
     metrics:
         prometheus:
             # Route for the metrics endpoint
-            endpoint: ${DRIFTER_METRICS_PROM_ENDPOINT:-/_metrics}
+            endpoint: ${HELMET_METRICS_PROM_ENDPOINT:-/_metrics}
 
     # Application Database
     database:
         # Database driver (sqlite3, mysql)
-        driver: ${DRIFTER_DATABASE_DRIVER:-sqlite3}
+        driver: ${HELMET_DATABASE_DRIVER:-sqlite3}
         # Database Host
-        host: ${DRIFTER_DATABASE_MYSQL_HOST:-localhost}
+        host: ${HELMET_DATABASE_MYSQL_HOST:-localhost}
         # Database Port
-        port: ${DRIFTER_DATABASE_MYSQL_PORT:-3306}
+        port: ${HELMET_DATABASE_MYSQL_PORT:-3306}
         # Database Name
-        name: ${DRIFTER_DATABASE_MYSQL_DATABASE:-helmet.db}
+        name: ${HELMET_DATABASE_MYSQL_DATABASE:-helmet.db}
         # Database Username
-        username: ${DRIFTER_DATABASE_MYSQL_USERNAME:-root}
+        username: ${HELMET_DATABASE_MYSQL_USERNAME:-root}
         # Database Password
-        password: ${DRIFTER_DATABASE_MYSQL_PASSWORD:-root}
+        password: ${HELMET_DATABASE_MYSQL_PASSWORD:-root}
 
     # Endpoint Configs
     endpoint:
@@ -158,11 +158,11 @@ app:
     # Log configs
     log:
         # Log level, it can be debug, info, warn, error, panic, fatal
-        level: ${DRIFTER_LOG_LEVEL:-info}
+        level: ${HELMET_LOG_LEVEL:-info}
         # Output can be stdout or abs path to log file /var/logs/helmet.log
-        output: ${DRIFTER_LOG_OUTPUT:-stdout}
+        output: ${HELMET_LOG_OUTPUT:-stdout}
         # Format can be json
-        format: ${DRIFTER_LOG_FORMAT:-json}
+        format: ${HELMET_LOG_FORMAT:-json}
 ```
 
 The run the `helmet` with `systemd`
