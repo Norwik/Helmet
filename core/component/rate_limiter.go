@@ -3,3 +3,11 @@
 // license that can be found in the LICENSE file.
 
 package component
+
+// RateLimiter interface
+type RateLimiter interface {
+}
+
+// RedisRateLimiter struct
+type RedisRateLimiter struct {
+}

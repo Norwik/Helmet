@@ -3,3 +3,11 @@
 // license that can be found in the LICENSE file.
 
 package component
+
+// KeyStore interface
+type KeyStore interface {
+}
+
+// RedisKeyStore struct
+type RedisKeyStore struct {
+}
