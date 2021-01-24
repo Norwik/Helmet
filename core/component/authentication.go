@@ -77,7 +77,7 @@ func (b *BasicAuthMethod) Authenticate(endpoint model.Endpoint, authKey string) 
 	username := pair[0]
 	password := pair[1]
 
-	data = b.Database.GetBasicAuthData(username, password)
+	data = b.Database.GetBasicAuthDataByUsername(username, password)
 
 	if data.ID < 1 {
 		return data, fmt.Errorf("API key is invalid")

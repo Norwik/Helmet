@@ -103,10 +103,12 @@ func (db *Database) Migrate() bool {
 	db.Connection.AutoMigrate(&migration.Option{})
 	db.Connection.AutoMigrate(&migration.AuthMethod{})
 	db.Connection.AutoMigrate(&migration.KeyBasedAuthData{})
+	db.Connection.AutoMigrate(&migration.BasicAuthData{})
 
 	status = status && db.Connection.HasTable(&migration.Option{})
 	status = status && db.Connection.HasTable(&migration.AuthMethod{})
 	status = status && db.Connection.HasTable(&migration.KeyBasedAuthData{})
+	status = status && db.Connection.HasTable(&migration.BasicAuthData{})
 
 	return status
 }
@@ -118,10 +120,12 @@ func (db *Database) Rollback() bool {
 	db.Connection.DropTableIfExists(&migration.Option{})
 	db.Connection.DropTableIfExists(&migration.AuthMethod{})
 	db.Connection.DropTableIfExists(&migration.KeyBasedAuthData{})
+	db.Connection.DropTableIfExists(&migration.BasicAuthData{})
 
 	status = status && !db.Connection.HasTable(&migration.Option{})
 	status = status && !db.Connection.HasTable(&migration.AuthMethod{})
 	status = status && !db.Connection.HasTable(&migration.KeyBasedAuthData{})
+	status = status && !db.Connection.HasTable(&migration.BasicAuthData{})
 
 	return status
 }

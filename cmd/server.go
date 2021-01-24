@@ -193,6 +193,12 @@ var serverCmd = &cobra.Command{
 			e1.DELETE("/auth/key/:id", controller.DeleteKeyBasedAuthData)
 			e1.POST("/auth/key", controller.CreateKeyBasedAuthData)
 			e1.PUT("/auth/key/:id", controller.UpdateKeyBasedAuthData)
+
+			e1.GET("/auth/basic", controller.GetBasicAuthItems)
+			e1.GET("/auth/basic/:id", controller.GetBasicAuthData)
+			e1.DELETE("/auth/basic/:id", controller.DeleteBasicAuthData)
+			e1.POST("/auth/basic", controller.CreateBasicAuthData)
+			e1.PUT("/auth/basic/:id", controller.UpdateBasicAuthData)
 		}
 
 		e.GET("/_me", controller.Me)
