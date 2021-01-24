@@ -3,3 +3,11 @@
 // license that can be found in the LICENSE file.
 
 package component
+
+// CircuitBreaker interface
+type CircuitBreaker interface {
+}
+
+// RedisCircuitBreaker struct
+type RedisCircuitBreaker struct {
+}
