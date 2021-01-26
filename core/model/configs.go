@@ -83,3 +83,13 @@ func (c *Configs) LoadFromJSON(data []byte) error {
 func (c *Configs) ConvertToJSON() (string, error) {
 	return util.ConvertToJSON(c)
 }
+
+// LoadFromJSON update object from json
+func (a *App) LoadFromJSON(data []byte) error {
+	return util.LoadFromJSON(a, data)
+}
+
+// ConvertToJSON convert object to json
+func (a *App) ConvertToJSON() (string, error) {
+	return util.ConvertToJSON(a)
+}

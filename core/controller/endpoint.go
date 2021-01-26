@@ -25,5 +25,5 @@ func GetEndpoints(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	return c.JSON(http.StatusOK, configs.App.Endpoint)
+	return c.JSON(http.StatusOK, configs.App)
 }

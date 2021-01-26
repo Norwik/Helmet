@@ -5,14 +5,20 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"os"
+
+	"github.com/spacemanio/helmet/core/service"
+	"github.com/spacemanio/helmet/sdk"
 
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )
 
 // apigwCmd command
+// $ export HELMET_URL=http://127.0.0.1:8000
+// $ export HELMET_API_KEY=6c68b836-6f8e-465e-b59f-89c1db53afca
 var apigwCmd = &cobra.Command{
 	Use:   "apigw",
 	Short: "Interact with a Remote Helmet API Gateway",
@@ -37,12 +43,37 @@ var endpointsListCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		data := [][]string{}
 
-		data = append(data, []string{
-			"customer_service",
-			"/customer/v2/*",
-			"On",
-			"On",
-		})
+		api := sdk.NewAPI(service.NewHTTPClient(20))
+
+		endpoints, err := api.GetEndpoints(
+			context.Background(),
+			os.Getenv("HELMET_URL"),
+			os.Getenv("HELMET_API_KEY"),
+		)
+
+		if err != nil {
+			panic(err.Error())
+		}
+
+		for _, endpoint := range endpoints {
+			status := "off"
+			auth := "off"
+
+			if endpoint.Active {
+				status = "on"
+			}
+
+			if endpoint.Proxy.Authentication.Status {
+				auth = "on"
+			}
+
+			data = append(data, []string{
+				endpoint.Name,
+				endpoint.Proxy.ListenPath,
+				status,
+				auth,
+			})
+		}
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Name", "Listen Path", "Status", "Authentication"})
