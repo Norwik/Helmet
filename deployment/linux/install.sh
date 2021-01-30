@@ -25,6 +25,7 @@ RestartSec=2
 WantedBy=multi-user.target" > /etc/systemd/system/helmet.service
 
     systemctl daemon-reload
+    systemctl enable helmet.service
     systemctl start helmet.service
 
     echo "helmet installation done!"
