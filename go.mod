@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/drone/envsubst v1.0.3
-	github.com/franela/goblin v0.0.0-20210519012713-85d372ac71e2
+	github.com/franela/goblin v0.0.0-20211003143422-0a4f594942bf
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/jinzhu/gorm v1.9.16
 	github.com/labstack/echo-contrib v0.12.0
@@ -35,7 +35,7 @@ require (
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/onsi/ginkgo v1.16.5 // indirect
-	github.com/onsi/gomega v1.18.1 // indirect
+	github.com/onsi/gomega v1.19.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.1 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect

@@ -1,7 +1,7 @@
-GO           ?= go
-GOFMT        ?= $(GO)fmt
+go           ?= go
+gofmt        ?= $(go)fmt
 pkgs          = ./...
-POODLE       ?= poodle
+poodle       ?= poodle
 
 
 help: Makefile
@@ -16,17 +16,17 @@ help: Makefile
 .PHONY: install_revive
 install_revive:
 	@echo ">> ============= Install Revive ============= <<"
-	$(GO) get github.com/mgechev/revive
+	$(go) get github.com/mgechev/revive
 
 
 ## style: Check code style.
 .PHONY: style
 style:
 	@echo ">> ============= Checking Code Style ============= <<"
-	@fmtRes=$$($(GOFMT) -d $$(find . -path ./vendor -prune -o -name '*.go' -print)); \
+	@fmtRes=$$($(gofmt) -d $$(find . -path ./vendor -prune -o -name '*.go' -print)); \
 	if [ -n "$${fmtRes}" ]; then \
 		echo "gofmt checking failed!"; echo "$${fmtRes}"; echo; \
-		echo "Please ensure you are using $$($(GO) version) for formatting code."; \
+		echo "Please ensure you are using $$($(go) version) for formatting code."; \
 		exit 1; \
 	fi
 
@@ -48,24 +48,24 @@ check_license:
 .PHONY: test_short
 test_short:
 	@echo ">> ============= Running Short Tests ============= <<"
-	$(GO) clean -testcache
-	$(GO) test -mod=readonly -short $(pkgs)
+	$(go) clean -testcache
+	$(go) test -mod=readonly -short $(pkgs)
 
 
 ## test: Run test cases.
 .PHONY: test
 test:
 	@echo ">> ============= Running All Tests ============= <<"
-	$(GO) clean -testcache
-	$(GO) test -mod=readonly -run=Unit -bench=. -benchmem -v -cover $(pkgs)
+	$(go) clean -testcache
+	$(go) test -mod=readonly -run=Unit -bench=. -benchmem -v -cover $(pkgs)
 
 
 ## integration: Run integration test cases (Requires Redis)
 .PHONY: integration
 integration:
 	@echo ">> ============= Running All Tests ============= <<"
-	$(GO) clean -testcache
-	$(GO) test -mod=readonly -run=Integration -bench=. -benchmem -v -cover $(pkgs)
+	$(go) clean -testcache
+	$(go) test -mod=readonly -run=Integration -bench=. -benchmem -v -cover $(pkgs)
 
 
 ## lint: Lint the code.
@@ -79,23 +79,23 @@ lint:
 .PHONY: verify
 verify:
 	@echo ">> ============= List Dependencies ============= <<"
-	$(GO) list -m all
+	$(go) list -m all
 	@echo ">> ============= Verify Dependencies ============= <<"
-	$(GO) mod verify
+	$(go) mod verify
 
 
 ## format: Format the code.
 .PHONY: format
 format:
 	@echo ">> ============= Formatting Code ============= <<"
-	$(GO) fmt $(pkgs)
+	$(go) fmt $(pkgs)
 
 
 ## vet: Examines source code and reports suspicious constructs.
 .PHONY: vet
 vet:
 	@echo ">> ============= Vetting Code ============= <<"
-	$(GO) vet $(pkgs)
+	$(go) vet $(pkgs)
 
 
 ## coverage: Create HTML coverage report
@@ -103,7 +103,7 @@ vet:
 coverage:
 	@echo ">> ============= Coverage ============= <<"
 	rm -f coverage.html cover.out
-	$(GO) test -mod=readonly -coverprofile=cover.out $(pkgs)
+	$(go) test -mod=readonly -coverprofile=cover.out $(pkgs)
 	go tool cover -html=cover.out -o coverage.html
 
 
@@ -111,7 +111,7 @@ coverage:
 .PHONY: run
 run:
 	@echo ">> ============= Run API Server ============= <<"
-	$(GO) run helmet.go server -c config.test.yml
+	$(go) run helmet.go server -c config.test.yml
 
 
 ## ci: Run all CI tests.
@@ -124,7 +124,7 @@ ci: style check_license test vet lint
 .PHONY: api
 api:
 	@echo ">> ====== Call API Endpoints With Poodle ====== <<"
-	$(POODLE) call -f .poodle.toml
+	$(poodle) call -f .poodle.toml
 
 
 .PHONY: help
