@@ -63,9 +63,10 @@ func (a *AuthMethod) ConvertToJSON() (string, error) {
 type KeyBasedAuthData struct {
 	gorm.Model
 
-	Name         string     `json:"name"`
-	APIKey       string     `json:"apiKey"`
-	Meta         string     `json:"meta"`
+	Name   string `json:"name"`
+	APIKey string `json:"apiKey"`
+	Meta   string `json:"meta"`
+
 	AuthMethodID int        `json:"authMethodID"`
 	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
@@ -84,10 +85,11 @@ func (k *KeyBasedAuthData) ConvertToJSON() (string, error) {
 type BasicAuthData struct {
 	gorm.Model
 
-	Name         string     `json:"name"`
-	Username     string     `json:"username"`
-	Password     string     `json:"password"`
-	Meta         string     `json:"meta"`
+	Name     string `json:"name"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Meta     string `json:"meta"`
+
 	AuthMethodID int        `json:"authMethodID"`
 	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
@@ -99,5 +101,28 @@ func (b *BasicAuthData) LoadFromJSON(data []byte) error {
 
 // ConvertToJSON convert object to json
 func (b *BasicAuthData) ConvertToJSON() (string, error) {
+	return util.ConvertToJSON(b)
+}
+
+// OAuthData struct
+type OAuthData struct {
+	gorm.Model
+
+	Name         string `json:"name"`
+	ClientID     string `json:"clientID"`
+	ClientSecret string `json:"clientSecret"`
+	Meta         string `json:"meta"`
+
+	AuthMethodID int        `json:"authMethodID"`
+	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+}
+
+// LoadFromJSON update object from json
+func (b *OAuthData) LoadFromJSON(data []byte) error {
+	return util.LoadFromJSON(b, data)
+}
+
+// ConvertToJSON convert object to json
+func (b *OAuthData) ConvertToJSON() (string, error) {
 	return util.ConvertToJSON(b)
 }

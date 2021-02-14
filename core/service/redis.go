@@ -34,31 +34,31 @@ func NewRedisDriver(addr string, password string, db int) *Redis {
 }
 
 // Connect establish a redis connection
-func (r *Redis) Connect() (bool, error) {
+func (r *Redis) Connect() error {
 	r.Client = redis.NewClient(&redis.Options{
 		Addr:     r.Addr,
 		Password: r.Password,
 		DB:       r.DB,
 	})
 
-	_, err := r.Ping()
+	err := r.Ping()
 
 	if err != nil {
-		return false, err
+		return err
 	}
 
-	return true, nil
+	return nil
 }
 
 // Ping checks the redis connection
-func (r *Redis) Ping() (bool, error) {
-	pong, err := r.Client.Ping().Result()
+func (r *Redis) Ping() error {
+	_, err := r.Client.Ping().Result()
 
 	if err != nil {
-		return false, err
+		return err
 	}
 
-	return pong == "PONG", nil
+	return nil
 }
 
 // Set sets a record
@@ -200,10 +200,13 @@ func (r *Redis) Subscribe(channel string, callback func(message Message) error) 
 			Channel: msg.Channel,
 			Payload: msg.Payload,
 		}
+
 		err := callback(message)
+
 		if err != nil {
 			return err
 		}
 	}
+
 	return nil
 }
