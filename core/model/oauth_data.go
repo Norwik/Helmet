@@ -32,25 +32,25 @@ type OAuthDataItems struct {
 }
 
 // LoadFromJSON update object from json
-func (k *OAuthData) LoadFromJSON(data []byte) error {
-	return util.LoadFromJSON(k, data)
+func (o *OAuthData) LoadFromJSON(data []byte) error {
+	return util.LoadFromJSON(o, data)
 }
 
 // Validate validates a request payload
-func (k *OAuthData) Validate() error {
-	if strings.TrimSpace(k.Name) == "" {
+func (o *OAuthData) Validate() error {
+	if strings.TrimSpace(o.Name) == "" {
 		return fmt.Errorf("Oauth key name is required")
 	}
 
-	if strings.TrimSpace(k.ClientID) == "" {
+	if strings.TrimSpace(o.ClientID) == "" {
 		return fmt.Errorf("Client id is required")
 	}
 
-	if strings.TrimSpace(k.ClientSecret) == "" {
+	if strings.TrimSpace(o.ClientSecret) == "" {
 		return fmt.Errorf("Client secret is required")
 	}
 
-	if k.AuthMethodID == 0 {
+	if o.AuthMethodID == 0 {
 		return fmt.Errorf("Auth method id is required")
 	}
 
@@ -58,16 +58,16 @@ func (k *OAuthData) Validate() error {
 }
 
 // ConvertToJSON convert object to json
-func (k *OAuthData) ConvertToJSON() (string, error) {
-	return util.ConvertToJSON(k)
+func (o *OAuthData) ConvertToJSON() (string, error) {
+	return util.ConvertToJSON(o)
 }
 
 // LoadFromJSON update object from json
-func (k *OAuthDataItems) LoadFromJSON(data []byte) error {
-	return util.LoadFromJSON(k, data)
+func (o *OAuthDataItems) LoadFromJSON(data []byte) error {
+	return util.LoadFromJSON(o, data)
 }
 
 // ConvertToJSON convert object to json
-func (k *OAuthDataItems) ConvertToJSON() (string, error) {
-	return util.ConvertToJSON(k)
+func (o *OAuthDataItems) ConvertToJSON() (string, error) {
+	return util.ConvertToJSON(o)
 }
