@@ -16,7 +16,7 @@ help: Makefile
 .PHONY: install_revive
 install_revive:
 	@echo ">> ============= Install Revive ============= <<"
-	$(go) get github.com/mgechev/revive
+	$(go) install github.com/mgechev/revive
 
 
 ## style: Check code style.
