@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Spacewalkio/Helmet/main/assets/logo.png?v=1.0.24" width="200" />
+    <img src="https://raw.githubusercontent.com/Spacewalkio/Helmet/main/assets/logo.png?v=1.0.25" width="200" />
     <h3 align="center">Helmet</h3>
     <p align="center">A Lightweight Cloud Native API Gateway.</p>
     <p align="center">
@@ -10,10 +10,10 @@
             <img src="https://github.com/spacewalkio/Helmet/workflows/Release/badge.svg">
         </a>
         <a href="https://github.com/spacewalkio/Helmet/releases">
-            <img src="https://img.shields.io/badge/Version-1.0.24-9B59B6.svg">
+            <img src="https://img.shields.io/badge/Version-1.0.25-9B59B6.svg">
         </a>
         <a href="https://goreportcard.com/report/github.com/spacewalkio/Helmet">
-            <img src="https://goreportcard.com/badge/github.com/spacewalkio/Helmet?v=1.0.24">
+            <img src="https://goreportcard.com/badge/github.com/spacewalkio/Helmet?v=1.0.25">
         </a>
         <a href="https://godoc.org/github.com/spacewalkio/helmet">
             <img src="https://godoc.org/github.com/spacewalkio/helmet?status.svg">
@@ -25,7 +25,7 @@
 </p>
 <br/>
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Spacewalkio/Helmet/main/assets/chart.jpg?v=1.0.24" width="80%" />
+    <img src="https://raw.githubusercontent.com/Spacewalkio/Helmet/main/assets/chart.jpg?v=1.0.25" width="80%" />
 </p>
 
 Helmet is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more!
