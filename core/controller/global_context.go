@@ -10,32 +10,19 @@ import (
 	"github.com/spacewalkio/helmet/core/component"
 	"github.com/spacewalkio/helmet/core/model"
 	"github.com/spacewalkio/helmet/core/module"
+	"github.com/spacewalkio/helmet/core/service"
 
 	"github.com/spf13/viper"
 )
 
-// Helpers type
-type Helpers struct {
+// GlobalContext type
+type GlobalContext struct {
 	Database *module.Database
-}
-
-// DB connect to database
-func (h *Helpers) DB() *module.Database {
-	return h.Database
-}
-
-// DatabaseConnect connect to database
-func (h *Helpers) DatabaseConnect() error {
-	return h.Database.AutoConnect()
-}
-
-// Close closed database connections
-func (h *Helpers) Close() {
-	h.Database.Close()
+	Cache    *service.Redis
 }
 
 // GetConfigs gets a config instance
-func (h *Helpers) GetConfigs() (*model.Configs, error) {
+func (c *GlobalContext) GetConfigs() (*model.Configs, error) {
 	configs := &model.Configs{}
 
 	data, err := ioutil.ReadFile(viper.GetString("config"))
@@ -54,10 +41,10 @@ func (h *Helpers) GetConfigs() (*model.Configs, error) {
 }
 
 // GetBalancer gets load balancer
-func (h *Helpers) GetBalancer() (map[string]component.Balancer, error) {
+func (c *GlobalContext) GetBalancer() (map[string]component.Balancer, error) {
 	result := make(map[string]component.Balancer)
 
-	configs, err := h.GetConfigs()
+	configs, err := c.GetConfigs()
 
 	if err != nil {
 		return result, err
@@ -87,4 +74,9 @@ func (h *Helpers) GetBalancer() (map[string]component.Balancer, error) {
 	}
 
 	return result, nil
+}
+
+// GetDatabase gets a database connection
+func (c *GlobalContext) GetDatabase() *module.Database {
+	return c.Database
 }

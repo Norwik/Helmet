@@ -12,12 +12,12 @@ import (
 )
 
 // Health controller
-func Health(c echo.Context) error {
+func Health(c echo.Context, gc *GlobalContext) error {
 	log.WithFields(log.Fields{
-		"status": "ok",
+		"status": "i am ok",
 	}).Info(`Health check`)
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "ok",
+		"status": "i am ok",
 	})
 }

@@ -12,26 +12,13 @@ import (
 
 	"github.com/spacewalkio/helmet/core/component"
 	"github.com/spacewalkio/helmet/core/model"
-	"github.com/spacewalkio/helmet/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
 )
 
 // CreateBasicAuthData controller
-func CreateBasicAuthData(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
+func CreateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 	data, _ := ioutil.ReadAll(c.Request().Body)
 
 	key := &model.BasicAuthData{}
@@ -62,7 +49,7 @@ func CreateBasicAuthData(c echo.Context) error {
 		})
 	}
 
-	method := helpers.DB().GetAuthMethodByID(key.AuthMethodID)
+	method := gc.GetDatabase().GetAuthMethodByID(key.AuthMethodID)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -72,28 +59,16 @@ func CreateBasicAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	key = helpers.DB().CreateBasicAuthData(key)
+	key = gc.GetDatabase().CreateBasicAuthData(key)
 
 	return c.JSON(http.StatusCreated, key)
 }
 
 // GetBasicAuthData controller
-func GetBasicAuthData(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
+func GetBasicAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	key := helpers.DB().GetBasicAuthDataByID(id)
+	key := gc.GetDatabase().GetBasicAuthDataByID(id)
 
 	if key.ID < 1 {
 		log.WithFields(log.Fields{
@@ -111,20 +86,8 @@ func GetBasicAuthData(c echo.Context) error {
 }
 
 // GetBasicAuthItems controller
-func GetBasicAuthItems(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	items := helpers.DB().GetBasicAuthItems()
+func GetBasicAuthItems(c echo.Context, gc *GlobalContext) error {
+	items := gc.GetDatabase().GetBasicAuthItems()
 
 	log.Info(`Get basic auth items`)
 
@@ -132,22 +95,10 @@ func GetBasicAuthItems(c echo.Context) error {
 }
 
 // DeleteBasicAuthData controller
-func DeleteBasicAuthData(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
+func DeleteBasicAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	key := helpers.DB().GetBasicAuthDataByID(id)
+	key := gc.GetDatabase().GetBasicAuthDataByID(id)
 
 	if key.ID < 1 {
 		log.WithFields(log.Fields{
@@ -161,28 +112,16 @@ func DeleteBasicAuthData(c echo.Context) error {
 		"id": id,
 	}).Info(`Deleting a basic auth key`)
 
-	helpers.DB().DeleteBasicAuthDataByID(key.ID)
+	gc.GetDatabase().DeleteBasicAuthDataByID(key.ID)
 
 	return c.NoContent(http.StatusNoContent)
 }
 
 // UpdateBasicAuthData controller
-func UpdateBasicAuthData(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
+func UpdateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	key := helpers.DB().GetBasicAuthDataByID(id)
+	key := gc.GetDatabase().GetBasicAuthDataByID(id)
 
 	if key.ID < 1 {
 		log.WithFields(log.Fields{
@@ -220,7 +159,7 @@ func UpdateBasicAuthData(c echo.Context) error {
 		})
 	}
 
-	method := helpers.DB().GetAuthMethodByID(key.AuthMethodID)
+	method := gc.GetDatabase().GetAuthMethodByID(key.AuthMethodID)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -230,7 +169,7 @@ func UpdateBasicAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	helpers.DB().UpdateBasicAuthDataByID(&key)
+	gc.GetDatabase().UpdateBasicAuthDataByID(&key)
 
 	return c.JSON(http.StatusOK, key)
 }

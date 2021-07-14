@@ -8,30 +8,13 @@ import (
 	"net/http"
 
 	"github.com/spacewalkio/helmet/core/component"
-	"github.com/spacewalkio/helmet/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
 )
 
 // ReverseProxy controller
-func ReverseProxy(c echo.Context, balancer map[string]component.Balancer) error {
-	helpers := &Helpers{
-		Database: &module.Database{},
-	}
-
-	err := helpers.DatabaseConnect()
-
-	if err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Internal server error`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
+func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 	log.WithFields(log.Fields{
 		"path":        c.Request().URL.Path,
 		"query_param": c.Request().URL.RawQuery,
@@ -42,7 +25,7 @@ func ReverseProxy(c echo.Context, balancer map[string]component.Balancer) error 
 	// Fetch the endpoint
 	// --------------------
 	router := component.NewRouter()
-	configs, err := helpers.GetConfigs()
+	configs, err := gc.GetConfigs()
 
 	if err != nil {
 		log.WithFields(log.Fields{
@@ -90,8 +73,8 @@ func ReverseProxy(c echo.Context, balancer map[string]component.Balancer) error 
 	// ---------------------------------
 	// Validate the Request Credentials
 	// ---------------------------------
-	apiMethod := &component.KeyBasedAuthMethod{Database: helpers.DB()}
-	basicMethod := &component.BasicAuthMethod{Database: helpers.DB()}
+	apiMethod := &component.KeyBasedAuthMethod{Database: gc.GetDatabase()}
+	basicMethod := &component.BasicAuthMethod{Database: gc.GetDatabase()}
 
 	meta := ""
 	name := ""
@@ -134,6 +117,8 @@ func ReverseProxy(c echo.Context, balancer map[string]component.Balancer) error 
 	// -------------------------------------
 	// Redirect The Request to The Upstream
 	// -------------------------------------
+	balancer, _ := gc.GetBalancer()
+
 	remote := router.BuildRemote(
 		balancer[endpoint.Name].Next().URL,
 		endpoint.Proxy.ListenPath,

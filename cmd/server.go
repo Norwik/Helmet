@@ -18,6 +18,7 @@ import (
 	"github.com/spacewalkio/helmet/core/component"
 	"github.com/spacewalkio/helmet/core/controller"
 	"github.com/spacewalkio/helmet/core/module"
+	"github.com/spacewalkio/helmet/core/service"
 
 	"github.com/drone/envsubst"
 	"github.com/labstack/echo-contrib/prometheus"
@@ -117,22 +118,25 @@ var serverCmd = &cobra.Command{
 			log.SetFormatter(&log.TextFormatter{})
 		}
 
-		// Init DB Connection
-		db := module.Database{}
-		err = db.AutoConnect()
+		context := &controller.GlobalContext{
+			Database: &module.Database{},
+			Cache:    service.GetDefaultRedisDriver(),
+		}
+
+		err = context.GetDatabase().AutoConnect()
 
 		if err != nil {
 			panic(err.Error())
 		}
 
 		// Migrate Database
-		success := db.Migrate()
+		success := context.GetDatabase().Migrate()
 
 		if !success {
 			panic("Error! Unable to migrate database tables.")
 		}
 
-		defer db.Close()
+		defer context.GetDatabase().Close()
 
 		viper.SetDefault("config", config)
 
@@ -153,17 +157,11 @@ var serverCmd = &cobra.Command{
 		p := prometheus.NewPrometheus(viper.GetString("app.name"), nil)
 		p.Use(e)
 
-		helpers := controller.Helpers{}
-		balancer, err := helpers.GetBalancer()
-
-		if err != nil {
-			panic(fmt.Sprintf("Error while loading configs: %s", err.Error()))
-		}
-
 		e.GET("/favicon.ico", func(c echo.Context) error {
 			return c.String(http.StatusNoContent, "")
 		})
 
+		// API GW Management API
 		e1 := e.Group("/_api/v1")
 		{
 			e1.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
@@ -181,37 +179,93 @@ var serverCmd = &cobra.Command{
 			}))
 
 			// List Endpoints
-			e1.GET("/endpoint", controller.GetEndpoints)
+			e1.GET("/endpoint", func(c echo.Context) error {
+				return controller.GetEndpoints(c, context)
+			})
 
 			// Auth Methods CRUD
-			e1.GET("/auth/method", controller.GetAuthMethods)
-			e1.GET("/auth/method/:id", controller.GetAuthMethod)
-			e1.DELETE("/auth/method/:id", controller.DeleteAuthMethod)
-			e1.POST("/auth/method", controller.CreateAuthMethod)
-			e1.PUT("/auth/method/:id", controller.UpdateAuthMethod)
+			e1.GET("/auth/method", func(c echo.Context) error {
+				return controller.GetAuthMethods(c, context)
+			})
+			e1.GET("/auth/method/:id", func(c echo.Context) error {
+				return controller.GetAuthMethod(c, context)
+			})
+			e1.DELETE("/auth/method/:id", func(c echo.Context) error {
+				return controller.DeleteAuthMethod(c, context)
+			})
+			e1.POST("/auth/method", func(c echo.Context) error {
+				return controller.CreateAuthMethod(c, context)
+			})
+			e1.PUT("/auth/method/:id", func(c echo.Context) error {
+				return controller.UpdateAuthMethod(c, context)
+			})
 
 			// API Keys CRUD
-			e1.GET("/auth/key", controller.GetKeysBasedAuthData)
-			e1.GET("/auth/key/:id", controller.GetKeyBasedAuthData)
-			e1.DELETE("/auth/key/:id", controller.DeleteKeyBasedAuthData)
-			e1.POST("/auth/key", controller.CreateKeyBasedAuthData)
-			e1.PUT("/auth/key/:id", controller.UpdateKeyBasedAuthData)
+			e1.GET("/auth/key", func(c echo.Context) error {
+				return controller.GetKeysBasedAuthData(c, context)
+			})
+			e1.GET("/auth/key/:id", func(c echo.Context) error {
+				return controller.GetKeyBasedAuthData(c, context)
+			})
+			e1.DELETE("/auth/key/:id", func(c echo.Context) error {
+				return controller.DeleteKeyBasedAuthData(c, context)
+			})
+			e1.POST("/auth/key", func(c echo.Context) error {
+				return controller.CreateKeyBasedAuthData(c, context)
+			})
+			e1.PUT("/auth/key/:id", func(c echo.Context) error {
+				return controller.UpdateKeyBasedAuthData(c, context)
+			})
 
 			// Basic Auth CRUD
-			e1.GET("/auth/basic", controller.GetBasicAuthItems)
-			e1.GET("/auth/basic/:id", controller.GetBasicAuthData)
-			e1.DELETE("/auth/basic/:id", controller.DeleteBasicAuthData)
-			e1.POST("/auth/basic", controller.CreateBasicAuthData)
-			e1.PUT("/auth/basic/:id", controller.UpdateBasicAuthData)
+			e1.GET("/auth/basic", func(c echo.Context) error {
+				return controller.GetBasicAuthItems(c, context)
+			})
+			e1.GET("/auth/basic/:id", func(c echo.Context) error {
+				return controller.GetBasicAuthData(c, context)
+			})
+			e1.DELETE("/auth/basic/:id", func(c echo.Context) error {
+				return controller.DeleteBasicAuthData(c, context)
+			})
+			e1.POST("/auth/basic", func(c echo.Context) error {
+				return controller.CreateBasicAuthData(c, context)
+			})
+			e1.PUT("/auth/basic/:id", func(c echo.Context) error {
+				return controller.UpdateBasicAuthData(c, context)
+			})
+
+			// OAuth CRUD
+			e1.GET("/auth/oauth", func(c echo.Context) error {
+				return controller.GetOAuthItems(c, context)
+			})
+			e1.GET("/auth/oauth/:id", func(c echo.Context) error {
+				return controller.GetOAuthData(c, context)
+			})
+			e1.DELETE("/auth/oauth/:id", func(c echo.Context) error {
+				return controller.DeleteOAuthData(c, context)
+			})
+			e1.POST("/auth/oauth", func(c echo.Context) error {
+				return controller.CreateOAuthData(c, context)
+			})
+			e1.PUT("/auth/oauth/:id", func(c echo.Context) error {
+				return controller.UpdateOAuthData(c, context)
+			})
 		}
 
-		e.GET("/_me", controller.Me)
+		e.GET("/_me", func(c echo.Context) error {
+			return controller.Me(c, context)
+		})
 
 		// API GW Health
-		e.GET("/_health", controller.Health)
+		e.GET("/_health", func(c echo.Context) error {
+			return controller.Health(c, context)
+		})
+		e.GET("/_ready", func(c echo.Context) error {
+			return controller.Ready(c, context)
+		})
 
 		e.Any("/*", func(c echo.Context) error {
-			return controller.ReverseProxy(c, balancer)
+			return controller.ReverseProxy(c, context)
 		})
 
 		var runerr error

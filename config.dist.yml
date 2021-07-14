@@ -21,12 +21,6 @@ app:
     api:
         key: ${HELMET_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
 
-    # Runtime, Requests/Response and Helmet Metrics
-    metrics:
-        prometheus:
-            # Route for the metrics endpoint
-            endpoint: ${HELMET_METRICS_PROM_ENDPOINT:-/_metrics}
-
     # Application Database
     database:
         # Database driver (sqlite3, mysql)

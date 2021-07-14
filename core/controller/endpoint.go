@@ -12,10 +12,8 @@ import (
 )
 
 // GetEndpoints controller
-func GetEndpoints(c echo.Context) error {
-	helpers := &Helpers{}
-
-	configs, err := helpers.GetConfigs()
+func GetEndpoints(c echo.Context, gc *GlobalContext) error {
+	configs, err := gc.GetConfigs()
 
 	if err != nil {
 		log.WithFields(log.Fields{

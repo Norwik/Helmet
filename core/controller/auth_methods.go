@@ -11,14 +11,13 @@ import (
 	"strconv"
 
 	"github.com/spacewalkio/helmet/core/model"
-	"github.com/spacewalkio/helmet/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
 )
 
 // Me controller
-func Me(c echo.Context) error {
+func Me(c echo.Context, gc *GlobalContext) error {
 	log.WithFields(log.Fields{
 		"status": "ok",
 	}).Info(`Create auth method`)
@@ -29,19 +28,7 @@ func Me(c echo.Context) error {
 }
 
 // CreateAuthMethod controller
-func CreateAuthMethod(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
+func CreateAuthMethod(c echo.Context, gc *GlobalContext) error {
 	data, _ := ioutil.ReadAll(c.Request().Body)
 
 	method := &model.AuthMethod{}
@@ -64,28 +51,16 @@ func CreateAuthMethod(c echo.Context) error {
 		})
 	}
 
-	method = helpers.DB().CreateAuthMethod(method)
+	method = gc.GetDatabase().CreateAuthMethod(method)
 
 	return c.JSON(http.StatusCreated, method)
 }
 
 // GetAuthMethod controller
-func GetAuthMethod(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
+func GetAuthMethod(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	method := helpers.DB().GetAuthMethodByID(id)
+	method := gc.GetDatabase().GetAuthMethodByID(id)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -103,43 +78,19 @@ func GetAuthMethod(c echo.Context) error {
 }
 
 // GetAuthMethods controller
-func GetAuthMethods(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
+func GetAuthMethods(c echo.Context, gc *GlobalContext) error {
 	log.Info(`Get auth methods`)
 
-	methods := helpers.DB().GetAuthMethods()
+	methods := gc.GetDatabase().GetAuthMethods()
 
 	return c.JSON(http.StatusOK, methods)
 }
 
 // DeleteAuthMethod controller
-func DeleteAuthMethod(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
+func DeleteAuthMethod(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	method := helpers.DB().GetAuthMethodByID(id)
+	method := gc.GetDatabase().GetAuthMethodByID(id)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -153,28 +104,16 @@ func DeleteAuthMethod(c echo.Context) error {
 		"id": id,
 	}).Info(`Deleting an auth method`)
 
-	helpers.DB().DeleteAuthMethodByID(method.ID)
+	gc.GetDatabase().DeleteAuthMethodByID(method.ID)
 
 	return c.NoContent(http.StatusNoContent)
 }
 
 // UpdateAuthMethod controller
-func UpdateAuthMethod(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
+func UpdateAuthMethod(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	method := helpers.DB().GetAuthMethodByID(id)
+	method := gc.GetDatabase().GetAuthMethodByID(id)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -210,7 +149,7 @@ func UpdateAuthMethod(c echo.Context) error {
 		"id": id,
 	}).Info(`Update an auth method`)
 
-	helpers.DB().UpdateAuthMethodByID(&method)
+	gc.GetDatabase().UpdateAuthMethodByID(&method)
 
 	return c.JSON(http.StatusCreated, method)
 }

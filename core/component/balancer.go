@@ -43,15 +43,23 @@ type RoundRobinBalancer struct {
 
 // NewRandomBalancer returns a random proxy balancer.
 func NewRandomBalancer(targets []*Target) Balancer {
-	b := &RandomBalancer{CommonBalancer: new(CommonBalancer)}
+	b := &RandomBalancer{
+		CommonBalancer: new(CommonBalancer),
+	}
+
 	b.targets = targets
+
 	return b
 }
 
 // NewRoundRobinBalancer returns a round-robin proxy balancer.
 func NewRoundRobinBalancer(targets []*Target) Balancer {
-	b := &RoundRobinBalancer{CommonBalancer: new(CommonBalancer)}
+	b := &RoundRobinBalancer{
+		CommonBalancer: new(CommonBalancer),
+	}
+
 	b.targets = targets
+
 	return b
 }
 

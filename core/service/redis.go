@@ -5,9 +5,11 @@
 package service
 
 import (
+	"errors"
 	"time"
 
 	"github.com/go-redis/redis"
+	"github.com/spf13/viper"
 )
 
 // Redis driver
@@ -25,7 +27,7 @@ type Message struct {
 }
 
 // NewRedisDriver create a new instance
-func NewRedisDriver(addr string, password string, db int) *Redis {
+func NewRedisDriver(addr, password string, db int) *Redis {
 	return &Redis{
 		Addr:     addr,
 		Password: password,
@@ -33,8 +35,22 @@ func NewRedisDriver(addr string, password string, db int) *Redis {
 	}
 }
 
+// GetDefaultRedisDriver create a new instance
+func GetDefaultRedisDriver() *Redis {
+	return NewRedisDriver(
+		viper.GetString("app.key_store.redis.address"),
+		viper.GetString("app.key_store.redis.password"),
+		viper.GetInt("app.key_store.redis.database"),
+	)
+}
+
 // Connect establish a redis connection
 func (r *Redis) Connect() error {
+	// If connected, skip
+	if r.Ping() == nil {
+		return nil
+	}
+
 	r.Client = redis.NewClient(&redis.Options{
 		Addr:        r.Addr,
 		Password:    r.Password,
@@ -54,6 +70,10 @@ func (r *Redis) Connect() error {
 
 // Ping checks the redis connection
 func (r *Redis) Ping() error {
+	if r.Client == nil {
+		return errors.New("Connection not established yet")
+	}
+
 	_, err := r.Client.Ping().Result()
 
 	if err != nil {

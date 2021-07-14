@@ -12,26 +12,13 @@ import (
 
 	"github.com/spacewalkio/helmet/core/component"
 	"github.com/spacewalkio/helmet/core/model"
-	"github.com/spacewalkio/helmet/core/module"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
 )
 
 // CreateKeyBasedAuthData controller
-func CreateKeyBasedAuthData(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
+func CreateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 	data, _ := ioutil.ReadAll(c.Request().Body)
 
 	key := &model.KeyBasedAuthData{}
@@ -58,7 +45,7 @@ func CreateKeyBasedAuthData(c echo.Context) error {
 		})
 	}
 
-	method := helpers.DB().GetAuthMethodByID(key.AuthMethodID)
+	method := gc.GetDatabase().GetAuthMethodByID(key.AuthMethodID)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -68,28 +55,16 @@ func CreateKeyBasedAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	key = helpers.DB().CreateKeyBasedAuthData(key)
+	key = gc.GetDatabase().CreateKeyBasedAuthData(key)
 
 	return c.JSON(http.StatusCreated, key)
 }
 
 // GetKeyBasedAuthData controller
-func GetKeyBasedAuthData(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
+func GetKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	key := helpers.DB().GetKeyBasedAuthDataByID(id)
+	key := gc.GetDatabase().GetKeyBasedAuthDataByID(id)
 
 	if key.ID < 1 {
 		log.WithFields(log.Fields{
@@ -107,20 +82,8 @@ func GetKeyBasedAuthData(c echo.Context) error {
 }
 
 // GetKeysBasedAuthData controller
-func GetKeysBasedAuthData(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	keys := helpers.DB().GetKeyBasedAuthItems()
+func GetKeysBasedAuthData(c echo.Context, gc *GlobalContext) error {
+	keys := gc.GetDatabase().GetKeyBasedAuthItems()
 
 	log.Info(`Get api keys`)
 
@@ -128,22 +91,10 @@ func GetKeysBasedAuthData(c echo.Context) error {
 }
 
 // DeleteKeyBasedAuthData controller
-func DeleteKeyBasedAuthData(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
+func DeleteKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	key := helpers.DB().GetKeyBasedAuthDataByID(id)
+	key := gc.GetDatabase().GetKeyBasedAuthDataByID(id)
 
 	if key.ID < 1 {
 		log.WithFields(log.Fields{
@@ -157,28 +108,16 @@ func DeleteKeyBasedAuthData(c echo.Context) error {
 		"id": id,
 	}).Info(`Deleting an API key`)
 
-	helpers.DB().DeleteKeyBasedAuthDataByID(key.ID)
+	gc.GetDatabase().DeleteKeyBasedAuthDataByID(key.ID)
 
 	return c.NoContent(http.StatusNoContent)
 }
 
 // UpdateKeyBasedAuthData controller
-func UpdateKeyBasedAuthData(c echo.Context) error {
-	helpers := &Helpers{Database: &module.Database{}}
-
+func UpdateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := helpers.DatabaseConnect(); err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while connecting database`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	defer helpers.Close()
-
-	key := helpers.DB().GetKeyBasedAuthDataByID(id)
+	key := gc.GetDatabase().GetKeyBasedAuthDataByID(id)
 
 	if key.ID < 1 {
 		log.WithFields(log.Fields{
@@ -212,7 +151,7 @@ func UpdateKeyBasedAuthData(c echo.Context) error {
 		})
 	}
 
-	method := helpers.DB().GetAuthMethodByID(key.AuthMethodID)
+	method := gc.GetDatabase().GetAuthMethodByID(key.AuthMethodID)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -222,7 +161,7 @@ func UpdateKeyBasedAuthData(c echo.Context) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	helpers.DB().UpdateKeyBasedAuthDataByID(&key)
+	gc.GetDatabase().UpdateKeyBasedAuthDataByID(&key)
 
 	return c.JSON(http.StatusOK, key)
 }
