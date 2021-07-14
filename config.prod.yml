@@ -39,15 +39,15 @@ app:
     # Key Store Configs
     key_store:
         # Cache Driver
-        driver: ${HELMET_CACHE_DRIVER:-redis}
+        driver: ${HELMET_KV_DRIVER:-redis}
         # Redis Driver Configs
         redis:
             # Redis Address
-            address: ${HELMET_CACHE_REDIS_ADDR:-localhost:6379}
+            address: ${HELMET_KV_REDIS_ADDR:-localhost:6379}
             # Redis Password
-            password: ${HELMET_CACHE_REDIS_PASSWORD:-}
+            password: ${HELMET_KV_REDIS_PASSWORD:-}
             # Redis Database
-            database: ${HELMET_CACHE_REDIS_DB:-0}
+            database: ${HELMET_KV_REDIS_DB:-0}
 
     # Endpoint Configs
     endpoint:
@@ -103,8 +103,8 @@ app:
     # Log configs
     log:
         # Log level, it can be debug, info, warn, error, panic, fatal
-        level: ${PEANUT_LOG_LEVEL:-info}
+        level: ${HELMET_LOG_LEVEL:-info}
         # Output can be stdout or abs path to log file /var/logs/helmet.log
-        output: ${PEANUT_LOG_OUTPUT:-/var/logs/helmet.log}
+        output: ${HELMET_LOG_OUTPUT:-/var/logs/helmet.log}
         # Format can be json
-        format: ${PEANUT_LOG_FORMAT:-json}
+        format: ${HELMET_LOG_FORMAT:-json}

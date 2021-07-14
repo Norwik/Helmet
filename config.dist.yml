@@ -39,15 +39,15 @@ app:
     # Key Store Configs
     key_store:
         # Cache Driver
-        driver: ${HELMET_CACHE_DRIVER:-redis}
+        driver: ${HELMET_KV_DRIVER:-redis}
         # Redis Driver Configs
         redis:
             # Redis Address
-            address: ${HELMET_CACHE_REDIS_ADDR:-localhost:6379}
+            address: ${HELMET_KV_REDIS_ADDR:-localhost:6379}
             # Redis Password
-            password: ${HELMET_CACHE_REDIS_PASSWORD:-}
+            password: ${HELMET_KV_REDIS_PASSWORD:-}
             # Redis Database
-            database: ${HELMET_CACHE_REDIS_DB:-0}
+            database: ${HELMET_KV_REDIS_DB:-0}
 
     # Endpoint Configs
     endpoint:
