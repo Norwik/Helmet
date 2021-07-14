@@ -1,6 +1,7 @@
 GO           ?= go
 GOFMT        ?= $(GO)fmt
 pkgs          = ./...
+POODLE       ?= poodle
 
 
 help: Makefile
@@ -128,6 +129,13 @@ run:
 .PHONY: ci
 ci: style check_license test vet lint
 	@echo "\n==> All quality checks passed"
+
+
+## api: Call API Endpoints With Poodle (github.com/Clivern/Poodle)
+.PHONY: api
+api:
+	@echo ">> ====== Call API Endpoints With Poodle ====== <<"
+	$(POODLE) call -f .poodle.toml
 
 
 .PHONY: help

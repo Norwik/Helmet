@@ -1,0 +1,44 @@
+# API Service Definition
+
+[Main]
+    id = "spacewalk_helmet"
+    name = "SpaceWalk - Helmet"
+    description = "A Lightweight Cloud Native API Gateway"
+    timeout = "30s"
+    service_url = "{$serviceURL:http://127.0.0.1:8000}"
+    # These headers will be applied to all endpoints http calls
+    headers = [ ["Content-Type", "application/json"] ]
+
+[Security]
+    # Supported Types are basic, bearer and api_key and none
+    scheme = "api_key"
+
+    [Security.Basic]
+        username = "{$authUsername:default}"
+        password = "{$authPassword:default}"
+        header = ["Authorization", "Basic base64(username:password)"]
+
+    [Security.ApiKey]
+        header = ["X-API-KEY", "{$authApiKey:6c68b836-6f8e-465e-b59f-89c1db53afca}"]
+
+[[Endpoint]]
+    id = "GetSystemHealth"
+    name = "Get system health"
+    description = ""
+    method = "get"
+    public = true
+    headers = []
+    parameters = []
+    uri = "/_health"
+    body = ""
+
+[[Endpoint]]
+    id = "GetSystemReadiness"
+    name = "Get system readiness"
+    description = ""
+    method = "get"
+    public = true
+    headers = []
+    parameters = []
+    uri = "/_ready"
+    body = ""
