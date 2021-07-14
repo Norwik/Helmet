@@ -21,9 +21,9 @@ import (
 func CreateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 	data, _ := ioutil.ReadAll(c.Request().Body)
 
-	key := &model.KeyBasedAuthData{}
+	item := &model.KeyBasedAuthData{}
 
-	err := key.LoadFromJSON(data)
+	err := item.LoadFromJSON(data)
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -32,11 +32,11 @@ func CreateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 		})
 	}
 
-	if key.APIKey == "" {
-		key.APIKey = component.NewCorrelation().UUIDv4()
+	if item.APIKey == "" {
+		item.APIKey = component.NewCorrelation().UUIDv4()
 	}
 
-	err = key.Validate()
+	err = item.Validate()
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -45,7 +45,7 @@ func CreateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 		})
 	}
 
-	method := gc.GetDatabase().GetAuthMethodByID(key.AuthMethodID)
+	method := gc.GetDatabase().GetAuthMethodByID(item.AuthMethodID)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -55,30 +55,30 @@ func CreateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	key = gc.GetDatabase().CreateKeyBasedAuthData(key)
+	item = gc.GetDatabase().CreateKeyBasedAuthData(item)
 
-	return c.JSON(http.StatusCreated, key)
+	return c.JSON(http.StatusCreated, item)
 }
 
 // GetKeyBasedAuthData controller
 func GetKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	key := gc.GetDatabase().GetKeyBasedAuthDataByID(id)
+	item := gc.GetDatabase().GetKeyBasedAuthDataByID(id)
 
-	if key.ID < 1 {
+	if item.ID < 1 {
 		log.WithFields(log.Fields{
 			"id": id,
-		}).Info(`API key not found`)
+		}).Info(`API key item not found`)
 
 		return c.NoContent(http.StatusNotFound)
 	}
 
 	log.WithFields(log.Fields{
 		"id": id,
-	}).Info(`Get an API key`)
+	}).Info(`Get API key item`)
 
-	return c.JSON(http.StatusOK, key)
+	return c.JSON(http.StatusOK, item)
 }
 
 // GetKeysBasedAuthData controller
@@ -94,9 +94,9 @@ func GetKeysBasedAuthData(c echo.Context, gc *GlobalContext) error {
 func DeleteKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	key := gc.GetDatabase().GetKeyBasedAuthDataByID(id)
+	item := gc.GetDatabase().GetKeyBasedAuthDataByID(id)
 
-	if key.ID < 1 {
+	if item.ID < 1 {
 		log.WithFields(log.Fields{
 			"id": id,
 		}).Info(`API key not found`)
@@ -108,7 +108,7 @@ func DeleteKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 		"id": id,
 	}).Info(`Deleting an API key`)
 
-	gc.GetDatabase().DeleteKeyBasedAuthDataByID(key.ID)
+	gc.GetDatabase().DeleteKeyBasedAuthDataByID(item.ID)
 
 	return c.NoContent(http.StatusNoContent)
 }
@@ -117,9 +117,9 @@ func DeleteKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 func UpdateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	key := gc.GetDatabase().GetKeyBasedAuthDataByID(id)
+	item := gc.GetDatabase().GetKeyBasedAuthDataByID(id)
 
-	if key.ID < 1 {
+	if item.ID < 1 {
 		log.WithFields(log.Fields{
 			"id": id,
 		}).Info(`API key not found`)
@@ -129,7 +129,7 @@ func UpdateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 
 	data, _ := ioutil.ReadAll(c.Request().Body)
 
-	err := key.LoadFromJSON(data)
+	err := item.LoadFromJSON(data)
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -138,11 +138,11 @@ func UpdateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 		})
 	}
 
-	if key.APIKey == "" {
-		key.APIKey = component.NewCorrelation().UUIDv4()
+	if item.APIKey == "" {
+		item.APIKey = component.NewCorrelation().UUIDv4()
 	}
 
-	err = key.Validate()
+	err = item.Validate()
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -151,7 +151,7 @@ func UpdateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 		})
 	}
 
-	method := gc.GetDatabase().GetAuthMethodByID(key.AuthMethodID)
+	method := gc.GetDatabase().GetAuthMethodByID(item.AuthMethodID)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -161,7 +161,7 @@ func UpdateKeyBasedAuthData(c echo.Context, gc *GlobalContext) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	gc.GetDatabase().UpdateKeyBasedAuthDataByID(&key)
+	gc.GetDatabase().UpdateKeyBasedAuthDataByID(&item)
 
-	return c.JSON(http.StatusOK, key)
+	return c.JSON(http.StatusOK, item)
 }

@@ -21,9 +21,9 @@ import (
 func CreateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 	data, _ := ioutil.ReadAll(c.Request().Body)
 
-	key := &model.BasicAuthData{}
+	item := &model.BasicAuthData{}
 
-	err := key.LoadFromJSON(data)
+	err := item.LoadFromJSON(data)
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -32,15 +32,15 @@ func CreateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 		})
 	}
 
-	if key.Username == "" {
-		key.Username = component.NewCorrelation().UUIDv4()
+	if item.Username == "" {
+		item.Username = component.NewCorrelation().UUIDv4()
 	}
 
-	if key.Password == "" {
-		key.Password = component.NewCorrelation().UUIDv4()
+	if item.Password == "" {
+		item.Password = component.NewCorrelation().UUIDv4()
 	}
 
-	err = key.Validate()
+	err = item.Validate()
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -49,7 +49,7 @@ func CreateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 		})
 	}
 
-	method := gc.GetDatabase().GetAuthMethodByID(key.AuthMethodID)
+	method := gc.GetDatabase().GetAuthMethodByID(item.AuthMethodID)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -59,30 +59,30 @@ func CreateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	key = gc.GetDatabase().CreateBasicAuthData(key)
+	item = gc.GetDatabase().CreateBasicAuthData(item)
 
-	return c.JSON(http.StatusCreated, key)
+	return c.JSON(http.StatusCreated, item)
 }
 
 // GetBasicAuthData controller
 func GetBasicAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	key := gc.GetDatabase().GetBasicAuthDataByID(id)
+	item := gc.GetDatabase().GetBasicAuthDataByID(id)
 
-	if key.ID < 1 {
+	if item.ID < 1 {
 		log.WithFields(log.Fields{
 			"id": id,
-		}).Info(`Basic auth key not found`)
+		}).Info(`Basic auth item not found`)
 
 		return c.NoContent(http.StatusNotFound)
 	}
 
 	log.WithFields(log.Fields{
 		"id": id,
-	}).Info(`Get a basic auth key`)
+	}).Info(`Get a basic auth item`)
 
-	return c.JSON(http.StatusOK, key)
+	return c.JSON(http.StatusOK, item)
 }
 
 // GetBasicAuthItems controller
@@ -98,21 +98,21 @@ func GetBasicAuthItems(c echo.Context, gc *GlobalContext) error {
 func DeleteBasicAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	key := gc.GetDatabase().GetBasicAuthDataByID(id)
+	item := gc.GetDatabase().GetBasicAuthDataByID(id)
 
-	if key.ID < 1 {
+	if item.ID < 1 {
 		log.WithFields(log.Fields{
 			"id": id,
-		}).Info(`Basic auth key not found`)
+		}).Info(`Basic auth item not found`)
 
 		return c.NoContent(http.StatusNotFound)
 	}
 
 	log.WithFields(log.Fields{
 		"id": id,
-	}).Info(`Deleting a basic auth key`)
+	}).Info(`Deleting a basic auth item`)
 
-	gc.GetDatabase().DeleteBasicAuthDataByID(key.ID)
+	gc.GetDatabase().DeleteBasicAuthDataByID(item.ID)
 
 	return c.NoContent(http.StatusNoContent)
 }
@@ -121,19 +121,19 @@ func DeleteBasicAuthData(c echo.Context, gc *GlobalContext) error {
 func UpdateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	key := gc.GetDatabase().GetBasicAuthDataByID(id)
+	item := gc.GetDatabase().GetBasicAuthDataByID(id)
 
-	if key.ID < 1 {
+	if item.ID < 1 {
 		log.WithFields(log.Fields{
 			"id": id,
-		}).Info(`Basic auth key not found`)
+		}).Info(`Basic auth item not found`)
 
 		return c.NoContent(http.StatusNotFound)
 	}
 
 	data, _ := ioutil.ReadAll(c.Request().Body)
 
-	err := key.LoadFromJSON(data)
+	err := item.LoadFromJSON(data)
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -142,15 +142,15 @@ func UpdateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 		})
 	}
 
-	if key.Username == "" {
-		key.Username = component.NewCorrelation().UUIDv4()
+	if item.Username == "" {
+		item.Username = component.NewCorrelation().UUIDv4()
 	}
 
-	if key.Password == "" {
-		key.Password = component.NewCorrelation().UUIDv4()
+	if item.Password == "" {
+		item.Password = component.NewCorrelation().UUIDv4()
 	}
 
-	err = key.Validate()
+	err = item.Validate()
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -159,7 +159,7 @@ func UpdateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 		})
 	}
 
-	method := gc.GetDatabase().GetAuthMethodByID(key.AuthMethodID)
+	method := gc.GetDatabase().GetAuthMethodByID(item.AuthMethodID)
 
 	if method.ID < 1 {
 		log.WithFields(log.Fields{
@@ -169,7 +169,7 @@ func UpdateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	gc.GetDatabase().UpdateBasicAuthDataByID(&key)
+	gc.GetDatabase().UpdateBasicAuthDataByID(&item)
 
-	return c.JSON(http.StatusOK, key)
+	return c.JSON(http.StatusOK, item)
 }
