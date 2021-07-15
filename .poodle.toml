@@ -157,8 +157,8 @@
     body = """
     {
         "name": "{$name:basic}",
-        "username": "{$username:admin}",
-        "password": "{$password:admin}",
+        "username": "{$username:}",
+        "password": "{$password:}",
         "meta": "{$meta:x=1;y=2}",
         "authMethodID": {$authMethodID:1}
     }
@@ -176,8 +176,8 @@
     body = """
     {
         "name": "{$name:basic}",
-        "username": "{$username:admin}",
-        "password": "{$password:admin}",
+        "username": "{$username:}",
+        "password": "{$password:}",
         "meta": "{$meta:x=1;y=2}",
         "authMethodID": {$authMethodID:1}
     }
@@ -228,7 +228,7 @@
     body = """
     {
         "name": "{$name:api}",
-        "apiKey": "{$apiKey:x-x-x-x}",
+        "apiKey": "{$apiKey:}",
         "meta": "{$meta:x=1;y=2}",
         "authMethodID": {$authMethodID:1}
     }
@@ -246,7 +246,7 @@
     body = """
     {
         "name": "{$name:api}",
-        "apiKey": "{$apiKey:x-x-x-x}",
+        "apiKey": "{$apiKey:}",
         "meta": "{$meta:x=1;y=2}",
         "authMethodID": {$authMethodID:1}
     }
@@ -297,8 +297,8 @@
     body = """
     {
         "name": "{$name:oauth}",
-        "clientID": "{$clientID:x-x-x-x}",
-        "clientSecret": "{$clientSecret:y-y-y-y}",
+        "clientID": "{$clientID:}",
+        "clientSecret": "{$clientSecret:}",
         "meta": "{$meta:x=1;y=2}",
         "authMethodID": {$authMethodID:1}
     }
@@ -316,8 +316,8 @@
     body = """
     {
         "name": "{$name:oauth}",
-        "clientID": "{$clientID:x-x-x-x}",
-        "clientSecret": "{$clientSecret:y-y-y-y}",
+        "clientID": "{$clientID:}",
+        "clientSecret": "{$clientSecret:}",
         "meta": "{$meta:x=1;y=2}",
         "authMethodID": {$authMethodID:1}
     }

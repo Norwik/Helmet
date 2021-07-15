@@ -35,6 +35,11 @@ func (db *Database) GetAuthMethodByID(id int) model.AuthMethod {
 // DeleteAuthMethodByID deletes an entity by id
 func (db *Database) DeleteAuthMethodByID(id int) {
 	db.Connection.Unscoped().Where("id = ?", id).Delete(&migration.AuthMethod{})
+
+	// Workaround to fix gorm constraint issue
+	db.Connection.Unscoped().Where("auth_method_id = ?", id).Delete(&migration.KeyBasedAuthData{})
+	db.Connection.Unscoped().Where("auth_method_id = ?", id).Delete(&migration.BasicAuthData{})
+	db.Connection.Unscoped().Where("auth_method_id = ?", id).Delete(&migration.OAuthData{})
 }
 
 // GetAuthMethods gets auth methods
