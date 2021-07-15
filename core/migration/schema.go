@@ -70,7 +70,7 @@ type KeyBasedAuthData struct {
 	Meta   string `json:"meta"`
 
 	AuthMethodID int        `json:"authMethodID"`
-	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID,constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 // LoadFromJSON update object from json
@@ -93,7 +93,7 @@ type BasicAuthData struct {
 	Meta     string `json:"meta"`
 
 	AuthMethodID int        `json:"authMethodID"`
-	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID,constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 // LoadFromJSON update object from json
@@ -116,7 +116,7 @@ type OAuthData struct {
 	Meta         string `json:"meta"`
 
 	AuthMethodID int        `json:"authMethodID"`
-	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	AuthMethod   AuthMethod `json:"authMethod" gorm:"foreignKey:AuthMethodID,constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 // LoadFromJSON update object from json
@@ -139,7 +139,7 @@ type OAuthAccessData struct {
 	ExpireAt     time.Time `json:"expireAt"`
 
 	OAuthDataID int       `json:"oauthDataID"`
-	OAuthData   OAuthData `json:"oauthData" gorm:"foreignKey:OAuthDataID" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	OAuthData   OAuthData `json:"oauthData" gorm:"foreignKey:OAuthDataID,constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 // LoadFromJSON update object from json

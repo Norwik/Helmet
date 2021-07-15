@@ -122,7 +122,7 @@ package:
 .PHONY: run
 run:
 	@echo ">> ============= Run API Server ============= <<"
-	$(GO) run helmet.go server -c config.dist.yml
+	$(GO) run helmet.go server -c config.test.yml
 
 
 ## ci: Run all CI tests.

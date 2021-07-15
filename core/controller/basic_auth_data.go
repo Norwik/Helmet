@@ -27,7 +27,7 @@ func CreateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": fmt.Sprintf("Invalid request"),
+			"message": fmt.Sprintf("Invalid request: %s", err.Error()),
 			"error":   fmt.Sprintf("code=%d, message=BadRequest", http.StatusBadRequest),
 		})
 	}
@@ -137,7 +137,7 @@ func UpdateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": fmt.Sprintf("Invalid request"),
+			"message": fmt.Sprintf("Invalid request: %s", err.Error()),
 			"error":   fmt.Sprintf("code=%d, message=BadRequest", http.StatusBadRequest),
 		})
 	}

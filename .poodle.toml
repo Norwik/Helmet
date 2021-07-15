@@ -66,6 +66,17 @@
     body = ""
 
 [[Endpoint]]
+    id = "GetAuthMethod"
+    name = "Get Auth Method"
+    description = ""
+    method = "get"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/method/{$id}"
+    body = ""
+
+[[Endpoint]]
     id = "CreateAuthMethod"
     name = "Create Auth Method"
     description = ""
@@ -82,18 +93,6 @@
         "endpoints": "{$endpoints:order_service}"
     }
     """
-
-[[Endpoint]]
-    id = "GetAuthMethod"
-    name = "Get Auth Method"
-    description = ""
-    method = "get"
-    public = false
-    headers = []
-    parameters = []
-    uri = "/_api/v1/auth/method/{$id}"
-    body = ""
-
 
 [[Endpoint]]
     id = "UpdateAuthMethod"
@@ -124,3 +123,213 @@
     uri = "/_api/v1/auth/method/{$id}"
     body = ""
 
+[[Endpoint]]
+    id = "GetBasicAuthKeys"
+    name = "Get Basic Auth Keys"
+    description = ""
+    method = "get"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/basic"
+    body = ""
+
+[[Endpoint]]
+    id = "GetBasicAuthKey"
+    name = "Get Basic Auth Key"
+    description = ""
+    method = "get"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/basic/{$id}"
+    body = ""
+
+[[Endpoint]]
+    id = "CreateBasicAuthKey"
+    name = "Create Basic Auth Key"
+    description = ""
+    method = "post"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/basic"
+    body = """
+    {
+        "name": "{$name:basic}",
+        "username": "{$username:admin}",
+        "password": "{$password:admin}",
+        "meta": "{$meta:x=1;y=2}",
+        "authMethodID": {$authMethodID:1}
+    }
+    """
+
+[[Endpoint]]
+    id = "UpdateBasicAuthKey"
+    name = "Update Basic Auth Key"
+    description = ""
+    method = "put"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/basic/{$id}"
+    body = """
+    {
+        "name": "{$name:basic}",
+        "username": "{$username:admin}",
+        "password": "{$password:admin}",
+        "meta": "{$meta:x=1;y=2}",
+        "authMethodID": {$authMethodID:1}
+    }
+    """
+
+[[Endpoint]]
+    id = "DeleteBasicAuthKey"
+    name = "Delete Basic Auth Key"
+    description = ""
+    method = "delete"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/basic/{$id}"
+    body = ""
+
+[[Endpoint]]
+    id = "GetAuthApiKeys"
+    name = "Get Auth API Keys"
+    description = ""
+    method = "get"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/key"
+    body = ""
+
+[[Endpoint]]
+    id = "GetAuthApiKey"
+    name = "Get Auth API Key"
+    description = ""
+    method = "get"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/key/{$id}"
+    body = ""
+
+[[Endpoint]]
+    id = "CreateAuthApiKey"
+    name = "Create Auth API Key"
+    description = ""
+    method = "post"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/key"
+    body = """
+    {
+        "name": "{$name:api}",
+        "apiKey": "{$apiKey:x-x-x-x}",
+        "meta": "{$meta:x=1;y=2}",
+        "authMethodID": {$authMethodID:1}
+    }
+    """
+
+[[Endpoint]]
+    id = "UpdateAuthApiKey"
+    name = "Update Auth API Key"
+    description = ""
+    method = "put"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/key/{$id}"
+    body = """
+    {
+        "name": "{$name:api}",
+        "apiKey": "{$apiKey:x-x-x-x}",
+        "meta": "{$meta:x=1;y=2}",
+        "authMethodID": {$authMethodID:1}
+    }
+    """
+
+[[Endpoint]]
+    id = "DeleteAuthApiKey"
+    name = "Delete Auth API Key"
+    description = ""
+    method = "delete"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/key/{$id}"
+    body = ""
+
+[[Endpoint]]
+    id = "GetAuthOauthKeys"
+    name = "Get Auth Oauth Keys"
+    description = ""
+    method = "get"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/oauth"
+    body = ""
+
+[[Endpoint]]
+    id = "GetAuthOauthKey"
+    name = "Get Auth Oauth Key"
+    description = ""
+    method = "get"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/oauth/{$id}"
+    body = ""
+
+[[Endpoint]]
+    id = "CreateAuthOauthKey"
+    name = "Create Auth Oauth Key"
+    description = ""
+    method = "post"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/oauth"
+    body = """
+    {
+        "name": "{$name:oauth}",
+        "clientID": "{$clientID:x-x-x-x}",
+        "clientSecret": "{$clientSecret:y-y-y-y}",
+        "meta": "{$meta:x=1;y=2}",
+        "authMethodID": {$authMethodID:1}
+    }
+    """
+
+[[Endpoint]]
+    id = "UpdateAuthOauthKey"
+    name = "Update Auth Oauth Key"
+    description = ""
+    method = "put"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/oauth/{$id}"
+    body = """
+    {
+        "name": "{$name:oauth}",
+        "clientID": "{$clientID:x-x-x-x}",
+        "clientSecret": "{$clientSecret:y-y-y-y}",
+        "meta": "{$meta:x=1;y=2}",
+        "authMethodID": {$authMethodID:1}
+    }
+    """
+
+[[Endpoint]]
+    id = "DeleteAuthOauthKey"
+    name = "Delete Auth Oauth Key"
+    description = ""
+    method = "delete"
+    public = false
+    headers = []
+    parameters = []
+    uri = "/_api/v1/auth/oauth/{$id}"
+    body = ""
