@@ -33,7 +33,7 @@ func (db *Database) GetOAuthAccessDataByID(id int) model.OAuthAccessData {
 }
 
 // GetOAuthAccessDataByKeys gets an entity by keys
-func (db *Database) GetOAuthAccessDataByKeys(accessToken string) model.OAuthAccessData {
+func (db *Database) GetOAuthAccessDataByKey(accessToken string) model.OAuthAccessData {
 	oauthAccessData := model.OAuthAccessData{}
 
 	db.Connection.Where(
