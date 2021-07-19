@@ -29,7 +29,7 @@
     public = true
     headers = []
     parameters = []
-    uri = "/_health"
+    uri = "/apigw/health"
     body = ""
 
 [[Endpoint]]
@@ -40,7 +40,7 @@
     public = true
     headers = []
     parameters = []
-    uri = "/_ready"
+    uri = "/apigw/ready"
     body = ""
 
 [[Endpoint]]
@@ -51,7 +51,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/endpoint"
+    uri = "/apigw/api/v1/endpoint"
     body = ""
 
 [[Endpoint]]
@@ -62,7 +62,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/method"
+    uri = "/apigw/api/v1/auth/method"
     body = ""
 
 [[Endpoint]]
@@ -73,7 +73,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/method/{$id}"
+    uri = "/apigw/api/v1/auth/method/{$id}"
     body = ""
 
 [[Endpoint]]
@@ -84,7 +84,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/method"
+    uri = "/apigw/api/v1/auth/method"
     body = """
     {
         "name": "{$name:customers_public}",
@@ -102,7 +102,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/method/{$id}"
+    uri = "/apigw/api/v1/auth/method/{$id}"
     body = """
     {
         "name": "{$name:customers_public}",
@@ -120,7 +120,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/method/{$id}"
+    uri = "/apigw/api/v1/auth/method/{$id}"
     body = ""
 
 [[Endpoint]]
@@ -131,7 +131,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/basic"
+    uri = "/apigw/api/v1/auth/basic"
     body = ""
 
 [[Endpoint]]
@@ -142,7 +142,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/basic/{$id}"
+    uri = "/apigw/api/v1/auth/basic/{$id}"
     body = ""
 
 [[Endpoint]]
@@ -153,7 +153,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/basic"
+    uri = "/apigw/api/v1/auth/basic"
     body = """
     {
         "name": "{$name:basic}",
@@ -172,7 +172,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/basic/{$id}"
+    uri = "/apigw/api/v1/auth/basic/{$id}"
     body = """
     {
         "name": "{$name:basic}",
@@ -191,7 +191,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/basic/{$id}"
+    uri = "/apigw/api/v1/auth/basic/{$id}"
     body = ""
 
 [[Endpoint]]
@@ -202,7 +202,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/key"
+    uri = "/apigw/api/v1/auth/key"
     body = ""
 
 [[Endpoint]]
@@ -213,7 +213,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/key/{$id}"
+    uri = "/apigw/api/v1/auth/key/{$id}"
     body = ""
 
 [[Endpoint]]
@@ -224,7 +224,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/key"
+    uri = "/apigw/api/v1/auth/key"
     body = """
     {
         "name": "{$name:api}",
@@ -242,7 +242,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/key/{$id}"
+    uri = "/apigw/api/v1/auth/key/{$id}"
     body = """
     {
         "name": "{$name:api}",
@@ -260,7 +260,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/key/{$id}"
+    uri = "/apigw/api/v1/auth/key/{$id}"
     body = ""
 
 [[Endpoint]]
@@ -271,7 +271,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/oauth"
+    uri = "/apigw/api/v1/auth/oauth"
     body = ""
 
 [[Endpoint]]
@@ -282,7 +282,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/oauth/{$id}"
+    uri = "/apigw/api/v1/auth/oauth/{$id}"
     body = ""
 
 [[Endpoint]]
@@ -293,7 +293,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/oauth"
+    uri = "/apigw/api/v1/auth/oauth"
     body = """
     {
         "name": "{$name:oauth}",
@@ -312,7 +312,7 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/oauth/{$id}"
+    uri = "/apigw/api/v1/auth/oauth/{$id}"
     body = """
     {
         "name": "{$name:oauth}",
@@ -331,5 +331,5 @@
     public = false
     headers = []
     parameters = []
-    uri = "/_api/v1/auth/oauth/{$id}"
+    uri = "/apigw/api/v1/auth/oauth/{$id}"
     body = ""

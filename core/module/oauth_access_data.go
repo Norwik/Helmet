@@ -32,7 +32,7 @@ func (db *Database) GetOAuthAccessDataByID(id int) model.OAuthAccessData {
 	return oauthAccessData
 }
 
-// GetOAuthAccessDataByKeys gets an entity by keys
+// GetOAuthAccessDataByKey gets an entity by key
 func (db *Database) GetOAuthAccessDataByKey(accessToken string) model.OAuthAccessData {
 	oauthAccessData := model.OAuthAccessData{}
 

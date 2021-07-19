@@ -162,13 +162,13 @@ var serverCmd = &cobra.Command{
 		})
 
 		// API GW Management API
-		e1 := e.Group("/_api/v1")
+		e1 := e.Group("/apigw/api/v1")
 		{
 			e1.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
 				KeyLookup:  "header:x-api-key",
 				AuthScheme: "",
 				Validator: func(key string, c echo.Context) (bool, error) {
-					if !strings.Contains(c.Request().URL.Path, "/_api/v1/") {
+					if !strings.Contains(c.Request().URL.Path, "/apigw/api/v1/") {
 						return true, nil
 					}
 
@@ -252,15 +252,20 @@ var serverCmd = &cobra.Command{
 			})
 		}
 
-		e.GET("/_me", func(c echo.Context) error {
+		// Oauth Access Token (https://datatracker.ietf.org/doc/html/rfc6749#section-4.4.2)
+		e.POST("/apigw/token", func(c echo.Context) error {
+			return controller.Token(c, context)
+		})
+
+		e.GET("/apigw/me", func(c echo.Context) error {
 			return controller.Me(c, context)
 		})
 
 		// API GW Health
-		e.GET("/_health", func(c echo.Context) error {
+		e.GET("/apigw/health", func(c echo.Context) error {
 			return controller.Health(c, context)
 		})
-		e.GET("/_ready", func(c echo.Context) error {
+		e.GET("/apigw/ready", func(c echo.Context) error {
 			return controller.Ready(c, context)
 		})
 
