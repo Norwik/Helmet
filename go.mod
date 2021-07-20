@@ -10,7 +10,6 @@ require (
 	github.com/labstack/echo-contrib v0.11.0
 	github.com/labstack/echo/v4 v4.5.0
 	github.com/manifoldco/promptui v0.8.0
-	github.com/olekukonko/tablewriter v0.0.5
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/prometheus/client_golang v1.11.0
 	github.com/satori/go.uuid v1.2.0
