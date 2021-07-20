@@ -16,10 +16,9 @@ import (
 type OAuthAccessData struct {
 	ID int `json:"id"`
 
-	AccessToken  string `json:"accessToken"`
-	RefreshToken string `json:"refreshToken"`
-	Meta         string `json:"meta"`
-	OAuthDataID  int    `json:"oauthDataID"`
+	AccessToken string `json:"accessToken"`
+	Meta        string `json:"meta"`
+	OAuthDataID int    `json:"oauthDataID"`
 
 	ExpireAt  time.Time `json:"expireAt"`
 	CreatedAt time.Time `json:"createdAt"`
@@ -40,10 +39,6 @@ func (o *OAuthAccessData) LoadFromJSON(data []byte) error {
 func (o *OAuthAccessData) Validate() error {
 	if strings.TrimSpace(o.AccessToken) == "" {
 		return errors.New("Access token is required")
-	}
-
-	if strings.TrimSpace(o.RefreshToken) == "" {
-		return errors.New("Refresh token is required")
 	}
 
 	if o.OAuthDataID == 0 {

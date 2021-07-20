@@ -22,17 +22,17 @@ func TestUnitDsn(t *testing.T) {
 				Password: "root",
 				Hostname: "127.0.0.1",
 				Port:     3306,
-				Name:     "beetle",
+				Name:     "helmet",
 			}
 
-			g.Assert(dsn.ToString()).Equal("root:root@tcp(127.0.0.1:3306)/beetle?charset=utf8&parseTime=True")
+			g.Assert(dsn.ToString()).Equal("root:root@tcp(127.0.0.1:3306)/helmet?charset=utf8&parseTime=True")
 
 			dsn = DSN{
 				Driver: "sqlite3",
-				Name:   "/path/to/beetle.db",
+				Name:   "/path/to/helmet.db",
 			}
 
-			g.Assert(dsn.ToString()).Equal("/path/to/beetle.db")
+			g.Assert(dsn.ToString()).Equal("/path/to/helmet.db")
 		})
 	})
 }

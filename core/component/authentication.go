@@ -6,6 +6,7 @@ package component
 
 import (
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -124,6 +125,37 @@ func (o *OAuthAuthMethod) Authenticate(endpoint model.Endpoint, accessToken stri
 
 	if authMethod.Endpoints == "" || !util.InArray(endpoint.Name, strings.Split(authMethod.Endpoints, ";")) {
 		return data, fmt.Errorf("Access token is invalid")
+	}
+
+	return data, nil
+}
+
+// ValidateClientCredentials validates client credentials
+func (o *OAuthAuthMethod) ValidateClientCredentials(authorizationToken string) (model.OAuthData, error) {
+	var data model.OAuthData
+
+	if authorizationToken == "" {
+		return data, errors.New("Authentication is missing")
+	}
+
+	authorizationToken = strings.Replace(authorizationToken, "Basic ", "", -1)
+
+	payload, err := base64.StdEncoding.DecodeString(authorizationToken)
+
+	if err != nil {
+		return data, errors.New("Authentication is invalid")
+	}
+
+	pair := strings.SplitN(string(payload), ":", 2)
+
+	if len(pair) != 2 {
+		return data, errors.New("Authentication is invalid")
+	}
+
+	data = o.Database.GetOAuthDataByKeys(pair[0], pair[1])
+
+	if data.ID < 1 {
+		return data, errors.New("Authentication is invalid")
 	}
 
 	return data, nil

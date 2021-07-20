@@ -133,10 +133,9 @@ func (b *OAuthData) ConvertToJSON() (string, error) {
 type OAuthAccessData struct {
 	gorm.Model
 
-	AccessToken  string    `json:"accessToken"`
-	RefreshToken string    `json:"refreshToken"`
-	Meta         string    `json:"meta"`
-	ExpireAt     time.Time `json:"expireAt"`
+	AccessToken string    `json:"accessToken"`
+	Meta        string    `json:"meta"`
+	ExpireAt    time.Time `json:"expireAt"`
 
 	OAuthDataID int       `json:"oauthDataID"`
 	OAuthData   OAuthData `json:"oauthData" gorm:"foreignKey:OAuthDataID,constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
