@@ -7,6 +7,7 @@ package module
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/spacewalkio/helmet/core/model"
 	"github.com/spacewalkio/helmet/pkg"
@@ -202,15 +203,124 @@ func TestUnitDatabase(t *testing.T) {
 
 			database.DeleteKeyBasedAuthDataByID(result.ID)
 
-			result5 := database.GetKeyBasedAuthDataByID(result.ID)
+			result4 := database.GetKeyBasedAuthDataByID(result.ID)
 
-			g.Assert(result5.ID == 0).Equal(true)
+			g.Assert(result4.ID == 0).Equal(true)
 		})
 	})
 
-	g.Describe("#OAuthCRUD", func() {
+	g.Describe("#OAuthDataCRUD", func() {
 		g.It("It should satisfy test cases", func() {
-			g.Assert(true).Equal(true)
+			result := database.CreateOAuthData(&model.OAuthData{
+				Name:         "oauth_key",
+				ClientID:     "clientId",
+				ClientSecret: "clientSecret",
+				Meta:         "c=2;k=6",
+				AuthMethodID: 1,
+			})
+
+			g.Assert(result.ID > 0).Equal(true)
+			g.Assert(result.Name).Equal("oauth_key")
+			g.Assert(result.ClientID).Equal("clientId")
+			g.Assert(result.ClientSecret).Equal("clientSecret")
+			g.Assert(result.Meta).Equal("c=2;k=6")
+			g.Assert(result.AuthMethodID).Equal(1)
+
+			result.Name = "oauth_key_updated"
+
+			result = database.UpdateOAuthDataByID(result)
+
+			g.Assert(result.ID > 0).Equal(true)
+			g.Assert(result.Name).Equal("oauth_key_updated")
+			g.Assert(result.ClientID).Equal("clientId")
+			g.Assert(result.ClientSecret).Equal("clientSecret")
+			g.Assert(result.Meta).Equal("c=2;k=6")
+			g.Assert(result.AuthMethodID).Equal(1)
+
+			result1 := database.GetOAuthDataByID(result.ID)
+
+			g.Assert(result1.ID > 0).Equal(true)
+			g.Assert(result1.Name).Equal("oauth_key_updated")
+			g.Assert(result1.ClientID).Equal("clientId")
+			g.Assert(result1.ClientSecret).Equal("clientSecret")
+			g.Assert(result1.Meta).Equal("c=2;k=6")
+			g.Assert(result1.AuthMethodID).Equal(1)
+
+			result2 := database.GetOAuthDataByKeys("clientId", "clientSecret")
+
+			g.Assert(result2.ID > 0).Equal(true)
+			g.Assert(result2.Name).Equal("oauth_key_updated")
+			g.Assert(result2.ClientID).Equal("clientId")
+			g.Assert(result2.ClientSecret).Equal("clientSecret")
+			g.Assert(result2.Meta).Equal("c=2;k=6")
+			g.Assert(result2.AuthMethodID).Equal(1)
+
+			result3 := database.GetOAuthDataItems()[0]
+
+			g.Assert(result3.ID > 0).Equal(true)
+			g.Assert(result3.Name).Equal("oauth_key_updated")
+			g.Assert(result3.ClientID).Equal("clientId")
+			g.Assert(result3.ClientSecret).Equal("clientSecret")
+			g.Assert(result3.Meta).Equal("c=2;k=6")
+			g.Assert(result3.AuthMethodID).Equal(1)
+
+			database.DeleteOAuthDataByID(result.ID)
+
+			result4 := database.GetOAuthDataByID(result.ID)
+
+			g.Assert(result4.ID == 0).Equal(true)
+		})
+	})
+
+	g.Describe("#OAuthAccessDataCRUD", func() {
+		g.It("It should satisfy test cases", func() {
+			result := database.CreateOAuthAccessData(&model.OAuthAccessData{
+				AccessToken: "access-token-x-y",
+				Meta:        "p=3",
+				OAuthDataID: 1,
+				ExpireAt:    time.Now().Add(time.Second * 3600).UTC(),
+			})
+
+			g.Assert(result.ID > 0).Equal(true)
+			g.Assert(result.AccessToken).Equal("access-token-x-y")
+			g.Assert(result.Meta).Equal("p=3")
+			g.Assert(result.OAuthDataID).Equal(1)
+
+			result.AccessToken = "y-y-y-y"
+
+			result = database.UpdateOAuthAccessDataByID(result)
+
+			g.Assert(result.ID > 0).Equal(true)
+			g.Assert(result.AccessToken).Equal("y-y-y-y")
+			g.Assert(result.Meta).Equal("p=3")
+			g.Assert(result.OAuthDataID).Equal(1)
+
+			result1 := database.GetOAuthAccessDataByID(result.ID)
+
+			g.Assert(result1.ID > 0).Equal(true)
+			g.Assert(result1.AccessToken).Equal("y-y-y-y")
+			g.Assert(result1.Meta).Equal("p=3")
+			g.Assert(result1.OAuthDataID).Equal(1)
+
+			result2 := database.GetOAuthAccessDataByKey("y-y-y-y")
+
+			g.Assert(result2.ID > 0).Equal(true)
+			g.Assert(result2.AccessToken).Equal("y-y-y-y")
+			g.Assert(result2.Meta).Equal("p=3")
+			g.Assert(result2.OAuthDataID).Equal(1)
+
+			result3 := database.GetOAuthAccessDataItems()[0]
+
+			g.Assert(result3.ID > 0).Equal(true)
+			g.Assert(result3.AccessToken).Equal("y-y-y-y")
+			g.Assert(result3.Meta).Equal("p=3")
+			g.Assert(result3.OAuthDataID).Equal(1)
+
+			database.DeleteOAuthAccessDataByID(result.ID)
+
+			result4 := database.GetOAuthAccessDataByID(result.ID)
+
+			g.Assert(result4.ID == 0).Equal(true)
 		})
 	})
 }
