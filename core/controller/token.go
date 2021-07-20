@@ -20,10 +20,6 @@ import (
 
 // Token controller
 func Token(c echo.Context, gc *GlobalContext) error {
-	log.WithFields(log.Fields{
-		"key": "value",
-	}).Info(`Token call`)
-
 	data, _ := ioutil.ReadAll(c.Request().Body)
 
 	if !strings.Contains(string(data), "grant_type=client_credentials") {
@@ -50,6 +46,10 @@ func Token(c echo.Context, gc *GlobalContext) error {
 		OAuthDataID: oauthRecord.ID,
 		ExpireAt:    time.Now().Add(time.Second * 3600).UTC(),
 	})
+
+	log.WithFields(log.Fields{
+		"time": time.Now().UTC(),
+	}).Info(`Cleanup stale access tokens`)
 
 	gc.GetDatabase().CleanupExpiredTokens()
 
