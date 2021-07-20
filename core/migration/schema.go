@@ -21,6 +21,9 @@ const (
 
 	// OAuthAuthentication const
 	OAuthAuthentication = "oauth_authentication"
+
+	// AnyAuthentication const
+	AnyAuthentication = "any_authentication"
 )
 
 // Option struct

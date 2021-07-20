@@ -16,17 +16,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// Me controller
-func Me(c echo.Context, gc *GlobalContext) error {
-	log.WithFields(log.Fields{
-		"status": "ok",
-	}).Info(`Create auth method`)
-
-	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "ok",
-	})
-}
-
 // CreateAuthMethod controller
 func CreateAuthMethod(c echo.Context, gc *GlobalContext) error {
 	data, _ := ioutil.ReadAll(c.Request().Body)

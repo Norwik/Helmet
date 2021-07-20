@@ -51,6 +51,7 @@ func (a *AuthMethod) Validate() error {
 		migration.KeyAuthentication,
 		migration.BasicAuthentication,
 		migration.OAuthAuthentication,
+		migration.AnyAuthentication,
 	}
 
 	endpoints, _ := a.GetEndpoints()

@@ -11,7 +11,9 @@ import (
 	"strconv"
 
 	"github.com/spacewalkio/helmet/core/component"
+	"github.com/spacewalkio/helmet/core/migration"
 	"github.com/spacewalkio/helmet/core/model"
+	"github.com/spacewalkio/helmet/core/util"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
@@ -57,6 +59,13 @@ func CreateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 		}).Info(`Auth method not found`)
 
 		return c.NoContent(http.StatusNotFound)
+	}
+
+	if !util.InArray(method.Type, []string{migration.BasicAuthentication, migration.AnyAuthentication}) {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": fmt.Sprintf("Invalid request: Auth method with ID %d supports only %s", method.ID, method.Type),
+			"error":   fmt.Sprintf("code=%d, message=BadRequest", http.StatusBadRequest),
+		})
 	}
 
 	item = gc.GetDatabase().CreateBasicAuthData(item)
@@ -167,6 +176,13 @@ func UpdateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 		}).Info(`Auth method not found`)
 
 		return c.NoContent(http.StatusNotFound)
+	}
+
+	if !util.InArray(method.Type, []string{migration.BasicAuthentication, migration.AnyAuthentication}) {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": fmt.Sprintf("Invalid request: Auth method with ID %d supports only %s", method.ID, method.Type),
+			"error":   fmt.Sprintf("code=%d, message=BadRequest", http.StatusBadRequest),
+		})
 	}
 
 	gc.GetDatabase().UpdateBasicAuthDataByID(&item)
