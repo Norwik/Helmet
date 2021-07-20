@@ -13,7 +13,7 @@ import (
 	"github.com/franela/goblin"
 )
 
-// TestUnitClientMethods
+// TestUnitHttpClientMethods
 func TestUnitHttpClientMethods(t *testing.T) {
 	g := goblin.Goblin(t)
 	httpClient := NewHTTPClient(30)
