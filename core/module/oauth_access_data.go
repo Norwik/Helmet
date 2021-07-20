@@ -5,6 +5,8 @@
 package module
 
 import (
+	"time"
+
 	"github.com/spacewalkio/helmet/core/migration"
 	"github.com/spacewalkio/helmet/core/model"
 )
@@ -56,4 +58,9 @@ func (db *Database) GetOAuthAccessDataItems() []model.OAuthAccessData {
 	db.Connection.Select("*").Find(&keys)
 
 	return keys
+}
+
+// CleanupExpiredTokens removes expired tokens
+func (db *Database) CleanupExpiredTokens() {
+	db.Connection.Unscoped().Where("expire_at < ?", time.Now().UTC()).Delete(&migration.OAuthAccessData{})
 }

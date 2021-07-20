@@ -48,8 +48,10 @@ func Token(c echo.Context, gc *GlobalContext) error {
 		AccessToken: component.NewCorrelation().UUIDv4(),
 		Meta:        "",
 		OAuthDataID: oauthRecord.ID,
-		ExpireAt:    time.Now().Add(time.Second * 3600),
+		ExpireAt:    time.Now().Add(time.Second * 3600).UTC(),
 	})
+
+	gc.GetDatabase().CleanupExpiredTokens()
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"access_token": item.AccessToken,
