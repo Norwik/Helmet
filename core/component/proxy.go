@@ -44,6 +44,11 @@ func (p *Proxy) Redirect() {
 		req.Header.Add("X-Forwarded-Host", origin.Host)
 		req.Header.Add("X-Origin-Host", req.Host)
 		req.Header.Add("X-Client-Name", p.Name)
+
+		// Remove any auth headers
+		req.Header.Del("authorization")
+		req.Header.Del("x-api-key")
+
 		// Add meta data in the request headers
 		for k, v := range p.Meta {
 			req.Header.Add(fmt.Sprintf("X-Meta-%s", strings.Title(k)), v)
@@ -55,14 +60,12 @@ func (p *Proxy) Redirect() {
 	}
 
 	modifyResponse := func(res *http.Response) error {
-
-		fmt.Println(res.StatusCode)
-
+		// fmt.Println(res.StatusCode)
 		return nil
 	}
 
 	errorHandler := func(res http.ResponseWriter, req *http.Request, err error) {
-		fmt.Println(err.Error())
+		// fmt.Println(err.Error())
 	}
 
 	// Ref --> https://github.com/golang/go/blob/master/src/net/http/httputil/reverseproxy.go#L42

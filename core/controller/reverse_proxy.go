@@ -75,12 +75,13 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 	// ---------------------------------
 	apiMethod := &component.KeyBasedAuthMethod{Database: gc.GetDatabase()}
 	basicMethod := &component.BasicAuthMethod{Database: gc.GetDatabase()}
+	oauthMethod := &component.OAuthAuthMethod{Database: gc.GetDatabase()}
 
 	meta := ""
 	name := ""
 	success := false
 	apiKey := c.Request().Header.Get("x-api-key")
-	basicAuthKey := c.Request().Header.Get("authorization")
+	authKey := c.Request().Header.Get("authorization")
 
 	if endpoint.Proxy.Authentication.Status {
 		result, err := apiMethod.Authenticate(endpoint, apiKey)
@@ -95,7 +96,17 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 	}
 
 	if !success {
-		result, err := basicMethod.Authenticate(endpoint, basicAuthKey)
+		result, err := basicMethod.Authenticate(endpoint, authKey)
+
+		if err == nil {
+			success = true
+			meta = result.Meta
+			name = result.Name
+		}
+	}
+
+	if !success {
+		result, err := oauthMethod.Authenticate(endpoint, authKey)
 
 		if err == nil {
 			success = true

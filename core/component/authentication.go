@@ -58,7 +58,7 @@ func (k *KeyBasedAuthMethod) Authenticate(endpoint model.Endpoint, apiKey string
 func (b *BasicAuthMethod) Authenticate(endpoint model.Endpoint, authKey string) (model.BasicAuthData, error) {
 	var data model.BasicAuthData
 
-	if authKey == "" {
+	if authKey == "" || !strings.Contains(authKey, "Basic") {
 		return data, fmt.Errorf("Basic auth credentials are missing")
 	}
 
@@ -95,39 +95,39 @@ func (b *BasicAuthMethod) Authenticate(endpoint model.Endpoint, authKey string) 
 }
 
 // Authenticate validates auth headers
-func (o *OAuthAuthMethod) Authenticate(endpoint model.Endpoint, accessToken string) (model.OAuthAccessData, error) {
-	var data model.OAuthAccessData
+func (o *OAuthAuthMethod) Authenticate(endpoint model.Endpoint, accessToken string) (model.OAuthData, error) {
+	var oauthData model.OAuthData
 
-	if accessToken == "" {
-		return data, fmt.Errorf("Access token is missing")
+	if accessToken == "" || !strings.Contains(accessToken, "Bearer") {
+		return oauthData, fmt.Errorf("Access token is missing")
 	}
 
 	accessToken = strings.Replace(accessToken, "Bearer ", "", -1)
 
-	data = o.Database.GetOAuthAccessDataByKey(accessToken)
+	data := o.Database.GetOAuthAccessDataByKey(accessToken)
 
 	if data.ID < 1 {
-		return data, fmt.Errorf("Access token is invalid")
+		return oauthData, fmt.Errorf("Access token is invalid")
 	}
 
 	// Validate if access token is expired
 	if time.Now().Unix() >= (data.ExpireAt.UnixNano() / int64(time.Millisecond)) {
-		return data, fmt.Errorf("Access token is expired")
+		return oauthData, fmt.Errorf("Access token is expired")
 	}
 
-	oauthData := o.Database.GetOAuthDataByID(data.OAuthDataID)
+	oauthData = o.Database.GetOAuthDataByID(data.OAuthDataID)
 
 	if oauthData.ID < 1 {
-		return data, fmt.Errorf("Access token credentials are missing")
+		return oauthData, fmt.Errorf("Access token credentials are missing")
 	}
 
 	authMethod := o.Database.GetAuthMethodByID(oauthData.AuthMethodID)
 
 	if authMethod.Endpoints == "" || !util.InArray(endpoint.Name, strings.Split(authMethod.Endpoints, ";")) {
-		return data, fmt.Errorf("Access token is invalid")
+		return oauthData, fmt.Errorf("Access token is invalid")
 	}
 
-	return data, nil
+	return oauthData, nil
 }
 
 // ValidateClientCredentials validates client credentials
