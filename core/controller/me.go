@@ -12,7 +12,7 @@ import (
 )
 
 // Me controller
-func Me(c echo.Context, gc *GlobalContext) error {
+func Me(c echo.Context, _ *GlobalContext) error {
 	log.WithFields(log.Fields{
 		"status": "ok",
 	}).Info(`Create auth method`)

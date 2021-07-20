@@ -12,7 +12,7 @@ import (
 )
 
 // Health controller
-func Health(c echo.Context, gc *GlobalContext) error {
+func Health(c echo.Context, _ *GlobalContext) error {
 	log.WithFields(log.Fields{
 		"status": "i am ok",
 	}).Info(`Health check`)
