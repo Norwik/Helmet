@@ -6,16 +6,16 @@ package controller
 
 import (
 	"fmt"
-	_ "net/http"
-	_ "net/http/httptest"
-	_ "strings"
+	"net/http"
+	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/spacewalkio/helmet/core/module"
 	"github.com/spacewalkio/helmet/pkg"
 
 	"github.com/franela/goblin"
-	_ "github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4"
 )
 
 // TestUnitGetEndpoints test cases
@@ -35,7 +35,17 @@ func TestUnitGetEndpoints(t *testing.T) {
 
 	g.Describe("#GetEndpoints", func() {
 		g.It("It should satisfy all provided test cases", func() {
+			e := echo.New()
+			req := httptest.NewRequest(http.MethodGet, "/apigw/api/v1/endpoint", nil)
+			rec := httptest.NewRecorder()
+			c := e.NewContext(req, rec)
+			c.SetPath("/apigw/api/v1/endpoint")
 
+			err := GetEndpoints(c, &GlobalContext{Database: database})
+
+			g.Assert(err).Equal(nil)
+			g.Assert(rec.Code).Equal(http.StatusOK)
+			g.Assert(strings.Contains(rec.Body.String(), "endpoint")).Equal(true)
 		})
 	})
 }
