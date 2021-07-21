@@ -150,6 +150,12 @@ var serverCmd = &cobra.Command{
 		e.Use(middleware.RequestID())
 		e.Use(middleware.BodyLimit("2M"))
 
+		// Allows requests from any origin with any method
+		// https://echo.labstack.com/cookbook/cors/
+		if viper.GetBool("app.cors.status") {
+			e.Use(middleware.CORS())
+		}
+
 		e.Use(middleware.TimeoutWithConfig(middleware.TimeoutConfig{
 			Timeout: time.Duration(viper.GetInt("app.timeout")) * time.Second,
 		}))

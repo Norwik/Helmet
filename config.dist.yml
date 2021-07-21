@@ -21,6 +21,10 @@ app:
     api:
         key: ${HELMET_API_KEY:-6c68b836-6f8e-465e-b59f-89c1db53afca}
 
+    # CORS status
+    cors:
+        status: ${HELMET_CORS_STATUS:-off}
+
     # Application Database
     database:
         # Database driver (sqlite3, mysql)
