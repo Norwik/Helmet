@@ -1,19 +1,19 @@
 #!/bin/bash
 
 function mysql {
-    echo "Installing mysql ..."
+    echo "Installing MySQL ..."
 
-    echo "mysql installation done!"
+    echo "MySQL Installation Done!"
 }
 
 function redis {
-    echo "Installing redis ..."
+    echo "Installing Redis ..."
 
-    echo "redis installation done!"
+    echo "Redis Installation Done!"
 }
 
 function helmet {
-    echo "Installing helmet ..."
+    echo "Installing Helmet ..."
 
     apt-get install jq -y
 
@@ -40,7 +40,7 @@ WantedBy=multi-user.target" > /etc/systemd/system/helmet.service
     systemctl enable helmet.service
     systemctl start helmet.service
 
-    echo "helmet installation done!"
+    echo "Helmet Installation Done!"
 }
 
 mysql

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function helmet {
-    echo "Upgrade helmet ..."
+    echo "Upgrade Helmet ..."
 
     cd /etc/helmet
     mv config.prod.yml config.back.yml
@@ -15,7 +15,7 @@ function helmet {
 
     systemctl restart helmet
 
-    echo "helmet upgrade done!"
+    echo "Helmet Upgrade Done!"
 }
 
 helmet
