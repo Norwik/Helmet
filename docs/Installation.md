@@ -13,7 +13,6 @@ $ sudo mysql_secure_installation
 - Install a `Redis` Server.
 
 ```zsh
-$ sudo apt update
 $ sudo apt install redis-server
 ```
 
