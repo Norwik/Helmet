@@ -18,8 +18,8 @@ import (
 	_ "github.com/labstack/echo/v4"
 )
 
-// TestUnitTokenEndpoint test cases
-func TestUnitTokenEndpoint(t *testing.T) {
+// TestUnitCreateTokenEndpoint test cases
+func TestUnitCreateTokenEndpoint(t *testing.T) {
 	g := goblin.Goblin(t)
 
 	pkg.LoadConfigs(fmt.Sprintf("%s/config.dist.yml", pkg.GetBaseDir("cache")))
