@@ -260,7 +260,7 @@ var serverCmd = &cobra.Command{
 
 		// Oauth Access Token (https://datatracker.ietf.org/doc/html/rfc6749#section-4.4.2)
 		e.POST("/apigw/token", func(c echo.Context) error {
-			return controller.Token(c, context)
+			return controller.CreateToken(c, context)
 		})
 
 		e.GET("/apigw/me", func(c echo.Context) error {

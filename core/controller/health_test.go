@@ -11,19 +11,29 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/spacewalkio/helmet/core/module"
 	"github.com/spacewalkio/helmet/pkg"
 
 	"github.com/franela/goblin"
 	"github.com/labstack/echo/v4"
 )
 
-// TestUnitHealthController
-func TestUnitHealthController(t *testing.T) {
+// TestUnitHealthEndpoint
+func TestUnitHealthEndpoint(t *testing.T) {
 	g := goblin.Goblin(t)
 
 	pkg.LoadConfigs(fmt.Sprintf("%s/config.dist.yml", pkg.GetBaseDir("cache")))
 
-	g.Describe("#Health", func() {
+	database := &module.Database{}
+
+	// Reset DB
+	database.AutoConnect()
+	database.Rollback()
+	database.Migrate()
+
+	defer database.Close()
+
+	g.Describe("#HealthEndpoint", func() {
 		g.It("It should satisfy all provided test cases", func() {
 			e := echo.New()
 			req := httptest.NewRequest(http.MethodGet, "/apigw/health", nil)
@@ -31,7 +41,7 @@ func TestUnitHealthController(t *testing.T) {
 			c := e.NewContext(req, rec)
 			c.SetPath("/apigw/health")
 
-			err := Health(c, &GlobalContext{})
+			err := Health(c, &GlobalContext{Database: database})
 
 			g.Assert(err).Equal(nil)
 			g.Assert(rec.Code).Equal(http.StatusOK)

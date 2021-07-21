@@ -18,8 +18,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// TestUnitReadyController
-func TestUnitReadyController(t *testing.T) {
+// TestUnitReadyEndpoint
+func TestUnitReadyEndpoint(t *testing.T) {
 	g := goblin.Goblin(t)
 
 	pkg.LoadConfigs(fmt.Sprintf("%s/config.dist.yml", pkg.GetBaseDir("cache")))
@@ -33,7 +33,7 @@ func TestUnitReadyController(t *testing.T) {
 
 	defer database.Close()
 
-	g.Describe("#Ready", func() {
+	g.Describe("#ReadyEndpoint", func() {
 		g.It("It should satisfy all provided test cases", func() {
 			e := echo.New()
 			req := httptest.NewRequest(http.MethodGet, "/apigw/ready", nil)

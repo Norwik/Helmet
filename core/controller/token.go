@@ -18,8 +18,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// Token controller
-func Token(c echo.Context, gc *GlobalContext) error {
+// CreateToken controller
+func CreateToken(c echo.Context, gc *GlobalContext) error {
 	data, _ := ioutil.ReadAll(c.Request().Body)
 
 	if !strings.Contains(string(data), "grant_type=client_credentials") {
