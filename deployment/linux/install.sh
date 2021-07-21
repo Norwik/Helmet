@@ -1,5 +1,17 @@
 #!/bin/bash
 
+function mysql {
+    echo "Installing mysql ..."
+
+    echo "mysql installation done!"
+}
+
+function redis {
+    echo "Installing redis ..."
+
+    echo "redis installation done!"
+}
+
 function helmet {
     echo "Installing helmet ..."
 
@@ -31,4 +43,6 @@ WantedBy=multi-user.target" > /etc/systemd/system/helmet.service
     echo "helmet installation done!"
 }
 
+mysql
+redis
 helmet
