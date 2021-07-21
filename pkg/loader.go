@@ -50,5 +50,7 @@ func LoadConfigs(path string) error {
 	viper.SetConfigType("yaml")
 	viper.ReadConfig(bytes.NewBuffer([]byte(data1)))
 
+	viper.SetDefault("config", path)
+
 	return nil
 }
