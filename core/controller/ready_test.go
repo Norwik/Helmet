@@ -36,10 +36,10 @@ func TestUnitReadyController(t *testing.T) {
 	g.Describe("#Ready", func() {
 		g.It("It should satisfy all provided test cases", func() {
 			e := echo.New()
-			req := httptest.NewRequest(http.MethodGet, "/apigw/health", nil)
+			req := httptest.NewRequest(http.MethodGet, "/apigw/ready", nil)
 			rec := httptest.NewRecorder()
 			c := e.NewContext(req, rec)
-			c.SetPath("/apigw/health")
+			c.SetPath("/apigw/ready")
 
 			err := Ready(c, &GlobalContext{Database: database})
 
