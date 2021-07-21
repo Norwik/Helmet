@@ -60,7 +60,7 @@ test:
 	$(GO) test -mod=readonly -run=Unit -bench=. -benchmem -v -cover $(pkgs)
 
 
-## integration: Run integration test cases (Requires etcd)
+## integration: Run integration test cases (Requires Redis)
 .PHONY: integration
 integration:
 	@echo ">> ============= Running All Tests ============= <<"
