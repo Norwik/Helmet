@@ -140,5 +140,5 @@ func UpdateAuthMethod(c echo.Context, gc *GlobalContext) error {
 
 	gc.GetDatabase().UpdateAuthMethodByID(&method)
 
-	return c.JSON(http.StatusCreated, method)
+	return c.JSON(http.StatusOK, method)
 }
