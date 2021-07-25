@@ -9,26 +9,44 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"strconv"
 	"strings"
+
+	"github.com/prometheus/client_golang/prometheus"
 )
+
+var (
+	services = prometheus.NewCounterVec(
+		prometheus.CounterOpts{
+			Namespace: "helmet",
+			Name:      "services",
+			Help:      "API GW Backend Services Statistics",
+		}, []string{"id", "method", "uri", "code"})
+)
+
+func init() {
+	prometheus.MustRegister(services)
+}
 
 // Proxy type
 type Proxy struct {
-	Name     string
-	Upstream string
-	Meta     map[string]string
+	Name        string
+	Upstream    string
+	Meta        map[string]string
+	RequestMeta []string
 
 	HTTPRequest *http.Request
 	HTTPWriter  http.ResponseWriter
 }
 
 // NewProxy creates a new instance
-func NewProxy(httpRequest *http.Request, httpWriter http.ResponseWriter, name, upstream, meta string) *Proxy {
+func NewProxy(httpRequest *http.Request, httpWriter http.ResponseWriter, name, upstream, meta string, requestMeta []string) *Proxy {
 	p := &Proxy{
 		Name:        name,
 		Upstream:    upstream,
 		HTTPRequest: httpRequest,
 		HTTPWriter:  httpWriter,
+		RequestMeta: requestMeta,
 	}
 
 	p.Meta = p.ConvertMetaData(meta)
@@ -60,13 +78,17 @@ func (p *Proxy) Redirect() {
 	}
 
 	modifyResponse := func(res *http.Response) error {
-		// fmt.Println(res.StatusCode)
+		services.WithLabelValues(
+			p.RequestMeta[0],
+			p.RequestMeta[1],
+			p.RequestMeta[2],
+			strconv.Itoa(res.StatusCode),
+		).Inc()
+
 		return nil
 	}
 
-	errorHandler := func(res http.ResponseWriter, req *http.Request, err error) {
-		// fmt.Println(err.Error())
-	}
+	errorHandler := func(res http.ResponseWriter, req *http.Request, err error) {}
 
 	// Ref --> https://github.com/golang/go/blob/master/src/net/http/httputil/reverseproxy.go#L42
 	proxy := &httputil.ReverseProxy{

@@ -111,7 +111,8 @@ func (o *OAuthAuthMethod) Authenticate(endpoint model.Endpoint, accessToken stri
 	}
 
 	// Validate if access token is expired
-	if time.Now().Unix() >= (data.ExpireAt.UnixNano() / int64(time.Millisecond)) {
+	if data.ExpireAt.Before(time.Now()) {
+		fmt.Println("Expired")
 		return oauthData, fmt.Errorf("Access token is expired")
 	}
 
