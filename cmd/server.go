@@ -17,6 +17,7 @@ import (
 
 	"github.com/spacewalkio/helmet/core/component"
 	"github.com/spacewalkio/helmet/core/controller"
+	m "github.com/spacewalkio/helmet/core/middleware"
 	"github.com/spacewalkio/helmet/core/module"
 	"github.com/spacewalkio/helmet/core/service"
 
@@ -149,6 +150,7 @@ var serverCmd = &cobra.Command{
 		e.Use(middleware.LoggerWithConfig(defaultLogger))
 		e.Use(middleware.RequestID())
 		e.Use(middleware.BodyLimit("2M"))
+		e.Use(m.Metric)
 
 		// Allows requests from any origin with any method
 		// https://echo.labstack.com/cookbook/cors/
