@@ -274,6 +274,9 @@ var serverCmd = &cobra.Command{
 		e.GET("/apigw/ready", func(c echo.Context) error {
 			return controller.Ready(c, context)
 		})
+		e.GET("/", func(c echo.Context) error {
+			return controller.Health(c, context)
+		})
 
 		e.Any("/*", func(c echo.Context) error {
 			return controller.ReverseProxy(c, context)
