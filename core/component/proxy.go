@@ -26,7 +26,7 @@ var (
 
 	requestDuration = prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
-			Subsystem: "peanut",
+			Subsystem: "helmet",
 			Name:      "srv_request_duration_seconds",
 			Help:      "The HTTP request latencies in seconds.",
 		},
