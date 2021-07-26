@@ -4,10 +4,18 @@
 
 package component
 
-// RateLimiter interface
-type RateLimiter interface {
+import (
+	"github.com/spacewalkio/helmet/core/service"
+)
+
+// RateLimiter struct
+type RateLimiter struct {
+	Driver *service.Redis
 }
 
-// RedisRateLimiter struct
-type RedisRateLimiter struct {
+// NewRateLimiter gets a new instance
+func NewRateLimiter(redisDriver *service.Redis) *RateLimiter {
+	return &RateLimiter{
+		Driver: redisDriver,
+	}
 }

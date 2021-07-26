@@ -4,10 +4,18 @@
 
 package component
 
-// CircuitBreaker interface
-type CircuitBreaker interface {
+import (
+	"github.com/spacewalkio/helmet/core/service"
+)
+
+// CircuitBreaker struct
+type CircuitBreaker struct {
+	Driver *service.Redis
 }
 
-// RedisCircuitBreaker struct
-type RedisCircuitBreaker struct {
+// NewCircuitBreaker gets a new instance
+func NewCircuitBreaker(redisDriver *service.Redis) *CircuitBreaker {
+	return &CircuitBreaker{
+		Driver: redisDriver,
+	}
 }
