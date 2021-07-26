@@ -151,6 +151,7 @@ var serverCmd = &cobra.Command{
 		e.Use(middleware.RequestID())
 		e.Use(middleware.BodyLimit("2M"))
 		e.Use(m.Server)
+		e.Use(m.Correlation)
 
 		// Allows requests from any origin with any method
 		// https://echo.labstack.com/cookbook/cors/

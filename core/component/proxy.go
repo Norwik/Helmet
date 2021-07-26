@@ -45,19 +45,21 @@ type Proxy struct {
 	Upstream    string
 	Meta        map[string]string
 	RequestMeta []string
+	RequestID   string
 
 	HTTPRequest *http.Request
 	HTTPWriter  http.ResponseWriter
 }
 
 // NewProxy creates a new instance
-func NewProxy(httpRequest *http.Request, httpWriter http.ResponseWriter, name, upstream, meta string, requestMeta []string) *Proxy {
+func NewProxy(httpRequest *http.Request, httpWriter http.ResponseWriter, name, upstream, meta string, requestMeta []string, requestID string) *Proxy {
 	p := &Proxy{
 		Name:        name,
 		Upstream:    upstream,
 		HTTPRequest: httpRequest,
 		HTTPWriter:  httpWriter,
 		RequestMeta: requestMeta,
+		RequestID:   requestID,
 	}
 
 	p.Meta = p.ConvertMetaData(meta)
@@ -75,6 +77,8 @@ func (p *Proxy) Redirect() {
 		req.Header.Add("X-Forwarded-Host", origin.Host)
 		req.Header.Add("X-Origin-Host", req.Host)
 		req.Header.Add("X-Client-Name", p.Name)
+		req.Header.Add("X-Correlation-Id", p.RequestID)
+		req.Header.Add("X-Request-Id", p.RequestID)
 
 		// Remove any auth headers
 		req.Header.Del("authorization")

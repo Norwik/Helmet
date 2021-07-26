@@ -143,6 +143,7 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 		remote,
 		meta,
 		[]string{endpoint.Name, c.Request().Method, c.Request().URL.Path},
+		c.Request().Header.Get("X-Request-ID"),
 	)
 
 	proxy.Redirect()
