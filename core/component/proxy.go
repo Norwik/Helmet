@@ -52,7 +52,15 @@ type Proxy struct {
 }
 
 // NewProxy creates a new instance
-func NewProxy(httpRequest *http.Request, httpWriter http.ResponseWriter, name, upstream, meta string, requestMeta []string, requestID string) *Proxy {
+func NewProxy(
+	httpRequest *http.Request,
+	httpWriter http.ResponseWriter,
+	name,
+	upstream,
+	meta string,
+	requestMeta []string,
+	requestID string,
+) *Proxy {
 	p := &Proxy{
 		Name:        name,
 		Upstream:    upstream,
