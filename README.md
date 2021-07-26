@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/assets/logo.png?v=1.0.7" width="200" />
+    <img src="/assets/logo.png?v=1.0.8" width="200" />
     <h3 align="center">Helmet</h3>
     <p align="center">A Lightweight Cloud Native API Gateway.</p>
     <p align="center">
@@ -10,10 +10,10 @@
             <img src="https://github.com/spacewalkio/Helmet/workflows/Release/badge.svg">
         </a>
         <a href="https://github.com/spacewalkio/Helmet/releases">
-            <img src="https://img.shields.io/badge/Version-1.0.7-pink.svg">
+            <img src="https://img.shields.io/badge/Version-1.0.8-pink.svg">
         </a>
         <a href="https://goreportcard.com/report/github.com/spacewalkio/Helmet">
-            <img src="https://goreportcard.com/badge/github.com/spacewalkio/Helmet?v=1.0.7">
+            <img src="https://goreportcard.com/badge/github.com/spacewalkio/Helmet?v=1.0.8">
         </a>
         <a href="https://godoc.org/github.com/spacewalkio/helmet">
             <img src="https://godoc.org/github.com/spacewalkio/helmet?status.svg">
@@ -25,7 +25,7 @@
 </p>
 <br/>
 <p align="center">
-    <img src="/assets/chart.png?v=1.0.7" width="80%" />
+    <img src="/assets/chart.png?v=1.0.8" width="80%" />
 </p>
 
 Helmet is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more!
@@ -36,8 +36,7 @@ Here is some of the key features:
 - Manage End User to Service Authentication, Authorization and Communication.
 - Basic, API Key Based and OAuth2 Authentication Support.
 - Multiple Backends Support with Load Balancing, Health Checks.
-- OpenTracing support for Distributed tracing.
-- Runtime Metrics exposed for Prometheus.
+- Runtime Metrics for both Helmet and Backend Services exposed for Prometheus.
 - CORS Support.
 - HTTP/2 support.
 - Rate Limiting Support.
@@ -61,7 +60,7 @@ $ curl -sL https://github.com/spacewalkio/Helmet/releases/download/v{$LATEST_VER
     | tar xz
 ```
 
-Then install `MySQL` and `Redis` on the server.
+Then install `MySQL` and `Redis` on the server or a separate one.
 
 Create the configs file `config.yml` from `config.dist.yml`. Something like the following:
 
