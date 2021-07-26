@@ -11,21 +11,32 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (
-	services = prometheus.NewCounterVec(
+	httpRequests = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Namespace: "helmet",
-			Name:      "services",
-			Help:      "API GW Backend Services Statistics",
+			Name:      "srv_total_http_requests",
+			Help:      "How many HTTP requests processed, partitioned by status code and HTTP method.",
 		}, []string{"id", "method", "uri", "code"})
+
+	requestDuration = prometheus.NewHistogramVec(
+		prometheus.HistogramOpts{
+			Subsystem: "peanut",
+			Name:      "srv_request_duration_seconds",
+			Help:      "The HTTP request latencies in seconds.",
+		},
+		[]string{"id", "method", "uri", "code"},
+	)
 )
 
 func init() {
-	prometheus.MustRegister(services)
+	prometheus.MustRegister(httpRequests)
+	prometheus.MustRegister(requestDuration)
 }
 
 // Proxy type
@@ -58,6 +69,8 @@ func NewProxy(httpRequest *http.Request, httpWriter http.ResponseWriter, name, u
 func (p *Proxy) Redirect() {
 	origin, _ := url.Parse(p.Upstream)
 
+	start := time.Now()
+
 	director := func(req *http.Request) {
 		req.Header.Add("X-Forwarded-Host", origin.Host)
 		req.Header.Add("X-Origin-Host", req.Host)
@@ -78,12 +91,21 @@ func (p *Proxy) Redirect() {
 	}
 
 	modifyResponse := func(res *http.Response) error {
-		services.WithLabelValues(
+		httpRequests.WithLabelValues(
 			p.RequestMeta[0],
 			p.RequestMeta[1],
 			p.RequestMeta[2],
 			strconv.Itoa(res.StatusCode),
 		).Inc()
+
+		elapsed := float64(time.Since(start)) / float64(time.Second)
+
+		requestDuration.WithLabelValues(
+			p.RequestMeta[0],
+			p.RequestMeta[1],
+			p.RequestMeta[2],
+			strconv.Itoa(res.StatusCode),
+		).Observe(elapsed)
 
 		return nil
 	}
