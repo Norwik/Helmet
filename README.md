@@ -10,7 +10,7 @@
             <img src="https://github.com/spacewalkio/Helmet/workflows/Release/badge.svg">
         </a>
         <a href="https://github.com/spacewalkio/Helmet/releases">
-            <img src="https://img.shields.io/badge/Version-1.0.10-pink.svg">
+            <img src="https://img.shields.io/badge/Version-1.0.10-9B59B6.svg">
         </a>
         <a href="https://goreportcard.com/report/github.com/spacewalkio/Helmet">
             <img src="https://goreportcard.com/badge/github.com/spacewalkio/Helmet?v=1.0.10">
@@ -19,7 +19,7 @@
             <img src="https://godoc.org/github.com/spacewalkio/helmet?status.svg">
         </a>
         <a href="https://github.com/spacewalkio/Helmet/blob/master/LICENSE">
-            <img src="https://img.shields.io/badge/LICENSE-MIT-orange.svg">
+            <img src="https://img.shields.io/badge/LICENSE-MIT-E74C3C.svg">
         </a>
     </p>
 </p>
