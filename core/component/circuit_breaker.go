@@ -5,17 +5,23 @@
 package component
 
 import (
+	"sync"
+
 	"github.com/spacewalkio/helmet/core/service"
 )
 
 // CircuitBreaker struct
 type CircuitBreaker struct {
-	Driver *service.Redis
+	sync.RWMutex
+
+	Driver  *service.Redis
+	HashMap string
 }
 
 // NewCircuitBreaker gets a new instance
-func NewCircuitBreaker(redisDriver *service.Redis) *CircuitBreaker {
+func NewCircuitBreaker(redisDriver *service.Redis, hashMap string) *CircuitBreaker {
 	return &CircuitBreaker{
-		Driver: redisDriver,
+		Driver:  redisDriver,
+		HashMap: hashMap,
 	}
 }

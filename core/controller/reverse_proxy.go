@@ -21,9 +21,7 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 		"http_method": c.Request().Method,
 	}).Info(`Incoming request`)
 
-	// --------------------
 	// Fetch the endpoint
-	// --------------------
 	router := component.NewRouter()
 	configs, err := gc.GetConfigs()
 
@@ -50,9 +48,7 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	// ---------------------------------
 	// Validate the Request HTTP Method
-	// ---------------------------------
 	authorization := &component.Authorization{}
 
 	err = authorization.Authorize(
@@ -70,9 +66,7 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 		return c.NoContent(http.StatusUnauthorized)
 	}
 
-	// ---------------------------------
 	// Validate the Request Credentials
-	// ---------------------------------
 	apiMethod := &component.KeyBasedAuthMethod{Database: gc.GetDatabase()}
 	basicMethod := &component.BasicAuthMethod{Database: gc.GetDatabase()}
 	oauthMethod := &component.OAuthAuthMethod{Database: gc.GetDatabase()}
@@ -125,9 +119,7 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 		return c.NoContent(http.StatusUnauthorized)
 	}
 
-	// -------------------------------------
 	// Redirect The Request to The Upstream
-	// -------------------------------------
 	balancer, _ := gc.GetBalancer()
 
 	remote := router.BuildRemote(

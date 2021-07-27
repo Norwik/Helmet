@@ -142,6 +142,15 @@ func (p *Proxy) ConvertMetaData(meta string) map[string]string {
 	items := strings.Split(meta, ";")
 
 	if len(items) > 0 {
+		// Matches x=1;y=2;z=3
+		for _, v := range items {
+			if strings.Contains(v, "=") {
+				item := strings.Split(v, "=")
+				metaItems[item[0]] = item[1]
+			}
+		}
+
+		// Matches x:1;y:2;z:3
 		for _, v := range items {
 			if strings.Contains(v, ":") {
 				item := strings.Split(v, ":")
