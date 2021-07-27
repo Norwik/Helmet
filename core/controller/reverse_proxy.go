@@ -120,7 +120,15 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 	}
 
 	// Redirect The Request to The Upstream
-	balancer, _ := gc.GetBalancer()
+	balancer, err := gc.GetBalancer()
+
+	if err != nil {
+		log.WithFields(log.Fields{
+			"error": err.Error(),
+		}).Error(`Internal server error`)
+
+		return c.NoContent(http.StatusInternalServerError)
+	}
 
 	remote := router.BuildRemote(
 		balancer[endpoint.Name].Next().URL,
