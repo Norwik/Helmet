@@ -1,6 +1,15 @@
-FROM golang:1.16.6
+FROM golang:1.16.6 as build
 
-ARG HELMET_VERSION=1.0.11
+RUN mkdir -p /app
+RUN apt-get update
+
+WORKDIR /app
+
+COPY ./ ./
+
+RUN go build helmet.go
+
+FROM golang:1.16.6
 
 ENV GO111MODULE=on
 
@@ -10,11 +19,8 @@ RUN apt-get update
 
 WORKDIR /app
 
-RUN curl -sL https://github.com/Spacewalkio/Helmet/releases/download/v${HELMET_VERSION}/helmet_${HELMET_VERSION}_Linux_x86_64.tar.gz | tar xz
-RUN rm LICENSE
-RUN rm README.md
-
-COPY ./config.dist.yml /app/configs/
+COPY --from=build /app/helmet /app/helmet
+COPY --from=build /app/config.dist.yml /app/configs/config.dist.yml
 
 EXPOSE 8000
 
