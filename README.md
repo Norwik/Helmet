@@ -52,12 +52,9 @@ Here is some of the key features:
 Download [the latest helmet binary](https://github.com/spacewalkio/Helmet/releases). Make it executable from everywhere.
 
 ```zsh
-$ export LATEST_VERSION=$(curl --silent "https://api.github.com/repos/spacewalkio/Helmet/releases/latest" \
-    | jq '.tag_name' \
-    | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
+$ export LATEST_VERSION=$(curl --silent "https://api.github.com/repos/spacewalkio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
 
-$ curl -sL https://github.com/spacewalkio/Helmet/releases/download/v{$LATEST_VERSION}/helmet_{$LATEST_VERSION}_Linux_x86_64.tar.gz \
-    | tar xz
+$ curl -sL https://github.com/spacewalkio/Helmet/releases/download/v{$LATEST_VERSION}/helmet_{$LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
 ```
 
 Then install `MySQL` and `Redis` on the server or a separate one.
