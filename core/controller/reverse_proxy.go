@@ -142,7 +142,7 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 		name,
 		remote,
 		meta,
-		[]string{endpoint.Name, c.Request().Method, c.Request().URL.Path},
+		[]string{endpoint.Name, c.Request().Method, endpoint.Proxy.ListenPath},
 		c.Request().Header.Get("X-Request-ID"),
 	)
 
