@@ -11,7 +11,7 @@ import (
 // Server middleware
 func Server(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		c.Response().Header().Set(echo.HeaderServer, "Helmet/1.0.7")
+		c.Response().Header().Set(echo.HeaderServer, "Helmet/1.0.x")
 		return next(c)
 	}
 }
