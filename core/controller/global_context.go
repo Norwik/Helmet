@@ -62,7 +62,7 @@ func (c *GlobalContext) GetBalancer() (map[string]component.Balancer, error) {
 			}
 		}
 
-		if endpoint.Proxy.Upstreams.Balancing == "random" {
+		if endpoint.Proxy.Upstreams.Balancing == "random" || endpoint.Proxy.Upstreams.Balancing == "none" {
 			result[endpoint.Name] = component.NewRandomBalancer([]*component.Target{})
 
 			for _, target := range endpoint.Proxy.Upstreams.Targets {
