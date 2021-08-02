@@ -59,7 +59,7 @@ func TestUnitAuthMethodsEndpoints(t *testing.T) {
 				Name:        "customers_public",
 				Description: "Customers Public",
 				Type:        "key_authentication",
-				Endpoints:   "customer_service",
+				Endpoints:   "customers_service",
 			}
 
 			body, _ := item.ConvertToJSON()
@@ -244,7 +244,7 @@ func TestUnitAuthMethodsEndpoints(t *testing.T) {
 				Name:        "customers_public_up999",
 				Description: "Customers Public",
 				Type:        "key_authentication",
-				Endpoints:   "customer_service",
+				Endpoints:   "customers_service",
 			}
 
 			body, _ := item.ConvertToJSON()
