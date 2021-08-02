@@ -56,17 +56,17 @@ app:
     # Endpoint Configs
     endpoint:
         # Orders Internal Service
-        - name: order_service
+        - name: orders_service
           active: true
           proxy:
             listen_path: "/orders/v2/*"
             upstreams:
                 balancing: roundrobin
                 targets:
-                    - target: https://httpbin.org/anything/orderService1/v2
-                    - target: https://httpbin.org/anything/orderService2/v2
-                    - target: https://httpbin.org/anything/orderService3/v2
-                    - target: https://httpbin.org/anything/orderService4/v2
+                    - target: https://httpbin.org/anything/orders1/v2
+                    - target: https://httpbin.org/anything/orders2/v2
+                    - target: https://httpbin.org/anything/orders3/v2
+                    - target: https://httpbin.org/anything/orders4/v2
             http_methods:
                 - ANY
             authentication:
@@ -79,17 +79,17 @@ app:
                 status: off
 
         # Customers Internal Service
-        - name: customer_service
+        - name: customers_service
           active: true
           proxy:
             listen_path: "/customer/v2/*"
             upstreams:
                 balancing: random
                 targets:
-                    - target: https://httpbin.org/anything/customerService1/v2
-                    - target: https://httpbin.org/anything/customerService2/v2
-                    - target: https://httpbin.org/anything/customerService3/v2
-                    - target: https://httpbin.org/anything/customerService4/v2
+                    - target: https://httpbin.org/anything/customers1/v2
+                    - target: https://httpbin.org/anything/customers2/v2
+                    - target: https://httpbin.org/anything/customers3/v2
+                    - target: https://httpbin.org/anything/customers4/v2
             http_methods:
                 - GET
                 - POST

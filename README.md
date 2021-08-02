@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/assets/logo.png?v=1.0.18" width="200" />
+    <img src="/assets/logo.png?v=1.0.19" width="200" />
     <h3 align="center">Helmet</h3>
     <p align="center">A Lightweight Cloud Native API Gateway.</p>
     <p align="center">
@@ -10,10 +10,10 @@
             <img src="https://github.com/spacewalkio/Helmet/workflows/Release/badge.svg">
         </a>
         <a href="https://github.com/spacewalkio/Helmet/releases">
-            <img src="https://img.shields.io/badge/Version-1.0.18-9B59B6.svg">
+            <img src="https://img.shields.io/badge/Version-1.0.19-9B59B6.svg">
         </a>
         <a href="https://goreportcard.com/report/github.com/spacewalkio/Helmet">
-            <img src="https://goreportcard.com/badge/github.com/spacewalkio/Helmet?v=1.0.18">
+            <img src="https://goreportcard.com/badge/github.com/spacewalkio/Helmet?v=1.0.19">
         </a>
         <a href="https://godoc.org/github.com/spacewalkio/helmet">
             <img src="https://godoc.org/github.com/spacewalkio/helmet?status.svg">
@@ -25,7 +25,7 @@
 </p>
 <br/>
 <p align="center">
-    <img src="/assets/chart.png?v=1.0.18" width="80%" />
+    <img src="/assets/chart.png?v=1.0.19" width="80%" />
 </p>
 
 Helmet is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more!
@@ -120,17 +120,17 @@ app:
     # Endpoint Configs
     endpoint:
         # Orders Internal Service
-        - name: order_service
+        - name: orders_service
           active: true
           proxy:
             listen_path: "/orders/v2/*"
             upstreams:
                 balancing: roundrobin
                 targets:
-                    - target: https://httpbin.org/anything/orderService1/v2
-                    - target: https://httpbin.org/anything/orderService2/v2
-                    - target: https://httpbin.org/anything/orderService3/v2
-                    - target: https://httpbin.org/anything/orderService4/v2
+                    - target: https://httpbin.org/anything/orders1/v2
+                    - target: https://httpbin.org/anything/orders2/v2
+                    - target: https://httpbin.org/anything/orders3/v2
+                    - target: https://httpbin.org/anything/orders4/v2
             http_methods:
                 - ANY
             authentication:
@@ -143,17 +143,17 @@ app:
                 status: off
 
         # Customers Internal Service
-        - name: customer_service
+        - name: customers_service
           active: true
           proxy:
             listen_path: "/customer/v2/*"
             upstreams:
                 balancing: random
                 targets:
-                    - target: https://httpbin.org/anything/customerService1/v2
-                    - target: https://httpbin.org/anything/customerService2/v2
-                    - target: https://httpbin.org/anything/customerService3/v2
-                    - target: https://httpbin.org/anything/customerService4/v2
+                    - target: https://httpbin.org/anything/customers1/v2
+                    - target: https://httpbin.org/anything/customers2/v2
+                    - target: https://httpbin.org/anything/customers3/v2
+                    - target: https://httpbin.org/anything/customers4/v2
             http_methods:
                 - GET
                 - POST

@@ -108,7 +108,7 @@
         "name": "{$name:customers_public}",
         "type": "{$type:key_authentication}",
         "description": "{$description}",
-        "endpoints": "{$endpoints:order_service}"
+        "endpoints": "{$endpoints:orders_service}"
     }
     """
 

@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY ./ ./
 
-RUN go build -v -ldflags="-X 'main.version=v1.0.18'" helmet.go
+RUN go build -v -ldflags="-X 'main.version=v1.0.19'" helmet.go
 
 FROM golang:1.16.6
 
