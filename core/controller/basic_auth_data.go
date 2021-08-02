@@ -58,7 +58,10 @@ func CreateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 			"id": method.ID,
 		}).Info(`Auth method not found`)
 
-		return c.NoContent(http.StatusNotFound)
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": "Auth method not found",
+			"error":   fmt.Sprintf("code=%d, message=BadRequest", http.StatusBadRequest),
+		})
 	}
 
 	if !util.InArray(method.Type, []string{migration.BasicAuthentication, migration.AnyAuthentication}) {
@@ -175,7 +178,10 @@ func UpdateBasicAuthData(c echo.Context, gc *GlobalContext) error {
 			"id": id,
 		}).Info(`Auth method not found`)
 
-		return c.NoContent(http.StatusNotFound)
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": "Auth method not found",
+			"error":   fmt.Sprintf("code=%d, message=BadRequest", http.StatusBadRequest),
+		})
 	}
 
 	if !util.InArray(method.Type, []string{migration.BasicAuthentication, migration.AnyAuthentication}) {
