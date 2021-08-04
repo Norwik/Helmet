@@ -53,7 +53,7 @@ func TestUnitApiAuthDataEndpoints(t *testing.T) {
 
 			g.Assert(err).Equal(nil)
 			g.Assert(rec.Code).Equal(http.StatusBadRequest)
-			g.Assert(strings.Contains(rec.Body.String(), "message=BadReques")).Equal(true)
+			g.Assert(strings.Contains(rec.Body.String(), "message=BadRequest")).Equal(true)
 		})
 	})
 
