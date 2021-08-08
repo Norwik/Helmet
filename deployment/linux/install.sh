@@ -3,11 +3,15 @@
 function mysql {
     echo "Installing MySQL ..."
 
+    apt-get update
+
     echo "MySQL Installation Done!"
 }
 
 function redis {
     echo "Installing Redis ..."
+
+    apt-get install redis-server
 
     echo "Redis Installation Done!"
 }
