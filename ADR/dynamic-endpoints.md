@@ -1,4 +1,4 @@
-#### Dynamic Endpoints
+### Dynamic Endpoints
 
 Endpoints has to be defined in helmet config file. Anytime we want to add a new endpoint or change an endpoint, a restart will be needed. This draft explains how to make these configs dynamic.
 
