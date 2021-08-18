@@ -24,7 +24,7 @@ type AuthMethod struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Type        string `json:"type"`
-	Endpoints   string `json:"endpoints"`
+	Endpoints   []int  `json:"endpoints"`
 
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
@@ -33,6 +33,17 @@ type AuthMethod struct {
 // AuthMethods struct
 type AuthMethods struct {
 	AuthMethods []AuthMethod `json:"authMethods"`
+}
+
+// EndpointAuthMethod struct
+type EndpointAuthMethod struct {
+	ID int `json:"id"`
+
+	AuthMethodID int `json:"authMethodID"`
+	EndpointID   int `json:"endpointID"`
+
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 // LoadFromJSON update object from json
@@ -64,40 +75,23 @@ func (a *AuthMethod) Validate() error {
 		return errors.New("Auth method name is required")
 	}
 
-	if strings.TrimSpace(a.Endpoints) != "" {
-		items := strings.Split(a.Endpoints, ";")
-		for _, item := range items {
-			if !util.InArray(item, endpoints) {
-				return fmt.Errorf("Endpoint with a name %s is invalid", item)
+	/*
+		if strings.TrimSpace(a.Endpoints) != "" {
+			items := strings.Split(a.Endpoints, ";")
+			for _, item := range items {
+				if !util.InArray(item, endpoints) {
+					return fmt.Errorf("Endpoint with a name %s is invalid", item)
+				}
 			}
 		}
-	}
+	*/
 
 	return nil
 }
 
 // GetEndpoints gets a list of endpoints names
 func (a *AuthMethod) GetEndpoints() ([]string, error) {
-	result := []string{}
-	configs := &Configs{}
-
-	data, err := ioutil.ReadFile(viper.GetString("config"))
-
-	if err != nil {
-		return result, err
-	}
-
-	err = configs.LoadFromYAML(data)
-
-	if err != nil {
-		return result, err
-	}
-
-	for _, endpoint := range configs.App.Endpoint {
-		result = append(result, endpoint.Name)
-	}
-
-	return result, nil
+	// Get Endpoints from database
 }
 
 // LoadFromJSON update object from json

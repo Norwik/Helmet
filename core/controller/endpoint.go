@@ -13,15 +13,25 @@ import (
 
 // GetEndpoints controller
 func GetEndpoints(c echo.Context, gc *GlobalContext) error {
-	configs, err := gc.GetConfigs()
+	return c.NoContent(http.StatusOK)
+}
 
-	if err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Failure while decoding configs`)
+// GetEndpoint controller
+func GetEndpoint(c echo.Context, gc *GlobalContext) error {
+	return c.NoContent(http.StatusOK)
+}
 
-		return c.NoContent(http.StatusInternalServerError)
-	}
+// CreateEndpoint controller
+func CreateEndpoint(c echo.Context, gc *GlobalContext) error {
+	return c.NoContent(http.StatusOK)
+}
 
-	return c.JSON(http.StatusOK, configs.App)
+// UpdateEndpoint controller
+func UpdateEndpoint(c echo.Context, gc *GlobalContext) error {
+	return c.NoContent(http.StatusOK)
+}
+
+// DeleteEndpoint controller
+func DeleteEndpoint(c echo.Context, gc *GlobalContext) error {
+	return c.NoContent(http.StatusOK)
 }

@@ -53,57 +53,6 @@ app:
             # Redis Database
             database: ${HELMET_KV_REDIS_DB:-0}
 
-    # Endpoint Configs
-    endpoint:
-        # Orders Internal Service
-        - name: orders_service
-          active: true
-          proxy:
-            listen_path: "/orders/v2/*"
-            upstreams:
-                balancing: roundrobin
-                targets:
-                    - target: https://httpbin.org/anything/orders1/v2
-                    - target: https://httpbin.org/anything/orders2/v2
-                    - target: https://httpbin.org/anything/orders3/v2
-                    - target: https://httpbin.org/anything/orders4/v2
-            http_methods:
-                - ANY
-            authentication:
-                status: on
-            # Rate limit use the key store for fast read write
-            rate_limit:
-                status: off
-            # Circuit Breaker use the key store for fast read write
-            circuit_breaker:
-                status: off
-
-        # Customers Internal Service
-        - name: customers_service
-          active: true
-          proxy:
-            listen_path: "/customer/v2/*"
-            upstreams:
-                balancing: random
-                targets:
-                    - target: https://httpbin.org/anything/customers1/v2
-                    - target: https://httpbin.org/anything/customers2/v2
-                    - target: https://httpbin.org/anything/customers3/v2
-                    - target: https://httpbin.org/anything/customers4/v2
-            http_methods:
-                - GET
-                - POST
-                - PUT
-                - DELETE
-            authentication:
-                status: on
-            # Rate limit use the key store for fast read write
-            rate_limit:
-                status: off
-            # Circuit Breaker use the key store for fast read write
-            circuit_breaker:
-                status: off
-
     # Log configs
     log:
         # Log level, it can be debug, info, warn, error, panic, fatal

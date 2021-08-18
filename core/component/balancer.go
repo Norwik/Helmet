@@ -13,13 +13,16 @@ import (
 
 // Target type
 type Target struct {
-	URL string
+	URL    string
+	Health string
+	Status string
 }
 
 // Balancer interface
 type Balancer interface {
 	AddTarget(*Target) bool
 	RemoveTarget(string) bool
+	UpdateTarget(string, *Target) bool
 	Next() *Target
 }
 
@@ -96,6 +99,30 @@ func (b *CommonBalancer) RemoveTarget(url string) bool {
 	return false
 }
 
+// UpdateTarget updates a target
+func (b *CommonBalancer) UpdateTarget(url string, target *Target) bool {
+	b.mutex.Lock()
+
+	defer b.mutex.Unlock()
+
+	for i, t := range b.targets {
+		if t.URL == url {
+			if target.Health == "" {
+				target.Health = t.Health
+			}
+
+			if target.Status == "" {
+				target.Status = t.Status
+			}
+
+			b.targets[i] = target
+			return true
+		}
+	}
+
+	return false
+}
+
 // Next randomly returns an upstream target.
 func (b *RandomBalancer) Next() *Target {
 	if b.random == nil {
@@ -111,7 +138,7 @@ func (b *RandomBalancer) Next() *Target {
 	return b.targets[b.random.Intn(len(b.targets))]
 }
 
-// Next returns an upstream target using round-robin technique.
+// Next returns an upstream target using roundrobin technique.
 func (b *RoundRobinBalancer) Next() *Target {
 	b.i = b.i % uint32(len(b.targets))
 

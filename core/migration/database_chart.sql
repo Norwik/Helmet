@@ -1,4 +1,4 @@
-//// -- https://dbdiagram.io/
+-- https://dbdiagram.io/
 
 Table option {
   id int [pk, increment] // auto-increment
@@ -12,10 +12,11 @@ Table endpoint {
   id int [pk, increment] // auto-increment
   status varchar
   listen_path varchar
+  token varchar
   name varchar
   upstreams mediumtext
   balancing varchar
-  http_methods varchar
+  authorization varchar
   authentication varchar
   rate_limit varchar
   circuit_breaker varchar

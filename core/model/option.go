@@ -12,9 +12,10 @@ import (
 
 // Option struct
 type Option struct {
-	ID        int       `json:"id"`
-	Key       string    `json:"key"`
-	Value     string    `json:"value"`
+	ID    int    `json:"id"`
+	Key   string `json:"key"`
+	Value string `json:"value"`
+
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }

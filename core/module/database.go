@@ -101,14 +101,42 @@ func (db *Database) Migrate() bool {
 	status := true
 
 	db.Connection.AutoMigrate(&migration.Option{})
+	db.Connection.AutoMigrate(&migration.Endpoint{})
 	db.Connection.AutoMigrate(&migration.AuthMethod{})
+	db.Connection.AutoMigrate(&migration.EndpointAuthMethod{})
 	db.Connection.AutoMigrate(&migration.KeyBasedAuthData{})
 	db.Connection.AutoMigrate(&migration.BasicAuthData{})
 	db.Connection.AutoMigrate(&migration.OAuthData{})
 	db.Connection.AutoMigrate(&migration.OAuthAccessData{})
 
+	// Create foreign keys since gorm is really bad at that!
+	if viper.GetString("app.database.driver") == "mysql" {
+		db.Connection.Exec("ALTER TABLE `endpoint_auth_methods` MODIFY COLUMN `auth_method_id` INT UNSIGNED")
+		db.Connection.Exec("ALTER TABLE `endpoint_auth_methods` MODIFY COLUMN `endpoint_id` INT UNSIGNED")
+		db.Connection.Exec("ALTER TABLE `key_based_auth_data` MODIFY COLUMN `auth_method_id` INT UNSIGNED")
+		db.Connection.Exec("ALTER TABLE `basic_auth_data` MODIFY COLUMN `auth_method_id` INT UNSIGNED")
+		db.Connection.Exec("ALTER TABLE `o_auth_data` MODIFY COLUMN `auth_method_id` INT UNSIGNED")
+		db.Connection.Exec("ALTER TABLE `o_auth_access_data` MODIFY COLUMN `o_auth_data_id` INT UNSIGNED")
+
+		db.Connection.Exec("ALTER TABLE `endpoint_auth_methods` ADD INDEX (`auth_method_id`)")
+		db.Connection.Exec("ALTER TABLE `endpoint_auth_methods` ADD INDEX (`endpoint_id`)")
+		db.Connection.Exec("ALTER TABLE `key_based_auth_data` ADD INDEX (`auth_method_id`)")
+		db.Connection.Exec("ALTER TABLE `basic_auth_data` ADD INDEX (`auth_method_id`)")
+		db.Connection.Exec("ALTER TABLE `o_auth_data` ADD INDEX (`auth_method_id`)")
+		db.Connection.Exec("ALTER TABLE `o_auth_access_data` ADD INDEX (`o_auth_data_id`)")
+
+		db.Connection.Exec("ALTER TABLE `auth_methods` ADD FOREIGN KEY (`id`) REFERENCES `endpoint_auth_methods` (`auth_method_id`) ON DELETE CASCADE ON UPDATE CASCADE")
+		db.Connection.Exec("ALTER TABLE `endpoints` ADD FOREIGN KEY (`id`) REFERENCES `endpoint_auth_methods` (`endpoint_id`) ON DELETE CASCADE ON UPDATE CASCADE")
+		db.Connection.Exec("ALTER TABLE `auth_methods` ADD FOREIGN KEY (`id`) REFERENCES `key_based_auth_data` (`auth_method_id`) ON DELETE CASCADE ON UPDATE CASCADE")
+		db.Connection.Exec("ALTER TABLE `auth_methods` ADD FOREIGN KEY (`id`) REFERENCES `basic_auth_data` (`auth_method_id`) ON DELETE CASCADE ON UPDATE CASCADE")
+		db.Connection.Exec("ALTER TABLE `auth_methods` ADD FOREIGN KEY (`id`) REFERENCES `o_auth_data` (`auth_method_id`) ON DELETE CASCADE ON UPDATE CASCADE")
+		db.Connection.Exec("ALTER TABLE `o_auth_data` ADD FOREIGN KEY (`id`) REFERENCES `o_auth_access_data` (`o_auth_data_id`) ON DELETE CASCADE ON UPDATE CASCADE")
+	}
+
 	status = status && db.Connection.HasTable(&migration.Option{})
+	status = status && db.Connection.HasTable(&migration.Endpoint{})
 	status = status && db.Connection.HasTable(&migration.AuthMethod{})
+	status = status && db.Connection.HasTable(&migration.EndpointAuthMethod{})
 	status = status && db.Connection.HasTable(&migration.KeyBasedAuthData{})
 	status = status && db.Connection.HasTable(&migration.BasicAuthData{})
 	status = status && db.Connection.HasTable(&migration.OAuthData{})
@@ -122,14 +150,18 @@ func (db *Database) Rollback() bool {
 	status := true
 
 	db.Connection.DropTableIfExists(&migration.Option{})
+	db.Connection.DropTableIfExists(&migration.Endpoint{})
 	db.Connection.DropTableIfExists(&migration.AuthMethod{})
+	db.Connection.DropTableIfExists(&migration.EndpointAuthMethod{})
 	db.Connection.DropTableIfExists(&migration.KeyBasedAuthData{})
 	db.Connection.DropTableIfExists(&migration.BasicAuthData{})
 	db.Connection.DropTableIfExists(&migration.OAuthData{})
 	db.Connection.DropTableIfExists(&migration.OAuthAccessData{})
 
 	status = status && !db.Connection.HasTable(&migration.Option{})
+	status = status && !db.Connection.HasTable(&migration.Endpoint{})
 	status = status && !db.Connection.HasTable(&migration.AuthMethod{})
+	status = status && !db.Connection.HasTable(&migration.EndpointAuthMethod{})
 	status = status && !db.Connection.HasTable(&migration.KeyBasedAuthData{})
 	status = status && !db.Connection.HasTable(&migration.BasicAuthData{})
 	status = status && !db.Connection.HasTable(&migration.OAuthData{})
