@@ -13,12 +13,16 @@ import (
 func (db *Database) CreateAuthMethod(authMethod *model.AuthMethod) *model.AuthMethod {
 	db.Connection.Create(authMethod)
 
+	// TODO add endpoints
+
 	return authMethod
 }
 
 // UpdateAuthMethodByID updates an entity by ID
 func (db *Database) UpdateAuthMethodByID(authMethod *model.AuthMethod) *model.AuthMethod {
 	db.Connection.Save(&authMethod)
+
+	// TODO add endpoints
 
 	return authMethod
 }
@@ -28,6 +32,8 @@ func (db *Database) GetAuthMethodByID(id int) model.AuthMethod {
 	authMethod := model.AuthMethod{}
 
 	db.Connection.Where("id = ?", id).First(&authMethod)
+
+	// TODO fetch endpoints
 
 	return authMethod
 }
@@ -47,6 +53,8 @@ func (db *Database) GetAuthMethods() []model.AuthMethod {
 	authMethods := []model.AuthMethod{}
 
 	db.Connection.Select("*").Find(&authMethods)
+
+	// TODO fetch endpoints
 
 	return authMethods
 }

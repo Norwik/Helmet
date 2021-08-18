@@ -187,9 +187,21 @@ var serverCmd = &cobra.Command{
 				},
 			}))
 
-			// List Endpoints
+			// Endpoint CRUD
 			e1.GET("/endpoint", func(c echo.Context) error {
 				return controller.GetEndpoints(c, context)
+			})
+			e1.GET("/endpoint/:id", func(c echo.Context) error {
+				return controller.GetEndpoint(c, context)
+			})
+			e1.DELETE("/endpoint/:id", func(c echo.Context) error {
+				return controller.DeleteEndpoint(c, context)
+			})
+			e1.POST("/endpoint", func(c echo.Context) error {
+				return controller.CreateEndpoint(c, context)
+			})
+			e1.PUT("/endpoint/:id", func(c echo.Context) error {
+				return controller.UpdateEndpoint(c, context)
 			})
 
 			// Auth Methods CRUD
