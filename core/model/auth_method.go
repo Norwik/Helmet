@@ -7,14 +7,11 @@ package model
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"strings"
 	"time"
 
 	"github.com/spacewalkio/helmet/core/migration"
 	"github.com/spacewalkio/helmet/core/util"
-
-	"github.com/spf13/viper"
 )
 
 // AuthMethod struct
@@ -33,17 +30,6 @@ type AuthMethod struct {
 // AuthMethods struct
 type AuthMethods struct {
 	AuthMethods []AuthMethod `json:"authMethods"`
-}
-
-// EndpointAuthMethod struct
-type EndpointAuthMethod struct {
-	ID int `json:"id"`
-
-	AuthMethodID int `json:"authMethodID"`
-	EndpointID   int `json:"endpointID"`
-
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 // LoadFromJSON update object from json
@@ -65,8 +51,6 @@ func (a *AuthMethod) Validate() error {
 		migration.AnyAuthentication,
 	}
 
-	endpoints, _ := a.GetEndpoints()
-
 	if !util.InArray(a.Type, lst) {
 		return fmt.Errorf("Auth method type %s is invalid", a.Type)
 	}
@@ -76,6 +60,8 @@ func (a *AuthMethod) Validate() error {
 	}
 
 	/*
+		endpoints, _ := a.GetEndpoints()
+
 		if strings.TrimSpace(a.Endpoints) != "" {
 			items := strings.Split(a.Endpoints, ";")
 			for _, item := range items {
@@ -92,6 +78,7 @@ func (a *AuthMethod) Validate() error {
 // GetEndpoints gets a list of endpoints names
 func (a *AuthMethod) GetEndpoints() ([]string, error) {
 	// Get Endpoints from database
+	return []string{}, nil
 }
 
 // LoadFromJSON update object from json

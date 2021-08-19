@@ -46,14 +46,14 @@ func TestUnitDatabase(t *testing.T) {
 				Name:        "customers_public",
 				Description: "Public API",
 				Type:        "api_auth",
-				Endpoints:   "orders_service",
+				Endpoints:   []int{1, 2, 3},
 			})
 
 			g.Assert(result.ID > 0).Equal(true)
 			g.Assert(result.Name).Equal("customers_public")
 			g.Assert(result.Description).Equal("Public API")
 			g.Assert(result.Type).Equal("api_auth")
-			g.Assert(result.Endpoints).Equal("orders_service")
+			g.Assert(result.Endpoints).Equal([]int{1, 2, 3})
 
 			result.Name = "customers_public_updated"
 
@@ -67,7 +67,7 @@ func TestUnitDatabase(t *testing.T) {
 			g.Assert(result1.Name).Equal("customers_public_updated")
 			g.Assert(result1.Description).Equal("Public API")
 			g.Assert(result1.Type).Equal("api_auth")
-			g.Assert(result1.Endpoints).Equal("orders_service")
+			g.Assert(result1.Endpoints).Equal([]int{1, 2, 3})
 
 			result2 := database.GetAuthMethods()[0]
 
@@ -75,7 +75,7 @@ func TestUnitDatabase(t *testing.T) {
 			g.Assert(result2.Name).Equal("customers_public_updated")
 			g.Assert(result2.Description).Equal("Public API")
 			g.Assert(result2.Type).Equal("api_auth")
-			g.Assert(result2.Endpoints).Equal("orders_service")
+			g.Assert(result2.Endpoints).Equal([]int{1, 2, 3})
 
 			database.DeleteAuthMethodByID(result.ID)
 

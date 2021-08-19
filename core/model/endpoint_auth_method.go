@@ -5,8 +5,6 @@
 package model
 
 import (
-	"errors"
-	"strings"
 	"time"
 
 	"github.com/spacewalkio/helmet/core/util"

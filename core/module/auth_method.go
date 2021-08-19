@@ -13,7 +13,12 @@ import (
 func (db *Database) CreateAuthMethod(authMethod *model.AuthMethod) *model.AuthMethod {
 	db.Connection.Create(authMethod)
 
-	// TODO add endpoints
+	for _, item := range authMethod.Endpoints {
+		db.Connection.Create(&model.EndpointAuthMethod{
+			AuthMethodID: authMethod.ID,
+			EndpointID:   item,
+		})
+	}
 
 	return authMethod
 }
@@ -22,7 +27,14 @@ func (db *Database) CreateAuthMethod(authMethod *model.AuthMethod) *model.AuthMe
 func (db *Database) UpdateAuthMethodByID(authMethod *model.AuthMethod) *model.AuthMethod {
 	db.Connection.Save(&authMethod)
 
-	// TODO add endpoints
+	db.Connection.Unscoped().Where("auth_method_id = ?", authMethod.ID).Delete(&migration.EndpointAuthMethod{})
+
+	for _, item := range authMethod.Endpoints {
+		db.Connection.Create(&model.EndpointAuthMethod{
+			AuthMethodID: authMethod.ID,
+			EndpointID:   item,
+		})
+	}
 
 	return authMethod
 }
@@ -30,10 +42,14 @@ func (db *Database) UpdateAuthMethodByID(authMethod *model.AuthMethod) *model.Au
 // GetAuthMethodByID gets an entity by uuid
 func (db *Database) GetAuthMethodByID(id int) model.AuthMethod {
 	authMethod := model.AuthMethod{}
+	authMethodEndpoint := []model.EndpointAuthMethod{}
 
 	db.Connection.Where("id = ?", id).First(&authMethod)
+	db.Connection.Where("auth_method_id = ?", id).Find(&authMethodEndpoint)
 
-	// TODO fetch endpoints
+	for _, item := range authMethodEndpoint {
+		authMethod.Endpoints = append(authMethod.Endpoints, item.EndpointID)
+	}
 
 	return authMethod
 }
@@ -46,6 +62,7 @@ func (db *Database) DeleteAuthMethodByID(id int) {
 	db.Connection.Unscoped().Where("auth_method_id = ?", id).Delete(&migration.KeyBasedAuthData{})
 	db.Connection.Unscoped().Where("auth_method_id = ?", id).Delete(&migration.BasicAuthData{})
 	db.Connection.Unscoped().Where("auth_method_id = ?", id).Delete(&migration.OAuthData{})
+	db.Connection.Unscoped().Where("auth_method_id = ?", id).Delete(&migration.EndpointAuthMethod{})
 }
 
 // GetAuthMethods gets auth methods
@@ -54,7 +71,14 @@ func (db *Database) GetAuthMethods() []model.AuthMethod {
 
 	db.Connection.Select("*").Find(&authMethods)
 
-	// TODO fetch endpoints
+	for k, it := range authMethods {
+		authMethodEndpoint := []model.EndpointAuthMethod{}
+		db.Connection.Where("auth_method_id = ?", it.ID).Find(&authMethodEndpoint)
+
+		for _, item := range authMethodEndpoint {
+			authMethods[k].Endpoints = append(authMethods[k].Endpoints, item.EndpointID)
+		}
+	}
 
 	return authMethods
 }

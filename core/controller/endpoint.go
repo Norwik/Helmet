@@ -33,5 +33,23 @@ func UpdateEndpoint(c echo.Context, gc *GlobalContext) error {
 
 // DeleteEndpoint controller
 func DeleteEndpoint(c echo.Context, gc *GlobalContext) error {
-	return c.NoContent(http.StatusOK)
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	endpoint := gc.GetDatabase().GetEndpointByID(id)
+
+	if endpoint.ID < 1 {
+		log.WithFields(log.Fields{
+			"id": id,
+		}).Info(`Endpoint not found`)
+
+		return c.NoContent(http.StatusNotFound)
+	}
+
+	log.WithFields(log.Fields{
+		"id": id,
+	}).Info(`Deleting an endpoint`)
+
+	gc.GetDatabase().DeleteEndpointByID(id)
+
+	return c.NoContent(http.StatusNoContent)
 }
