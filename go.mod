@@ -9,12 +9,10 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/labstack/echo-contrib v0.11.0
 	github.com/labstack/echo/v4 v4.6.1
-	github.com/opentracing/opentracing-go v1.2.0
 	github.com/prometheus/client_golang v1.11.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.9.0
-	github.com/uber/jaeger-client-go v2.29.1+incompatible
 	gopkg.in/yaml.v2 v2.4.0
 )

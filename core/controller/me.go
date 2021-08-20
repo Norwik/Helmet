@@ -13,11 +13,12 @@ import (
 
 // Me controller
 func Me(c echo.Context, _ *GlobalContext) error {
-	log.WithFields(log.Fields{
-		"status": "ok",
-	}).Info(`Create auth method`)
+	log.Info(`Get access status and permissions`)
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "ok",
+		"id":         "1",
+		"type":       "ok",
+		"authMethod": "",
+		"services":   "",
 	})
 }
