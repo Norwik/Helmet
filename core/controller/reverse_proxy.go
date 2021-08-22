@@ -23,18 +23,10 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 
 	// Fetch the endpoint
 	router := component.NewRouter()
-	configs, err := gc.GetConfigs()
-
-	if err != nil {
-		log.WithFields(log.Fields{
-			"error": err.Error(),
-		}).Error(`Internal server error`)
-
-		return c.NoContent(http.StatusInternalServerError)
-	}
+	endpoints := gc.GetEndpoints()
 
 	endpoint, err := router.GetEndpoint(
-		configs.App.Endpoint,
+		endpoints,
 		c.Request().URL.Path,
 	)
 
@@ -77,7 +69,7 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 	apiKey := c.Request().Header.Get("x-api-key")
 	authKey := c.Request().Header.Get("authorization")
 
-	if endpoint.Proxy.Authentication.Status {
+	if endpoint.Authentication.Status == "on" {
 		result, err := apiMethod.Authenticate(endpoint, apiKey)
 
 		if err == nil {
@@ -132,7 +124,7 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 
 	remote := router.BuildRemote(
 		balancer[endpoint.Name].Next().URL,
-		endpoint.Proxy.ListenPath,
+		endpoint.ListenPath,
 		c.Request().URL.Path,
 	)
 
@@ -142,7 +134,7 @@ func ReverseProxy(c echo.Context, gc *GlobalContext) error {
 		name,
 		remote,
 		meta,
-		[]string{endpoint.Name, c.Request().Method, endpoint.Proxy.ListenPath},
+		[]string{endpoint.Name, c.Request().Method, endpoint.ListenPath},
 		c.Request().Header.Get("X-Request-ID"),
 	)
 

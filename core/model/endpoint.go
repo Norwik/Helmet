@@ -10,6 +10,30 @@ import (
 	"github.com/spacewalkio/helmet/core/util"
 )
 
+// EndpointEntity struct
+type EndpointEntity struct {
+	ID int `json:"id"`
+
+	Status         string `json:"status"`
+	ListenPath     string `json:"listenPath"`
+	Name           string `json:"name"`
+	Token          string `json:"token"`
+	Upstreams      string `json:"upstreams"`
+	Balancing      string `json:"balancing"`
+	Authorization  string `json:"authorization"`
+	Authentication string `json:"authentication"`
+	RateLimit      string `json:"rateLimit"`
+	CircuitBreaker string `json:"circuitBreaker"`
+
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
+}
+
+// EndpointEntities struct
+type EndpointEntities struct {
+	EndpointEntities []EndpointEntity `json:"endpoints"`
+}
+
 // Endpoint struct
 type Endpoint struct {
 	ID int `json:"id"`
@@ -85,5 +109,25 @@ func (e *Endpoints) LoadFromJSON(data []byte) error {
 
 // ConvertToJSON convert object to json
 func (e *Endpoints) ConvertToJSON() (string, error) {
+	return util.ConvertToJSON(e)
+}
+
+// LoadFromJSON update object from json
+func (e *EndpointEntity) LoadFromJSON(data []byte) error {
+	return util.LoadFromJSON(e, data)
+}
+
+// ConvertToJSON convert object to json
+func (e *EndpointEntity) ConvertToJSON() (string, error) {
+	return util.ConvertToJSON(e)
+}
+
+// LoadFromJSON update object from json
+func (e *EndpointEntities) LoadFromJSON(data []byte) error {
+	return util.LoadFromJSON(e, data)
+}
+
+// ConvertToJSON convert object to json
+func (e *EndpointEntities) ConvertToJSON() (string, error) {
 	return util.ConvertToJSON(e)
 }

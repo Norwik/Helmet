@@ -34,12 +34,12 @@ func (r *Router) GetEndpoint(endpoints []model.Endpoint, path string) (model.End
 	}
 
 	for _, endpoint := range endpoints {
-		if !endpoint.Active {
+		if endpoint.Status == "off" {
 			continue
 		}
 
 		// Use the listen path as a regex
-		r, _ := regexp.Compile(endpoint.Proxy.ListenPath)
+		r, _ := regexp.Compile(endpoint.ListenPath)
 
 		if r.MatchString(uri) {
 			return endpoint, nil

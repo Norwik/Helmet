@@ -38,7 +38,6 @@ func TestUnitOAuthDataEndpoints(t *testing.T) {
 		Name:        "customers_public",
 		Description: "Public API",
 		Type:        "any_authentication",
-		Endpoints:   "orders_service",
 	})
 
 	g.Describe("#CreateOAuthData.Failure", func() {

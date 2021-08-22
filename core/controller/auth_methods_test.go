@@ -59,7 +59,6 @@ func TestUnitAuthMethodsEndpoints(t *testing.T) {
 				Name:        "customers_public",
 				Description: "Customers Public",
 				Type:        "key_authentication",
-				Endpoints:   "customers_service",
 			}
 
 			body, _ := item.ConvertToJSON()
@@ -81,7 +80,6 @@ func TestUnitAuthMethodsEndpoints(t *testing.T) {
 				Name:        "customers_public_new",
 				Description: "Public API",
 				Type:        "api_auth",
-				Endpoints:   "orders_service",
 			})
 
 			e := echo.New()
@@ -123,7 +121,6 @@ func TestUnitAuthMethodsEndpoints(t *testing.T) {
 				Name:        "customers_public_up09",
 				Description: "Public API",
 				Type:        "api_auth",
-				Endpoints:   "orders_service",
 			})
 
 			e := echo.New()
@@ -146,7 +143,6 @@ func TestUnitAuthMethodsEndpoints(t *testing.T) {
 				Name:        "customers_public_up02",
 				Description: "Public API",
 				Type:        "api_auth",
-				Endpoints:   "orders_service",
 			})
 
 			e := echo.New()
@@ -204,14 +200,12 @@ func TestUnitAuthMethodsEndpoints(t *testing.T) {
 				Name:        "customers_public_up09",
 				Description: "Public API",
 				Type:        "api_auth",
-				Endpoints:   "orders_service",
 			})
 
 			item := &model.AuthMethod{
 				Name:        "customers_public",
 				Description: "Customers Public",
 				Type:        "",
-				Endpoints:   "",
 			}
 
 			body, _ := item.ConvertToJSON()
@@ -237,14 +231,12 @@ func TestUnitAuthMethodsEndpoints(t *testing.T) {
 				Name:        "customers_public_up09",
 				Description: "Public API",
 				Type:        "api_auth",
-				Endpoints:   "orders_service",
 			})
 
 			item := &model.AuthMethod{
 				Name:        "customers_public_up999",
 				Description: "Customers Public",
 				Type:        "key_authentication",
-				Endpoints:   "customers_service",
 			}
 
 			body, _ := item.ConvertToJSON()

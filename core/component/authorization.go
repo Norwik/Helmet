@@ -18,13 +18,17 @@ type Authorization struct {
 
 // Authorize validates http method
 func (a *Authorization) Authorize(endpoint model.Endpoint, httpMethod string) error {
-	if util.InArray("ANY", endpoint.Proxy.HTTPMethods) {
+	if endpoint.Authorization.Status == "on" {
+		return nil
+	}
+
+	if util.InArray("ANY", endpoint.Authorization.HttpMethods) {
 		return nil
 	}
 
 	httpMethod = strings.ToUpper(httpMethod)
 
-	if !util.InArray(httpMethod, endpoint.Proxy.HTTPMethods) {
+	if !util.InArray(httpMethod, endpoint.Authorization.HttpMethods) {
 		return fmt.Errorf("HTTP method %s not allowed for endpoint %s", httpMethod, endpoint.Name)
 	}
 

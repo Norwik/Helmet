@@ -26,16 +26,18 @@ func TestUnitAuthorization(t *testing.T) {
 	g.Describe("#Authorization", func() {
 		g.It("It should satisfy test cases", func() {
 			result := auth.Authorize(model.Endpoint{
-				Proxy: model.Proxy{
-					HTTPMethods: []string{"GET", "POST"},
+				Authorization: model.Authorization{
+					Status:      "on",
+					HttpMethods: []string{"GET", "POST"},
 				},
 			}, "get")
 
 			g.Assert(result).Equal(nil)
 
 			result = auth.Authorize(model.Endpoint{
-				Proxy: model.Proxy{
-					HTTPMethods: []string{"GET", "POST"},
+				Authorization: model.Authorization{
+					Status:      "on",
+					HttpMethods: []string{"GET", "POST"},
 				},
 			}, "delete")
 

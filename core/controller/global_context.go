@@ -5,14 +5,10 @@
 package controller
 
 import (
-	"io/ioutil"
-
 	"github.com/spacewalkio/helmet/core/component"
 	"github.com/spacewalkio/helmet/core/model"
 	"github.com/spacewalkio/helmet/core/module"
 	"github.com/spacewalkio/helmet/core/service"
-
-	"github.com/spf13/viper"
 )
 
 // GlobalContext type
@@ -21,53 +17,51 @@ type GlobalContext struct {
 	Cache    *service.Redis
 }
 
-// GetConfigs gets a config instance
-func (c *GlobalContext) GetConfigs() (*model.Configs, error) {
-	configs := &model.Configs{}
+// GetEndpoints gets a list of endpoints
+func (c *GlobalContext) GetEndpoints() []model.Endpoint {
+	var result []model.Endpoint
 
-	data, err := ioutil.ReadFile(viper.GetString("config"))
+	endpoints := c.Database.GetEndpoints()
 
-	if err != nil {
-		return configs, err
+	for _, v := range endpoints {
+		if v.Status == "off" {
+			continue
+		}
+
+		data, _ := v.ConvertToJSON()
+		item := model.Endpoint{}
+		item.LoadFromJSON([]byte(data))
+
+		result = append(result, item)
 	}
 
-	err = configs.LoadFromYAML(data)
-
-	if err != nil {
-		return configs, err
-	}
-
-	return configs, nil
+	return result
 }
 
 // GetBalancer gets load balancer
 func (c *GlobalContext) GetBalancer() (map[string]component.Balancer, error) {
 	result := make(map[string]component.Balancer)
 
-	configs, err := c.GetConfigs()
+	endpoints := c.GetEndpoints()
 
-	if err != nil {
-		return result, err
-	}
+	for _, endpoint := range endpoints {
 
-	for _, endpoint := range configs.App.Endpoint {
-
-		if endpoint.Proxy.Upstreams.Balancing == "roundrobin" {
+		if endpoint.Balancing.Type == "roundrobin" {
 			result[endpoint.Name] = component.NewRoundRobinBalancer([]*component.Target{})
 
-			for _, target := range endpoint.Proxy.Upstreams.Targets {
+			for _, upstream := range endpoint.Upstreams {
 				result[endpoint.Name].AddTarget(&component.Target{
-					URL: target.Target,
+					URL: upstream.Target,
 				})
 			}
 		}
 
-		if endpoint.Proxy.Upstreams.Balancing == "random" || endpoint.Proxy.Upstreams.Balancing == "none" {
+		if endpoint.Balancing.Type == "random" || endpoint.Balancing.Status == "off" {
 			result[endpoint.Name] = component.NewRandomBalancer([]*component.Target{})
 
-			for _, target := range endpoint.Proxy.Upstreams.Targets {
+			for _, upstream := range endpoint.Upstreams {
 				result[endpoint.Name].AddTarget(&component.Target{
-					URL: target.Target,
+					URL: upstream.Target,
 				})
 			}
 		}
