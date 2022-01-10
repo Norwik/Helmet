@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/assets/logo.png?v=1.0.23" width="200" />
+    <img src="https://raw.githubusercontent.com/Spacewalkio/Helmet/main/assets/logo.png?v=1.0.23" width="200" />
     <h3 align="center">Helmet</h3>
     <p align="center">A Lightweight Cloud Native API Gateway.</p>
     <p align="center">
@@ -25,7 +25,7 @@
 </p>
 <br/>
 <p align="center">
-    <img src="/assets/chart.png?v=1.0.23" width="80%" />
+    <img src="https://raw.githubusercontent.com/Spacewalkio/Helmet/main/assets/chart.png?v=1.0.23" width="80%" />
 </p>
 
 Helmet is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more!
