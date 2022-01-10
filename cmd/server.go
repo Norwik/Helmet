@@ -274,9 +274,11 @@ var serverCmd = &cobra.Command{
 		e.GET("/apigw/health", func(c echo.Context) error {
 			return controller.Health(c, context)
 		})
+
 		e.GET("/apigw/ready", func(c echo.Context) error {
 			return controller.Ready(c, context)
 		})
+
 		e.GET("/", func(c echo.Context) error {
 			return controller.Health(c, context)
 		})
