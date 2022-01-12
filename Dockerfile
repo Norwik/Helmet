@@ -1,4 +1,4 @@
-FROM golang:1.16.6 as build
+FROM golang:1.17 as build
 
 RUN mkdir -p /app
 RUN apt-get update
@@ -7,15 +7,15 @@ WORKDIR /app
 
 COPY ./ ./
 
-RUN go build -v -ldflags="-X 'main.version=v1.0.21'" helmet.go
+RUN go build -v -ldflags="-X 'main.version=v1.0.23'" helmet.go
 
-FROM golang:1.16.6
+FROM ubuntu:20.04
 
-ENV GO111MODULE=on
+RUN apt-get update
+RUN apt-get install curl -y
 
 RUN mkdir -p /app/configs
 RUN mkdir -p /app/var/logs
-RUN apt-get update
 
 WORKDIR /app
 
