@@ -7,10 +7,10 @@ package controller
 import (
 	"io/ioutil"
 
-	"github.com/clevenio/helmet/core/component"
-	"github.com/clevenio/helmet/core/model"
-	"github.com/clevenio/helmet/core/module"
-	"github.com/clevenio/helmet/core/service"
+	"github.com/norwik/helmet/core/component"
+	"github.com/norwik/helmet/core/model"
+	"github.com/norwik/helmet/core/module"
+	"github.com/norwik/helmet/core/service"
 
 	"github.com/spf13/viper"
 )

@@ -5,7 +5,7 @@
 package model
 
 import (
-	"github.com/clevenio/helmet/core/util"
+	"github.com/norwik/helmet/core/util"
 
 	yaml "gopkg.in/yaml.v2"
 )

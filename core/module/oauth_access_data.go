@@ -7,8 +7,8 @@ package module
 import (
 	"time"
 
-	"github.com/clevenio/helmet/core/migration"
-	"github.com/clevenio/helmet/core/model"
+	"github.com/norwik/helmet/core/migration"
+	"github.com/norwik/helmet/core/model"
 )
 
 // CreateOAuthAccessData creates a new entity

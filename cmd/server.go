@@ -15,11 +15,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/clevenio/helmet/core/component"
-	"github.com/clevenio/helmet/core/controller"
-	m "github.com/clevenio/helmet/core/middleware"
-	"github.com/clevenio/helmet/core/module"
-	"github.com/clevenio/helmet/core/service"
+	"github.com/norwik/helmet/core/component"
+	"github.com/norwik/helmet/core/controller"
+	m "github.com/norwik/helmet/core/middleware"
+	"github.com/norwik/helmet/core/module"
+	"github.com/norwik/helmet/core/service"
 
 	"github.com/drone/envsubst"
 	"github.com/labstack/echo-contrib/prometheus"

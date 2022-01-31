@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/clevenio/helmet/core/model"
-	"github.com/clevenio/helmet/core/module"
-	"github.com/clevenio/helmet/core/util"
+	"github.com/norwik/helmet/core/model"
+	"github.com/norwik/helmet/core/module"
+	"github.com/norwik/helmet/core/util"
 )
 
 // KeyBasedAuthMethod type

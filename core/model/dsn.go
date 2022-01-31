@@ -7,7 +7,7 @@ package model
 import (
 	"fmt"
 
-	"github.com/clevenio/helmet/core/util"
+	"github.com/norwik/helmet/core/util"
 )
 
 // DSN struct

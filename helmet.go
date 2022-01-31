@@ -5,7 +5,7 @@
 package main
 
 import (
-	"github.com/clevenio/helmet/cmd"
+	"github.com/norwik/helmet/cmd"
 )
 
 var (

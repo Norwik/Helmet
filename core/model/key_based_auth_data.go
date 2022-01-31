@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/clevenio/helmet/core/util"
+	"github.com/norwik/helmet/core/util"
 )
 
 // KeyBasedAuthData struct

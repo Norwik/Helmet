@@ -7,7 +7,7 @@ package component
 import (
 	"sync"
 
-	"github.com/clevenio/helmet/core/service"
+	"github.com/norwik/helmet/core/service"
 )
 
 // CircuitBreaker struct

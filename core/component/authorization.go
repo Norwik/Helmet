@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/clevenio/helmet/core/model"
-	"github.com/clevenio/helmet/core/util"
+	"github.com/norwik/helmet/core/model"
+	"github.com/norwik/helmet/core/util"
 )
 
 // Authorization type

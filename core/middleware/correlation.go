@@ -7,7 +7,7 @@ package middleware
 import (
 	"strings"
 
-	"github.com/clevenio/helmet/core/component"
+	"github.com/norwik/helmet/core/component"
 
 	"github.com/labstack/echo/v4"
 )

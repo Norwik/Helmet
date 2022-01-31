@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/clevenio/helmet/core/migration"
-	"github.com/clevenio/helmet/core/util"
+	"github.com/norwik/helmet/core/migration"
+	"github.com/norwik/helmet/core/util"
 
 	"github.com/spf13/viper"
 )

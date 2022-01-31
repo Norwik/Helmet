@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/clevenio/helmet/core/model"
+	"github.com/norwik/helmet/core/model"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"

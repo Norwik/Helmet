@@ -10,10 +10,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/clevenio/helmet/core/component"
-	"github.com/clevenio/helmet/core/migration"
-	"github.com/clevenio/helmet/core/model"
-	"github.com/clevenio/helmet/core/util"
+	"github.com/norwik/helmet/core/component"
+	"github.com/norwik/helmet/core/migration"
+	"github.com/norwik/helmet/core/model"
+	"github.com/norwik/helmet/core/util"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"

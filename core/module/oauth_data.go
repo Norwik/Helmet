@@ -5,8 +5,8 @@
 package module
 
 import (
-	"github.com/clevenio/helmet/core/migration"
-	"github.com/clevenio/helmet/core/model"
+	"github.com/norwik/helmet/core/migration"
+	"github.com/norwik/helmet/core/model"
 )
 
 // CreateOAuthData creates a new entity

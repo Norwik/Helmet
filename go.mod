@@ -1,4 +1,4 @@
-module github.com/clevenio/helmet
+module github.com/norwik/helmet
 
 go 1.17
 

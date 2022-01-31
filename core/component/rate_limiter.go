@@ -8,8 +8,8 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/clevenio/helmet/core/service"
-	"github.com/clevenio/helmet/core/util"
+	"github.com/norwik/helmet/core/service"
+	"github.com/norwik/helmet/core/util"
 )
 
 // RateLimiter struct

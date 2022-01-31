@@ -1,8 +1,8 @@
 # Helmet API Definition
 
 [Main]
-    id = "spacewalk_helmet"
-    name = "Cleven - Helmet"
+    id = "norwik_helmet"
+    name = "Norwik - Helmet"
     description = "A Lightweight Cloud Native API Gateway"
     timeout = "30s"
     service_url = "{$serviceURL:http://127.0.0.1:8000}"

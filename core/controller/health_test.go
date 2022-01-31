@@ -11,8 +11,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/clevenio/helmet/core/module"
-	"github.com/clevenio/helmet/pkg"
+	"github.com/norwik/helmet/core/module"
+	"github.com/norwik/helmet/pkg"
 
 	"github.com/franela/goblin"
 	"github.com/labstack/echo/v4"

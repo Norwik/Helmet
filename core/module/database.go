@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/clevenio/helmet/core/migration"
-	"github.com/clevenio/helmet/core/model"
+	"github.com/norwik/helmet/core/migration"
+	"github.com/norwik/helmet/core/model"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
