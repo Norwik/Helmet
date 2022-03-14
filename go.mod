@@ -8,7 +8,7 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/jinzhu/gorm v1.9.16
 	github.com/labstack/echo-contrib v0.12.0
-	github.com/labstack/echo/v4 v4.7.0
+	github.com/labstack/echo/v4 v4.7.1
 	github.com/prometheus/client_golang v1.12.1
 	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.8.1
