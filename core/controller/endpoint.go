@@ -19,7 +19,27 @@ func GetEndpoints(c echo.Context, gc *GlobalContext) error {
 
 // GetEndpoint controller
 func GetEndpoint(c echo.Context, gc *GlobalContext) error {
-	return c.NoContent(http.StatusOK)
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	if id < 1 {
+		log.WithFields(log.Fields{
+			"id": id,
+		}).Info(`Endpoint not found`)
+
+		return c.NoContent(http.StatusNotFound)
+	}
+
+	endpoint := gc.GetDatabase().GetEndpointByID(id)
+
+	if endpoint.ID < 1 {
+		log.WithFields(log.Fields{
+			"id": id,
+		}).Info(`Endpoint not found`)
+
+		return c.NoContent(http.StatusNotFound)
+	}
+
+	return c.JSON(http.StatusOK, endpoint)
 }
 
 // CreateEndpoint controller
@@ -29,12 +49,40 @@ func CreateEndpoint(c echo.Context, gc *GlobalContext) error {
 
 // UpdateEndpoint controller
 func UpdateEndpoint(c echo.Context, gc *GlobalContext) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	if id < 1 {
+		log.WithFields(log.Fields{
+			"id": id,
+		}).Info(`Endpoint not found`)
+
+		return c.NoContent(http.StatusNotFound)
+	}
+
+	endpoint := gc.GetDatabase().GetEndpointByID(id)
+
+	if endpoint.ID < 1 {
+		log.WithFields(log.Fields{
+			"id": id,
+		}).Info(`Endpoint not found`)
+
+		return c.NoContent(http.StatusNotFound)
+	}
+
 	return c.NoContent(http.StatusOK)
 }
 
 // DeleteEndpoint controller
 func DeleteEndpoint(c echo.Context, gc *GlobalContext) error {
 	id, _ := strconv.Atoi(c.Param("id"))
+
+	if id < 1 {
+		log.WithFields(log.Fields{
+			"id": id,
+		}).Info(`Endpoint not found`)
+
+		return c.NoContent(http.StatusNotFound)
+	}
 
 	endpoint := gc.GetDatabase().GetEndpointByID(id)
 
