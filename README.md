@@ -1,31 +1,31 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Spacewalkio/Helmet/main/assets/logo.png?v=1.0.25" width="200" />
+    <img src="https://raw.githubusercontent.com/Clevenio/Helmet/main/assets/logo.png?v=1.0.26" width="200" />
     <h3 align="center">Helmet</h3>
     <p align="center">A Lightweight Cloud Native API Gateway.</p>
     <p align="center">
-        <a href="https://github.com/spacewalkio/Helmet/actions/workflows/build.yml">
-            <img src="https://github.com/spacewalkio/Helmet/actions/workflows/build.yml/badge.svg">
+        <a href="https://github.com/clevenio/Helmet/actions/workflows/build.yml">
+            <img src="https://github.com/clevenio/Helmet/actions/workflows/build.yml/badge.svg">
         </a>
-        <a href="https://github.com/spacewalkio/Helmet/actions">
-            <img src="https://github.com/spacewalkio/Helmet/workflows/Release/badge.svg">
+        <a href="https://github.com/clevenio/Helmet/actions">
+            <img src="https://github.com/clevenio/Helmet/workflows/Release/badge.svg">
         </a>
-        <a href="https://github.com/spacewalkio/Helmet/releases">
-            <img src="https://img.shields.io/badge/Version-1.0.25-9B59B6.svg">
+        <a href="https://github.com/clevenio/Helmet/releases">
+            <img src="https://img.shields.io/badge/Version-1.0.26-9B59B6.svg">
         </a>
-        <a href="https://goreportcard.com/report/github.com/spacewalkio/Helmet">
-            <img src="https://goreportcard.com/badge/github.com/spacewalkio/Helmet?v=1.0.25">
+        <a href="https://goreportcard.com/report/github.com/clevenio/Helmet">
+            <img src="https://goreportcard.com/badge/github.com/clevenio/Helmet?v=1.0.26">
         </a>
-        <a href="https://godoc.org/github.com/spacewalkio/helmet">
-            <img src="https://godoc.org/github.com/spacewalkio/helmet?status.svg">
+        <a href="https://godoc.org/github.com/clevenio/helmet">
+            <img src="https://godoc.org/github.com/clevenio/helmet?status.svg">
         </a>
-        <a href="https://github.com/spacewalkio/Helmet/blob/master/LICENSE">
+        <a href="https://github.com/clevenio/Helmet/blob/master/LICENSE">
             <img src="https://img.shields.io/badge/LICENSE-MIT-E74C3C.svg">
         </a>
     </p>
 </p>
 <br/>
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Spacewalkio/Helmet/main/assets/chart.jpg?v=1.0.25" width="80%" />
+    <img src="https://raw.githubusercontent.com/Clevenio/Helmet/main/assets/chart.jpg?v=1.0.26" width="80%" />
 </p>
 
 Helmet is Cloud Native API Gateway that control who accesses your API whether from customer or other internal services. It also collect metrics about service calls count, latency, success rate and much more!
@@ -49,12 +49,12 @@ Here is some of the key features:
 
 #### Linux Deployment
 
-Download [the latest helmet binary](https://github.com/spacewalkio/Helmet/releases). Make it executable from everywhere.
+Download [the latest helmet binary](https://github.com/clevenio/Helmet/releases). Make it executable from everywhere.
 
 ```zsh
-$ export LATEST_VERSION=$(curl --silent "https://api.github.com/repos/spacewalkio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
+$ export LATEST_VERSION=$(curl --silent "https://api.github.com/repos/clevenio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
 
-$ curl -sL https://github.com/spacewalkio/Helmet/releases/download/v{$LATEST_VERSION}/helmet_{$LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
+$ curl -sL https://github.com/clevenio/Helmet/releases/download/v{$LATEST_VERSION}/helmet_{$LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
 ```
 
 Then install `MySQL` and `Redis` on the server or a separate one.
@@ -189,12 +189,12 @@ $ helmet server -c /path/to/config.yml
 
 For transparency into our release cycle and in striving to maintain backward compatibility, Helmet is maintained under the [Semantic Versioning guidelines](https://semver.org/) and release process is predictable and business-friendly.
 
-See the [Releases section of our GitHub project](https://github.com/spacewalkio/helmet/releases) for changelogs for each release version of Helmet. It contains summaries of the most noteworthy changes made in each release.
+See the [Releases section of our GitHub project](https://github.com/clevenio/helmet/releases) for changelogs for each release version of Helmet. It contains summaries of the most noteworthy changes made in each release.
 
 
 ## Bug tracker
 
-If you have any suggestions, bug reports, or annoyances please report them to our issue tracker at https://github.com/spacewalkio/helmet/issues
+If you have any suggestions, bug reports, or annoyances please report them to our issue tracker at https://github.com/clevenio/helmet/issues
 
 
 ## Security Issues
@@ -209,6 +209,6 @@ We are an open source, community-driven project so please feel free to join us. 
 
 ## License
 
-© 2021, SpaceWalk. Released under [MIT License](https://opensource.org/licenses/mit-license.php).
+© 2021, Cleven. Released under [MIT License](https://opensource.org/licenses/mit-license.php).
 
-**Helmet** is authored and maintained by [@SpaceWalk](http://github.com/spacewalkio).
+**Helmet** is authored and maintained by [@Cleven](http://github.com/clevenio).

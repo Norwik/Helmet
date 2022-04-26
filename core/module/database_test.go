@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/spacewalkio/helmet/core/model"
-	"github.com/spacewalkio/helmet/pkg"
+	"github.com/clevenio/helmet/core/model"
+	"github.com/clevenio/helmet/pkg"
 
 	"github.com/franela/goblin"
 )

@@ -1,4 +1,4 @@
-module github.com/spacewalkio/helmet
+module github.com/clevenio/helmet
 
 go 1.17
 

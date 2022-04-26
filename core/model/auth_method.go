@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spacewalkio/helmet/core/migration"
-	"github.com/spacewalkio/helmet/core/util"
+	"github.com/clevenio/helmet/core/migration"
+	"github.com/clevenio/helmet/core/util"
 
 	"github.com/spf13/viper"
 )

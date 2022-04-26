@@ -5,8 +5,8 @@
 package module
 
 import (
-	"github.com/spacewalkio/helmet/core/migration"
-	"github.com/spacewalkio/helmet/core/model"
+	"github.com/clevenio/helmet/core/migration"
+	"github.com/clevenio/helmet/core/model"
 )
 
 // CreateAuthMethod creates a new entity

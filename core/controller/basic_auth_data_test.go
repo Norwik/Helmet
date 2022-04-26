@@ -12,9 +12,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/spacewalkio/helmet/core/model"
-	"github.com/spacewalkio/helmet/core/module"
-	"github.com/spacewalkio/helmet/pkg"
+	"github.com/clevenio/helmet/core/model"
+	"github.com/clevenio/helmet/core/module"
+	"github.com/clevenio/helmet/pkg"
 
 	"github.com/franela/goblin"
 	"github.com/labstack/echo/v4"

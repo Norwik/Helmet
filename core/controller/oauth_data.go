@@ -10,10 +10,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/spacewalkio/helmet/core/component"
-	"github.com/spacewalkio/helmet/core/migration"
-	"github.com/spacewalkio/helmet/core/model"
-	"github.com/spacewalkio/helmet/core/util"
+	"github.com/clevenio/helmet/core/component"
+	"github.com/clevenio/helmet/core/migration"
+	"github.com/clevenio/helmet/core/model"
+	"github.com/clevenio/helmet/core/util"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"

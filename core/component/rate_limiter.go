@@ -8,8 +8,8 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/spacewalkio/helmet/core/service"
-	"github.com/spacewalkio/helmet/core/util"
+	"github.com/clevenio/helmet/core/service"
+	"github.com/clevenio/helmet/core/util"
 )
 
 // RateLimiter struct

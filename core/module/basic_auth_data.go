@@ -5,8 +5,8 @@
 package module
 
 import (
-	"github.com/spacewalkio/helmet/core/migration"
-	"github.com/spacewalkio/helmet/core/model"
+	"github.com/clevenio/helmet/core/migration"
+	"github.com/clevenio/helmet/core/model"
 )
 
 // CreateBasicAuthData creates a new entity

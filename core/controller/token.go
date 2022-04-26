@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spacewalkio/helmet/core/component"
-	"github.com/spacewalkio/helmet/core/model"
+	"github.com/clevenio/helmet/core/component"
+	"github.com/clevenio/helmet/core/model"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"

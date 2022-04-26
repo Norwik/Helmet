@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/spacewalkio/helmet/core/model"
-	"github.com/spacewalkio/helmet/core/util"
+	"github.com/clevenio/helmet/core/model"
+	"github.com/clevenio/helmet/core/util"
 )
 
 // Authorization type

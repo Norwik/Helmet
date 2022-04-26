@@ -18,7 +18,7 @@ var rootCmd = &cobra.Command{
 	Short: `🐺 A Lightweight Cloud Native API Gateway
 
 If you have any suggestions, bug reports, or annoyances please report
-them to our issue tracker at <https://github.com/spacewalkio/helmet/issues>`,
+them to our issue tracker at <https://github.com/clevenio/helmet/issues>`,
 }
 
 // Execute runs cmd tool

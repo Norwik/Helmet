@@ -7,7 +7,7 @@ package component
 import (
 	"sync"
 
-	"github.com/spacewalkio/helmet/core/service"
+	"github.com/clevenio/helmet/core/service"
 )
 
 // CircuitBreaker struct

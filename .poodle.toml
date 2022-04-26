@@ -2,7 +2,7 @@
 
 [Main]
     id = "spacewalk_helmet"
-    name = "SpaceWalk - Helmet"
+    name = "Cleven - Helmet"
     description = "A Lightweight Cloud Native API Gateway"
     timeout = "30s"
     service_url = "{$serviceURL:http://127.0.0.1:8000}"

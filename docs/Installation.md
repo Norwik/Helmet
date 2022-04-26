@@ -24,9 +24,9 @@ $ apt-get install jq -y
 $ mkdir -p /etc/helmet
 $ cd /etc/helmet
 
-$ export LATEST_VERSION=$(curl --silent "https://api.github.com/repos/spacewalkio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
+$ export LATEST_VERSION=$(curl --silent "https://api.github.com/repos/clevenio/Helmet/releases/latest" | jq '.tag_name' | sed -E 's/.*"([^"]+)".*/\1/' | tr -d v)
 
-$ curl -sL https://github.com/spacewalkio/Helmet/releases/download/v{$LATEST_VERSION}/helmet_{$LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
+$ curl -sL https://github.com/clevenio/Helmet/releases/download/v{$LATEST_VERSION}/helmet_{$LATEST_VERSION}_Linux_x86_64.tar.gz | tar xz
 ```
 
 - Edit the `Helmet` config file `/etc/helmet/config.prod.yml` to configure the database and redis server. The following part
@@ -66,7 +66,7 @@ key_store:
 ```zsh
 $ echo "[Unit]
 Description=Helmet
-Documentation=https://github.com/spacewalkio/helmet
+Documentation=https://github.com/clevenio/helmet
 
 [Service]
 ExecStart=/etc/helmet/helmet server -c /etc/helmet/config.prod.yml

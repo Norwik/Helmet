@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/spacewalkio/helmet/core/model"
+	"github.com/clevenio/helmet/core/model"
 )
 
 // Router type

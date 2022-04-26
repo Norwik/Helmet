@@ -7,7 +7,7 @@ package migration
 import (
 	"time"
 
-	"github.com/spacewalkio/helmet/core/util"
+	"github.com/clevenio/helmet/core/util"
 
 	"github.com/jinzhu/gorm"
 )

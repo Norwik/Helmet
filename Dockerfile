@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY ./ ./
 
-RUN go build -v -ldflags="-X 'main.version=v1.0.25'" helmet.go
+RUN go build -v -ldflags="-X 'main.version=v1.0.26'" helmet.go
 
 FROM ubuntu:22.04
 

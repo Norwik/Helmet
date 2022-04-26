@@ -15,11 +15,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spacewalkio/helmet/core/component"
-	"github.com/spacewalkio/helmet/core/controller"
-	m "github.com/spacewalkio/helmet/core/middleware"
-	"github.com/spacewalkio/helmet/core/module"
-	"github.com/spacewalkio/helmet/core/service"
+	"github.com/clevenio/helmet/core/component"
+	"github.com/clevenio/helmet/core/controller"
+	m "github.com/clevenio/helmet/core/middleware"
+	"github.com/clevenio/helmet/core/module"
+	"github.com/clevenio/helmet/core/service"
 
 	"github.com/drone/envsubst"
 	"github.com/labstack/echo-contrib/prometheus"

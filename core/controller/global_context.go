@@ -7,10 +7,10 @@ package controller
 import (
 	"io/ioutil"
 
-	"github.com/spacewalkio/helmet/core/component"
-	"github.com/spacewalkio/helmet/core/model"
-	"github.com/spacewalkio/helmet/core/module"
-	"github.com/spacewalkio/helmet/core/service"
+	"github.com/clevenio/helmet/core/component"
+	"github.com/clevenio/helmet/core/model"
+	"github.com/clevenio/helmet/core/module"
+	"github.com/clevenio/helmet/core/service"
 
 	"github.com/spf13/viper"
 )
