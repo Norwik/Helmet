@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/drone/envsubst v1.0.3
-	github.com/franela/goblin v0.0.0-20210519012713-85d372ac71e2
+	github.com/franela/goblin v0.0.0-20211003143422-0a4f594942bf
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/jinzhu/gorm v1.9.16
 	github.com/labstack/echo-contrib v0.12.0
