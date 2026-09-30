@@ -1,6 +1,6 @@
 module github.com/norwik/helmet
 
-go 1.17
+go 1.23
 
 require (
 	github.com/drone/envsubst v1.0.3
@@ -11,7 +11,7 @@ require (
 	github.com/labstack/echo/v4 v4.11.1
 	github.com/prometheus/client_golang v1.16.0
 	github.com/satori/go.uuid v1.2.0
-	github.com/sirupsen/logrus v1.9.3
+	github.com/sirupsen/logrus v1.10.2
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
 	gopkg.in/yaml.v2 v2.4.0
@@ -49,7 +49,7 @@ require (
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	golang.org/x/crypto v0.11.0 // indirect
 	golang.org/x/net v0.12.0 // indirect
-	golang.org/x/sys v0.10.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.11.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
