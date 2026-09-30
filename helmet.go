@@ -5,7 +5,7 @@
 package main
 
 import (
-	"github.com/norwik/helmet/cmd"
+	"github.com/norwik/helmet/cli"
 )
 
 var (
@@ -16,10 +16,10 @@ var (
 )
 
 func main() {
-	cmd.Version = version
-	cmd.Commit = commit
-	cmd.Date = date
-	cmd.BuiltBy = builtBy
+	cli.Version = version
+	cli.Commit = commit
+	cli.Date = date
+	cli.BuiltBy = builtBy
 
-	cmd.Execute()
+	cli.Execute()
 }
