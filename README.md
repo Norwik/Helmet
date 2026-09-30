@@ -12,9 +12,6 @@
         <a href="https://github.com/norwik/Helmet/releases">
             <img src="https://img.shields.io/badge/Version-1.0.27-9B59B6.svg">
         </a>
-        <a href="https://goreportcard.com/report/github.com/norwik/Helmet">
-            <img src="https://goreportcard.com/badge/github.com/norwik/Helmet?v=1.0.27">
-        </a>
         <a href="https://godoc.org/github.com/norwik/helmet">
             <img src="https://godoc.org/github.com/norwik/helmet?status.svg">
         </a>
